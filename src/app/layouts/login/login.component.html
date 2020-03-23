@@ -1,1 +1,46 @@
+<div class="login-container">
+  <div style="width: 500px;">
+    <mat-toolbar color="primary">
+      <span class="fill-space"></span>
 
+      <span>IReNE Admin</span>
+
+      <span class="fill-space"></span>
+    </mat-toolbar>
+    <mat-card class="login-card">
+      <mat-card-content class="login-content">
+        <form>
+          <mat-form-field appearance="outline" style="width: 32em;">
+            <mat-label>Username</mat-label>
+            <!-- <input matInput placeholder="Username" [(ngModel)]="username" name="username" required> -->
+            <input matInput required>
+            <mat-icon matSuffix>perm_identity</mat-icon>
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field appearance="outline" style="width: 32em;">
+            <mat-label>Password</mat-label>
+            <!-- <input matInput placeholder="Password" [(ngModel)]="password"type="password" name="password" required> -->
+            <input matInput placeholder="Password" required>
+            <mat-icon matSuffix>lock</mat-icon>
+          </mat-form-field>
+        </form>
+        <!-- <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner> -->
+      </mat-card-content>
+
+      <mat-card-actions class="login-actions">
+        <span class="fill-space"></span>
+        <!-- <button mat-raised-button (click)="login()" color="primary">Login</button> -->
+        <button mat-raised-button 
+          color="primary" 
+          style="width: 32em;"
+          (click)="toDashboard()">
+            Login
+          </button>
+      </mat-card-actions>
+      <br>
+    </mat-card>
+  </div>
+</div>
+<app-footer></app-footer>

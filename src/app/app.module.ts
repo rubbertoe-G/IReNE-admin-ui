@@ -7,18 +7,19 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DefaultModule } from './layouts/default/default.module';
 import { NotfoundComponent } from './modules/notfound/notfound.component';
+import { LoginModule } from './layouts/login/login.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     NotfoundComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    DefaultModule
+    DefaultModule,
+    LoginModule
   ],
   providers: [],
   bootstrap: [AppComponent]
