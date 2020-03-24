@@ -21,8 +21,6 @@ const ELEMENT_DATA: CollaboratorMeta[] = [
   {collabId: 12, name: 'Roberto Guzman'},
   {collabId: 13, name: 'Roberto Guzman'},
   {collabId: 14, name: 'Roberto Guzman'},
-
-
 ];
 
 

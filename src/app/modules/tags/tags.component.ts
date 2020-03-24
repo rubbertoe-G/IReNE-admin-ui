@@ -34,4 +34,8 @@ export class TagsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  removeTag() {
+    console.log("Tag removed!");
+  }
+
 }
