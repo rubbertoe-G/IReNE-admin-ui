@@ -13,7 +13,7 @@ import { LoginComponent } from './layouts/login/login.component';
 const routes: Routes = [
   { path: '', component: DefaultComponent,
     children: [
-      { path: '', component: DashboardComponent },
+      { path: '', redirectTo: '/collaborators', pathMatch: 'full' },
       { path: 'collaborators', component: CollaboratorComponent},
       { path: 'documents', component: DocumentsComponent },
       { path: 'access-requests', component: AccessRequestsComponent },
