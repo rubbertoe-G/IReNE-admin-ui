@@ -1,26 +1,26 @@
+import { element } from 'protractor';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 
+import Swal from 'sweetalert2';
+import { CollaboratorsService } from 'src/app/shared/services/collaborators.service';
+
+
 export interface CollaboratorMeta {
-  collabId: number;
-  name: string;
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  banned: boolean;
 }
 
-const ELEMENT_DATA: CollaboratorMeta[] = [
-  {collabId: 1, name: 'Roberto Guzman'},
-  {collabId: 2, name: 'Roberto Guzman'},
-  {collabId: 3, name: 'Roberto Guzman'},
-  {collabId: 4, name: 'Roberto Guzman'},
-  {collabId: 5, name: 'Roberto Guzman'},
-  {collabId: 6, name: 'Roberto Guzman'},
-  {collabId: 7, name: 'Roberto Guzman'},
-  {collabId: 8, name: 'Roberto Guzman'},
-  {collabId: 9, name: 'Roberto Guzman'},
-  {collabId: 10, name: 'Roberto Guzman'},
-  {collabId: 11, name: 'Roberto Guzman'},
-  {collabId: 12, name: 'Roberto Guzman'},
-  {collabId: 13, name: 'Roberto Guzman'},
-  {collabId: 14, name: 'Roberto Guzman'},
+let elementData: CollaboratorMeta[] = [
+  {id: 'aq9zI01ORNE9Okyziblp', firstName: 'Roberto', lastName: 'Guzman', email: 'roberto.guzman3@upr.edu', banned: true},
+  {id: '66BuIJ0kNTYPDGz405qb', firstName: 'Yomar', lastName: 'Ruiz', email: 'yomar.ruiz@upr.edu', banned: false},
+  {id: 'W0SUHONPhPrkrvL3ruxj', firstName: 'Jainel', lastName: 'Torres', email: 'jainel.torrer@upr.edu', banned: false},
+  {id: 'zOHEzUyIKZB3LsAiu2Kb', firstName: 'Alberto', lastName: 'Canela', email: 'alberto.canela@upr.edu', banned: false},
+  {id: '9XIu1jT96A5qz1Kpl90R', firstName: 'Alejandro', lastName: 'Vasquez', email: 'alejandro.vasquez@upr.edu', banned: false},
+  {id: 'jEFgdhchAjyVhJikg17s', firstName: 'Don', lastName: 'Quijote', email: 'don.quijote@upr.edu', banned: true},
 ];
 
 
@@ -31,18 +31,81 @@ const ELEMENT_DATA: CollaboratorMeta[] = [
 })
 export class CollaboratorComponent implements OnInit {
 
-  dataSource = new MatTableDataSource<CollaboratorMeta>(ELEMENT_DATA);
+  // The data to be presented
+  dataSource = null;
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'actions'];
 
-  displayedColumns: string[] = ['collabId', 'name', 'actions'];
-
-  constructor() { }
+  constructor(private collaboratorService: CollaboratorsService) { }
 
   ngOnInit(): void {
+    this.dataSource = new MatTableDataSource<CollaboratorMeta>(this.collaboratorService.getCollaborators());
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  isBanned(banned: boolean) {
+    if (banned) {
+      return 'salmon';
+    }
+  }
+
+  banCollaborator(id: string) {
+    Swal.fire({
+      title: 'Ban Collaborator',
+      text: 'Are you sure you want to remove this collaborator?',
+      icon: 'warning',
+      showCancelButton: true,
+      showConfirmButton: true,
+      showLoaderOnConfirm: true,
+      confirmButtonColor: 'red',
+      // preConfirm: // http request here,
+      preConfirm: () => { 
+        let theId = id;
+        return theId;
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result.value) {
+        this.dataSource.data.forEach(e => {
+          if (e.id === result.value) {
+            e.banned = !e.banned;
+          }
+        });
+
+        Swal.fire('Collaborator Banned', '', 'success');
+      }
+    });
+  }
+
+  unbanCollaborator(id: string){
+    Swal.fire({
+      title: 'Unban Collaborator',
+      text: 'Are you sure you want to unban this collaborator?',
+      icon: 'warning',
+      showCancelButton: true,
+      showConfirmButton: true,
+      showLoaderOnConfirm: true,
+      confirmButtonColor: 'red',
+      // preConfirm: // http request here,
+      preConfirm: () => { 
+        let theId = id;
+        return theId;
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result.value) {
+        this.dataSource.data.forEach(e => {
+          if (e.id === result.value) {
+            e.banned = !e.banned;
+          }
+        });
+
+        Swal.fire('Collaborator Banned', '', 'success');
+      }
+    });
   }
 
 }

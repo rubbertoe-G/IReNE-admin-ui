@@ -19,6 +19,7 @@ import { TagsComponent } from 'src/app/modules/tags/tags.component';
 import { MatButtonModule } from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import { CollaboratorsService } from 'src/app/shared/services/collaborators.service';
 
 
 
@@ -49,7 +50,8 @@ import {MatInputModule} from '@angular/material/input';
     FlexLayoutModule,
   ],
   providers: [
-    DashboardService
+    DashboardService,
+    CollaboratorsService
   ]
 })
 export class DefaultModule { }
