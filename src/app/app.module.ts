@@ -1,4 +1,3 @@
-import { LoginComponent } from './layouts/login/login.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -8,6 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DefaultModule } from './layouts/default/default.module';
 import { NotfoundComponent } from './modules/notfound/notfound.component';
 import { LoginModule } from './layouts/login/login.module';
+import { fakeBackendProvider } from './shared/fakebackend/fakebackend.service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,9 +20,13 @@ import { LoginModule } from './layouts/login/login.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     DefaultModule,
-    LoginModule
+    LoginModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptors, multi: true },
+    fakeBackendProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

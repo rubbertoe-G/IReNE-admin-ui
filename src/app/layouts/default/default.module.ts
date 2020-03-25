@@ -22,8 +22,6 @@ import {MatInputModule} from '@angular/material/input';
 import { CollaboratorsService } from 'src/app/shared/services/collaborators.service';
 
 
-
-
 @NgModule({
   declarations: [
     DefaultComponent,
@@ -47,11 +45,12 @@ import { CollaboratorsService } from 'src/app/shared/services/collaborators.serv
     MatInputModule,
     MatFormFieldModule,
 
+
     FlexLayoutModule,
   ],
   providers: [
     DashboardService,
-    CollaboratorsService
+    CollaboratorsService,
   ]
 })
 export class DefaultModule { }
