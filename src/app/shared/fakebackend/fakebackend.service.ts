@@ -30,7 +30,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return of(null)
             .pipe(mergeMap(handleRoute))
             .pipe(materialize()) // call materialize and dematerialize to ensure delay even if an error is thrown (https://github.com/Reactive-Extensions/RxJS/issues/648)
-            .pipe(delay(500))
+            .pipe(delay(1000))
             .pipe(dematerialize());
 
         function handleRoute() {
@@ -52,11 +52,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function banCollaborator() {
-            const {id} = body;
+            const {collabId} = body;
             for (let index = 0; index < collaborators.length; index++) {
               const element = collaborators[index];
-              if (element.id == id){
-                return ok(id);
+              if (element.id == collabId){
+                return ok(collabId);
               }
             }
 

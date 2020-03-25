@@ -31,7 +31,7 @@ export class CollaboratorsService {
 
      // TODO: Update the view model on success request.
      const body = {
-       id: id
+       collabId: id
      }
      return this.http.put(`${this.fakeBackend}/collaborators/ban`, body).subscribe(
        (response) => {
@@ -40,7 +40,8 @@ export class CollaboratorsService {
              e.banned = !e.banned;
            }
          });
-       }
+       },
+       (error) => console.log(error)
      );
   }
 

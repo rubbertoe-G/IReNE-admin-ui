@@ -3,6 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import Swal from 'sweetalert2';
 import { CollaboratorsService } from 'src/app/shared/services/collaborators.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-collaborator',
@@ -14,9 +16,10 @@ export class CollaboratorComponent implements OnInit {
   // The data to be presented
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'actions'];
-
+  
   constructor(
     private collaboratorService: CollaboratorsService,
+    private snackBar: MatSnackBar
     ) { }
 
   ngOnInit(): void {
@@ -46,10 +49,12 @@ export class CollaboratorComponent implements OnInit {
       showLoaderOnConfirm: true,
       confirmButtonColor: 'red',
     }).then((result) => {
-      if (result.value){
+      if (result.value) {
         this.collaboratorService.banCollaborator(id).add(
           () => {
-            Swal.fire('Succesfully banned.', '', 'success');
+            this.snackBar.open('Collaborator Banned', null, {
+              duration: 2000
+            });
           }
         );
       }
@@ -69,7 +74,9 @@ export class CollaboratorComponent implements OnInit {
       if (result.value){
         this.collaboratorService.unbanCollaborator(id).add(
           () => {
-            Swal.fire('Succesfully unbanned', '', 'success');
+            this.snackBar.open('Collaborator Unbanned', null, {
+              duration: 2000
+            });
           }
         );
       }
