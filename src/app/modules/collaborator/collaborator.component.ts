@@ -32,7 +32,7 @@ let elementData: CollaboratorMeta[] = [
 export class CollaboratorComponent implements OnInit {
 
   // The data to be presented
-  dataSource = null;
+  dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'actions'];
 
   constructor(private collaboratorService: CollaboratorsService) { }
@@ -62,19 +62,12 @@ export class CollaboratorComponent implements OnInit {
       showLoaderOnConfirm: true,
       confirmButtonColor: 'red',
       // preConfirm: // http request here,
-      preConfirm: () => { 
-        let theId = id;
-        return theId;
+      preConfirm: () => {
+        return this.collaboratorService.banCollaborator(id);
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
-      if (result.value) {
-        this.dataSource.data.forEach(e => {
-          if (e.id === result.value) {
-            e.banned = !e.banned;
-          }
-        });
-
+      if (result.value){
         Swal.fire('Collaborator Banned', '', 'success');
       }
     });
@@ -82,28 +75,21 @@ export class CollaboratorComponent implements OnInit {
 
   unbanCollaborator(id: string){
     Swal.fire({
-      title: 'Unban Collaborator',
-      text: 'Are you sure you want to unban this collaborator?',
+      title: 'Ban Collaborator',
+      text: 'Are you sure you want to remove this collaborator?',
       icon: 'warning',
       showCancelButton: true,
       showConfirmButton: true,
       showLoaderOnConfirm: true,
       confirmButtonColor: 'red',
       // preConfirm: // http request here,
-      preConfirm: () => { 
-        let theId = id;
-        return theId;
+      preConfirm: () => {
+        return this.collaboratorService.unbanCollaborator(id);
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
-      if (result.value) {
-        this.dataSource.data.forEach(e => {
-          if (e.id === result.value) {
-            e.banned = !e.banned;
-          }
-        });
-
-        Swal.fire('Collaborator Banned', '', 'success');
+      if (result.value){
+        Swal.fire('Collaborator Unbanned', '', 'success');
       }
     });
   }

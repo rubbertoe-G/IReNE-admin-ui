@@ -25,13 +25,37 @@ export class CollaboratorsService {
   constructor() { }
 
   getCollaborators() {
+    /**
+     * Get all approved collabroators from the database.
+     */
     return collaborators;
   }
 
-  banCollaborator() {
+  banCollaborator(id: string) {
+    /**
+     * Ban one collaborator from the database using the collaborator id.
+     */
 
+     // TODO: Update the view model on success request.
+    collaborators.forEach(e => {
+      if (e.id === id) {
+        e.banned = !e.banned;
+        return e.id;
+      }
+    });
   }
 
-  unbanCollaborator() {
+  unbanCollaborator(id: string) {
+    /**
+     * Unban one collaborator from the database using the collaborator id.
+     *
+     * Returns: id of the unbanned banned collaborator after http request is done.
+     */
+    collaborators.forEach(e => {
+      if (e.id === id) {
+        e.banned = !e.banned;
+        return e.id;
+      }
+    });
   }
 }
