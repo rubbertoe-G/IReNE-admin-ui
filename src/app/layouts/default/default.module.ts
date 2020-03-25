@@ -22,6 +22,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { CollaboratorsService } from 'src/app/shared/services/collaborators.service';
+import { DocumentsService } from 'src/app/shared/services/documents.service';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { CollaboratorsService } from 'src/app/shared/services/collaborators.serv
   providers: [
     DashboardService,
     CollaboratorsService,
+    DocumentsService
   ]
 })
 export class DefaultModule { }

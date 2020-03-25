@@ -1,30 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-
-export interface DocumentMeta {
-  docId: number;
-  creator: string;
-}
-
-const ELEMENT_DATA: DocumentMeta[] = [
-  {docId: 1, creator: 'Roberto Guzman'},
-  {docId: 2, creator: 'Roberto Guzman'},
-  {docId: 3, creator: 'Roberto Guzman'},
-  {docId: 4, creator: 'Roberto Guzman'},
-  {docId: 5, creator: 'Roberto Guzman'},
-  {docId: 6, creator: 'Roberto Guzman'},
-  {docId: 7, creator: 'Roberto Guzman'},
-  {docId: 8, creator: 'Roberto Guzman'},
-  {docId: 9, creator: 'Roberto Guzman'},
-  {docId: 10, creator: 'Roberto Guzman'},
-  {docId: 11, creator: 'Roberto Guzman'},
-  {docId: 12, creator: 'Roberto Guzman'},
-  {docId: 13, creator: 'Roberto Guzman'},
-  {docId: 14, creator: 'Roberto Guzman'},
-
-
-];
+import Swal from 'sweetalert2';
+import { DocumentsService } from 'src/app/shared/services/documents.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { DocumentMeta } from 'src/app/shared/models/documents.model';
 
 
 @Component({
@@ -34,17 +13,75 @@ const ELEMENT_DATA: DocumentMeta[] = [
 })
 export class DocumentsComponent implements OnInit {
 
-  dataSource = new MatTableDataSource<DocumentMeta>(ELEMENT_DATA);
+  dataSource: MatTableDataSource<any>;
+  displayedColumns: string[] = ['id', 'creator', 'actions'];
 
-  displayedColumns: string[] = ['docId', 'creator', 'actions'];
-
-  constructor() { }
+  constructor(
+    private documentService: DocumentsService,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
+    this.documentService.getDocuments().add(() => {
+      this.dataSource =  new MatTableDataSource<DocumentMeta>(this.documentService.documents);
+    });
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  isUnpublished(unpublished: boolean) {
+    if (!unpublished) {
+      return 'salmon';
+    }
+  }
+
+  publishDoc(id: string) {
+    Swal.fire({
+      title: 'Publish Document',
+      text: 'Are you sure you want to publish this document?',
+      icon: 'warning',
+      showCancelButton: true,
+      showConfirmButton: true,
+      showLoaderOnConfirm: true,
+      confirmButtonColor: 'red',
+    }).then((result) => {
+      if (result.value) {
+        this.documentService.publishDocument(id).add(
+          () => {
+            this.snackBar.open('Document published.', null, {
+              duration: 2000
+            });
+          }
+        )
+      }
+    });
+  }
+
+  unpublishDoc(id: string) {
+    Swal.fire({
+      title: 'Unpublish Document',
+      text: 'Are you sure you want to unpublish this document?',
+      icon: 'warning',
+      showCancelButton: true,
+      showConfirmButton: true,
+      showLoaderOnConfirm: true,
+      confirmButtonColor: 'red',
+    }).then((result) => {
+      if (result.value) {
+        this.documentService.unpublishDocument(id).add(
+          () => {
+            this.snackBar.open('Document unpublished.', null, {
+              duration: 2000
+            });
+          }
+        );
+      }
+    });
+  }
+
+  previewDoc(id: string) {
   }
 }

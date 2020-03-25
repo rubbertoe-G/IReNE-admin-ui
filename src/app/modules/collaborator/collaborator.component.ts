@@ -24,7 +24,7 @@ export class CollaboratorComponent implements OnInit {
 
   ngOnInit(): void {
     this.collaboratorService.getCollaborators().add(() => {
-      this.dataSource = new MatTableDataSource<any>(this.collaboratorService.collaborators);
+      this.dataSource = new MatTableDataSource<any>(this.collaboratorService.collaborators)
     });
   }
 

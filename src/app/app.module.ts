@@ -9,11 +9,12 @@ import { NotfoundComponent } from './modules/notfound/notfound.component';
 import { LoginModule } from './layouts/login/login.module';
 import { fakeBackendProvider } from './shared/fakebackend/fakebackend.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { PreviewModule } from './layouts/preview/preview.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NotfoundComponent
+    NotfoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -21,6 +22,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     BrowserAnimationsModule,
     DefaultModule,
     LoginModule,
+    PreviewModule,
     HttpClientModule
   ],
   providers: [

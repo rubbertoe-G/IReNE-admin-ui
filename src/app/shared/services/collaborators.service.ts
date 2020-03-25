@@ -37,7 +37,7 @@ export class CollaboratorsService {
        (response) => {
          this.collaborators.forEach(e => {
            if(e.id === response){
-             e.banned = !e.banned;
+             e.banned = true;
            }
          });
        },
@@ -58,7 +58,7 @@ export class CollaboratorsService {
       (response) => {
         this.collaborators.forEach(e => {
           if(e.id === response){
-            e.banned = !e.banned;
+            e.banned = false;
           }
         });
       }

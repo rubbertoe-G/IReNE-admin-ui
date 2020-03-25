@@ -7,27 +7,37 @@
 
   <table mat-table [dataSource]="dataSource" class="example-container mat-elevation-z8">
 
-    <!-- Position Column -->
-    <ng-container matColumnDef="docId">
-      <th mat-header-cell *matHeaderCellDef> No. </th>
-      <td mat-cell *matCellDef="let element"> {{element.docId}} </td>
+    <!-- id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': isUnpublished(element.published)}">
+        {{element.id}}
+      </td>
     </ng-container>
 
     <!-- Creator Column -->
     <ng-container matColumnDef="creator">
       <th mat-header-cell *matHeaderCellDef> Creator </th>
-      <td mat-cell *matCellDef="let element"> {{element.creator}} </td>
+      <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': isUnpublished(element.published)}"> 
+        {{element.creator}}
+      </td>
     </ng-container>
+
 
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-icon-button style="color: green;">
-          <mat-icon>check</mat-icon>
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': isUnpublished(element.published)}" >
+        <button mat-raised-button color="secondary" (click)="publishDoc(element.id)" *ngIf="!element.published" >
+          RE-PUBLISH
         </button>
-        <button mat-icon-button color="warn">
-          <mat-icon>close</mat-icon>
+        <button mat-raised-button color="warn" 
+          (click)="unpublishDoc(element.id)"
+          *ngIf="element.published">
+          UNPUBLISH
+        </button>
+        <button mat-mini-fab color="primary" (click)="previewDoc(element.id)" style="margin-left: 10px;">
+          <mat-icon>zoom_in</mat-icon>
         </button>
       </td>
     </ng-container>
