@@ -28,7 +28,7 @@ const dbDocuments: DocumentMeta[] = [
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const { url, method, headers, body } = request;
+        const { url, method, headers, body, params } = request;
 
         // wrap in delayed observable to simulate server api call
         return of(null)
@@ -45,6 +45,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return banCollaborator();
                 case url.endsWith('/api/collaborators/unban') && method === 'PUT':
                     return unbanCollaborator();
+                case url.endsWith('api/collaborators/remove') && method === 'PUT':
+                        return removeCollaborator();
                 case url.endsWith('/api/documents') && method === 'GET':
                     return getDocuments();
                 case url.endsWith('/api/documents/publish') && method === 'PUT':
@@ -56,7 +58,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
         }
 
-        // route functions
+        // Collaborators
         function getCollaborators() {
             return ok(collaborators);
         }
@@ -83,6 +85,23 @@ export class FakeBackendInterceptor implements HttpInterceptor {
               return ok(id);
             }
           }
+        }
+
+        function removeCollaborator() {
+            const { id } = body;
+            let removeIndex = -1;
+            for (let index = 0; index < collaborators.length; index++) {
+                const element = collaborators[index];
+                if (element.id === id){
+                   removeIndex = index;
+                }
+            }
+            if(removeIndex >= 0){
+                collaborators.splice(removeIndex, 1);
+                return ok(id);
+            }
+
+            
         }
 
         // Documents

@@ -33,16 +33,7 @@ export class CollaboratorsService {
      const body = {
        collabId: id
      }
-     return this.http.put(`${this.fakeBackend}/collaborators/ban`, body).subscribe(
-       (response) => {
-         this.collaborators.forEach(e => {
-           if(e.id === response){
-             e.banned = true;
-           }
-         });
-       },
-       (error) => console.log(error)
-     );
+     return this.http.put(`${this.fakeBackend}/collaborators/ban`, body);
   }
 
   unbanCollaborator(id: string) {
@@ -54,14 +45,16 @@ export class CollaboratorsService {
     const body = {
       id: id
     }
-    return this.http.put(`${this.fakeBackend}/collaborators/unban`, body).subscribe(
-      (response) => {
-        this.collaborators.forEach(e => {
-          if(e.id === response){
-            e.banned = false;
-          }
-        });
-      }
-    );
+    return this.http.put(`${this.fakeBackend}/collaborators/unban`, body);
+  }
+
+  removeCollaborator(id: string){
+    /**
+     * Remove a collaborator from the system, remember to updateSubscription in the component.
+     */
+    const body = {
+      id: id
+    }
+    return this.http.put(`${this.fakeBackend}/collaborators/remove`, body);
   }
 }

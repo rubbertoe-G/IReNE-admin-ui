@@ -49,10 +49,11 @@
         <button mat-raised-button color="secondary" (click)="unbanCollaborator(element.id)" *ngIf="element.banned">
           UNBAN
         </button>
-        <button mat-icon-button color="warn" 
-          (click)="banCollaborator(element.id)"
-          *ngIf="!element.banned">
-          <mat-icon>close</mat-icon>
+        <button mat-raised-button color="primary" (click)="banCollaborator(element.id)" *ngIf="!element.banned">
+          BAN
+        </button>
+        <button mat-raised-button color="warn" (click)="removeCollaborator(element.id)" style="margin-left: 10px;">
+          REMOVE
         </button>
       </td>
     </ng-container>
