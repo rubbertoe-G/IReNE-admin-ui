@@ -48,13 +48,13 @@ export class CollaboratorsService {
     return this.http.put(`${this.fakeBackend}/collaborators/unban`, body);
   }
 
-  removeCollaborator(id: string){
-    /**
-     * Remove a collaborator from the system, remember to updateSubscription in the component.
-     */
-    const body = {
-      id: id
-    }
-    return this.http.put(`${this.fakeBackend}/collaborators/remove`, body);
-  }
+  // removeCollaborator(id: string){
+  //   /**
+  //    * Remove a collaborator from the system, remember to updateSubscription in the component.
+  //    */
+  //   const body = {
+  //     id: id
+  //   }
+  //   return this.http.put(`${this.fakeBackend}/collaborators/remove`, body);
+  // }
 }

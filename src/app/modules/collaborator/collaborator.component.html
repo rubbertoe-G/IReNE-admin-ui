@@ -45,15 +45,12 @@
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Actions</th>
-      <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': isBanned(element.banned)}" >
-        <button mat-raised-button color="secondary" (click)="unbanCollaborator(element.id)" *ngIf="element.banned">
+      <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': isBanned(element.banned)}">
+        <button mat-raised-button color="secondary" (click)="unbanCollaborator(element.id)" *ngIf="element.banned" style="width: 7em;">
           UNBAN
         </button>
-        <button mat-raised-button color="primary" (click)="banCollaborator(element.id)" *ngIf="!element.banned">
+        <button mat-raised-button color="primary" (click)="banCollaborator(element.id)" *ngIf="!element.banned" style="width: 7em;">
           BAN
-        </button>
-        <button mat-raised-button color="warn" (click)="removeCollaborator(element.id)" style="margin-left: 10px;">
-          REMOVE
         </button>
       </td>
     </ng-container>
