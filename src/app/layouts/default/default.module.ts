@@ -20,9 +20,11 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { CollaboratorsService } from 'src/app/shared/services/collaborators.service';
 import { DocumentsService } from 'src/app/shared/services/documents.service';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -36,6 +38,7 @@ import { DocumentsService } from 'src/app/shared/services/documents.service';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule,
     SharedModule,
     MatSidenavModule,
@@ -48,6 +51,7 @@ import { DocumentsService } from 'src/app/shared/services/documents.service';
     MatInputModule,
     MatFormFieldModule,
     MatSnackBarModule,
+    MatCheckboxModule,
 
     FlexLayoutModule,
   ],

@@ -17,8 +17,10 @@ const collaborators: CollaboratorMeta[] = [
 
 const dbDocuments: DocumentMeta[] = [
     {id: 'tPbl1DyxToy1FUHpfcqn', creator: 'Roberto Guzman', published: false},
-    {id: 'iO0PxjKJY0FwezeVq943', creator: 'Roberto Guzman', published: true},
-    {id: 'VwVIAfAK1qjXwIjUepnd', creator: 'Roberto Guzman', published: true},
+    {id: 'iO0PxjKJY0FwezeVq943', creator: 'Yomar Ruiz', published: true},
+    {id: 'qkdQoXSmnNeMISTmMP4f', creator: 'Alberto Canela', published: false},
+    {id: 'RYTSBZAiwlAG0t8EOb6B', creator: 'Alejandro Vasquez', published: true},
+    {id: 'VzunBYihBS05mpj0U9pP', creator: 'Don Quijote', published: true},
 ];
   
 

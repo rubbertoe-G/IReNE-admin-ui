@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+import { NgxExtendedPdfViewerService } from 'ngx-extended-pdf-viewer';
+import { base64PDF } from './samplePdf';
 @Component({
   selector: 'app-preview',
   templateUrl: './preview.component.html',
@@ -8,8 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PreviewComponent implements OnInit {
 
-  pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
-
+  base64Src = base64PDF;
 
   constructor(
     private route: ActivatedRoute
@@ -18,7 +18,7 @@ export class PreviewComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params =>{
       console.log(params['docId'])
-    })
+    });
   }
 
 }

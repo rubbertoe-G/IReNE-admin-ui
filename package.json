@@ -27,7 +27,7 @@
     "flex-layouts": "^0.5.2",
     "highcharts": "^8.0.4",
     "highcharts-angular": "^2.4.0",
-    "ng2-pdf-viewer": "^6.1.2",
+    "ngx-extended-pdf-viewer": "^2.1.2",
     "rxjs": "~6.5.4",
     "sweetalert2": "^9.10.6",
     "tslib": "^1.10.0",

@@ -13,8 +13,11 @@ import { DocumentMeta } from 'src/app/shared/models/documents.model';
 })
 export class DocumentsComponent implements OnInit {
 
-  dataSource: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<DocumentMeta>;
   displayedColumns: string[] = ['id', 'creator', 'actions'];
+  tempDataSource: MatTableDataSource<DocumentMeta>;
+  checkPublished = false;
+  checkUnpublished = false;
 
   constructor(
     private documentService: DocumentsService,
@@ -24,12 +27,43 @@ export class DocumentsComponent implements OnInit {
   ngOnInit(): void {
     this.documentService.getDocuments().add(() => {
       this.dataSource =  new MatTableDataSource<DocumentMeta>(this.documentService.documents);
+      this.tempDataSource = this.dataSource;
     });
   }
 
-  applyFilter(event: Event) {
+  textFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  filterPublished() {
+    this.checkPublished = !this.checkPublished;
+    if (this.checkPublished && !this.checkUnpublished) {
+      const publishedData = new MatTableDataSource<DocumentMeta>();
+      this.dataSource.data.forEach(e => {
+        if (e.published) {
+          publishedData.data.push(e);
+        }
+      });
+      this.dataSource = publishedData;
+      return;
+    }
+    this.dataSource = this.tempDataSource;
+  }
+
+  filterUnpublished() {
+    this.checkUnpublished = !this.checkUnpublished;
+    if (!this.checkPublished && this.checkUnpublished) {
+      const publishedData = new MatTableDataSource<DocumentMeta>();
+      this.dataSource.data.forEach(e => {
+        if (e.published === false) {
+          publishedData.data.push(e);
+        }
+      });
+      this.dataSource = publishedData;
+      return;
+    }
+    this.dataSource = this.tempDataSource;
   }
 
   isUnpublished(unpublished: boolean) {

@@ -1,2 +1,11 @@
-
-<pdf-viewer [src]="pdfSrc" [render-text]="true" style="display: block;"></pdf-viewer>
+<!-- <mat-card class="distance-16 mat-elevation-z8"> -->
+  <ngx-extended-pdf-viewer
+    [base64Src]="base64Src"
+    backgroundColor="#ffffff"
+    [height]="'90vh'"
+    [useBrowserLocale]="true"
+    [handTool]="false"
+    [showHandToolButton]="true"
+  >
+  </ngx-extended-pdf-viewer>
+<!-- </mat-card> -->

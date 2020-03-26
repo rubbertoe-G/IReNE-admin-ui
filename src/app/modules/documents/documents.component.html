@@ -1,9 +1,13 @@
 <div>
   <mat-form-field appearance="outline">
     <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Roberto">
+    <input matInput (keyup)="textFilter($event)" placeholder="Ex. Roberto ...">
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
+
+  
+  <mat-checkbox style="margin: 10px;" color="primary" (click)="filterPublished()">Published</mat-checkbox>
+  <mat-checkbox style="margin: 10px;" color="primary" (click)="filterUnpublished()">Unpublished</mat-checkbox>
 
   <table mat-table [dataSource]="dataSource" class="example-container mat-elevation-z8">
 

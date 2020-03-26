@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PreviewComponent } from './preview.component';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { MatCardModule } from '@angular/material/card';
 
 
 
@@ -12,7 +13,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
   ],
   imports: [
     CommonModule,
-    PdfViewerModule
+    MatCardModule,
+    NgxExtendedPdfViewerModule
   ]
 })
 export class PreviewModule { }
