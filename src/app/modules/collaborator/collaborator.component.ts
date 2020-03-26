@@ -96,7 +96,7 @@ export class CollaboratorComponent implements OnInit {
       if (result.value){
         this.collaboratorService.removeCollaborator(id).subscribe(
           (response: string) => {
-            this.dataSource._updateChangeSubscription();
+            this.dataSource._updateChangeSubscription(); // updates the data source.
             this.snackBar.open('Collaborator Removed', null, {
               duration: 2000
             });

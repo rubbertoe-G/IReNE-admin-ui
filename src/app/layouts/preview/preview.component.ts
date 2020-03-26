@@ -1,7 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxExtendedPdfViewerService } from 'ngx-extended-pdf-viewer';
-import { base64PDF } from './samplePdf';
+import { base64PDF } from '../../shared/fakebackend/fake-data/samplePdf';
 @Component({
   selector: 'app-preview',
   templateUrl: './preview.component.html',
@@ -9,15 +10,23 @@ import { base64PDF } from './samplePdf';
 })
 export class PreviewComponent implements OnInit {
 
-  base64Src = base64PDF;
+  base64Src = '';
+  fakeBackend = 'http://localhost:4200/api/view'
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params =>{
-      console.log(params['docId'])
+      // use params['docId] to get the docID
+      console.log(params['docId']);
+      this.http.get(this.fakeBackend).subscribe(
+        (response: string) =>{
+          this.base64Src = response;
+        }
+      );
     });
   }
 
