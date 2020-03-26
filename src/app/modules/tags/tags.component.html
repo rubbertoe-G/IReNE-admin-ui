@@ -23,7 +23,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="warn" (click)="removeTag()">
+        <button mat-icon-button color="warn" (click)="removeTag(element)">
           <mat-icon>close</mat-icon>
         </button>
       </td>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import Swal from 'sweetalert2';
 
 export interface TagMeta {
   tagNbr: number;
@@ -34,8 +35,28 @@ export class TagsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  removeTag() {
-    console.log("Tag removed!");
+  removeTag(tag: TagMeta) {
+    Swal.fire({
+      title: 'Delete Tag',
+      text: 'Are you sure you want to delete this tag?',
+      icon: 'warning',
+      showCancelButton: true,
+      showConfirmButton: true,
+      showLoaderOnConfirm: true,
+      confirmButtonColor: 'red',
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Deleted!',
+          text: "The tag has been deleted.",
+          showConfirmButton: false,
+          timer: 1500
+        })
+        let index = this.dataSource.data.indexOf(tag)
+        this.dataSource.data.splice(index, 1);
+        this.dataSource._updateChangeSubscription();
+      }
+    });
   }
-
 }
