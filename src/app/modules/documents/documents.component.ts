@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import Swal from 'sweetalert2';
 
 export interface DocumentMeta {
   docId: number;
@@ -47,4 +48,31 @@ export class DocumentsComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
+  removeDocument(document: DocumentMeta) {
+    Swal.fire({
+      title: 'Delete Document',
+      text: 'Are you sure you want to delete this document?',
+      icon: 'warning',
+      showCancelButton: true,
+      showConfirmButton: true,
+      showLoaderOnConfirm: true,
+      confirmButtonColor: 'red',
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Deleted!',
+          text: "The document has been deleted.",
+          showConfirmButton: false,
+          timer: 1500
+        })
+        let index = this.dataSource.data.indexOf(document)
+        this.dataSource.data.splice(index, 1);
+        this.dataSource._updateChangeSubscription();
+      }
+    });
+  }
+
+
 }
