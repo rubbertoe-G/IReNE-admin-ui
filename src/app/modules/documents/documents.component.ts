@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { DocumentsService } from 'src/app/shared/services/documents.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { DocumentMeta } from 'src/app/shared/models/documents.model';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class DocumentsComponent implements OnInit {
 
   constructor(
     private documentService: DocumentsService,
+    private router: Router,
     private snackBar: MatSnackBar
   ) { }
 
@@ -116,6 +118,7 @@ export class DocumentsComponent implements OnInit {
     });
   }
 
-  previewDoc(id: string) {
+  previewDoc(docId: string) {
+    this.router.navigate([`/preview/${docId}`])
   }
 }

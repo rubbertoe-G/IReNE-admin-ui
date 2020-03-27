@@ -25,6 +25,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CollaboratorsService } from 'src/app/shared/services/collaborators.service';
 import { DocumentsService } from 'src/app/shared/services/documents.service';
 import { FormsModule } from '@angular/forms';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatSnackBarModule,
     MatCheckboxModule,
+    MatTooltipModule,
 
     FlexLayoutModule,
   ],

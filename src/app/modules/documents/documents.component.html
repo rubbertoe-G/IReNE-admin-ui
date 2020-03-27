@@ -40,7 +40,11 @@
           *ngIf="element.published">
           UNPUBLISH
         </button>
-        <button mat-mini-fab color="primary" (click)="previewDoc(element.id)" style="margin-left: 10px;">
+        <button mat-mini-fab color="primary" 
+          (click)="previewDoc(element.id)"
+          matTooltip="Preview Document"
+          matTooltipPosition="right"
+          style="margin-left: 10px;">
           <mat-icon>zoom_in</mat-icon>
         </button>
       </td>

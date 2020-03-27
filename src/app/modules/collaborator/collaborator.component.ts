@@ -83,27 +83,27 @@ export class CollaboratorComponent implements OnInit {
     });
   }
 
-  removeCollaborator(id: string){
-    Swal.fire({
-      title: 'Remove Collaborator',
-      text: 'Are you sure you want to remove this collaborator?',
-      icon: 'warning',
-      showCancelButton: true,
-      showConfirmButton: true,
-      showLoaderOnConfirm: true,
-      confirmButtonColor: 'red',
-    }).then((result) => {
-      if (result.value){
-        this.collaboratorService.removeCollaborator(id).subscribe(
-          (response: string) => {
-            this.dataSource._updateChangeSubscription(); // updates the data source.
-            this.snackBar.open('Collaborator Removed', null, {
-              duration: 2000
-            });
-          }
-        );
-      }
-    });
-  }
+  // removeCollaborator(id: string){
+  //   Swal.fire({
+  //     title: 'Remove Collaborator',
+  //     text: 'Are you sure you want to remove this collaborator?',
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     showConfirmButton: true,
+  //     showLoaderOnConfirm: true,
+  //     confirmButtonColor: 'red',
+  //   }).then((result) => {
+  //     if (result.value){
+  //       this.collaboratorService.removeCollaborator(id).subscribe(
+  //         (response: string) => {
+  //           this.dataSource._updateChangeSubscription();
+  //           this.snackBar.open('Collaborator Removed', null, {
+  //             duration: 2000
+  //           });
+  //         }
+  //       );
+  //     }
+  //   });
+  // }
 
 }
