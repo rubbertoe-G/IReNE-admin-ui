@@ -12,9 +12,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 
-// Angular DIST output folder
+// Angular build output folder
 app.use(express.static(__dirname +'/dist'));
-
 
 // Send requests to the Angular app
 app.get('*', (req, res) => {
@@ -22,9 +21,8 @@ app.get('*', (req, res) => {
 });
 
 
-
 //Set Port
-const port = process.env.PORT || '8080';
+process.env.PORT || '8080';
 app.set('port', port);
 
 const server = http.createServer(app);
