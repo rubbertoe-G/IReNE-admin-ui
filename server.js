@@ -15,7 +15,8 @@ app.use(bodyParser.urlencoded({ extended: false}));
 // Angular build output folder
 app.use(express.static(__dirname +'/dist'));
 
-// Send requests to the Angular app
+// Send requests to the 
+// use '*' so that the system can access all routes in the angular app
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/dist/index.html'));
 });

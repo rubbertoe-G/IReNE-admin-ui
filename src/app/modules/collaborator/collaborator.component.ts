@@ -15,7 +15,7 @@ export class CollaboratorComponent implements OnInit {
 
   // The data to be presented
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'actions'];
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email','banned', 'actions'];
   
   constructor(
     private collaboratorService: CollaboratorsService,

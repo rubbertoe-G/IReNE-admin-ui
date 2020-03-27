@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 export class DocumentsComponent implements OnInit {
 
   dataSource: MatTableDataSource<DocumentMeta>;
-  displayedColumns: string[] = ['id', 'creator', 'actions'];
+  displayedColumns: string[] = ['id', 'creator', 'published', 'actions'];
   tempDataSource: MatTableDataSource<DocumentMeta>;
   checkPublished = false;
   checkUnpublished = false;

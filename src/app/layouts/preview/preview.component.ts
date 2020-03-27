@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxExtendedPdfViewerService } from 'ngx-extended-pdf-viewer';
 import { base64PDF } from '../../shared/fakebackend/fake-data/samplePdf';
+
 @Component({
   selector: 'app-preview',
   templateUrl: './preview.component.html',
@@ -12,6 +13,7 @@ export class PreviewComponent implements OnInit {
 
   base64Src = '';
   fakeBackend = 'http://localhost:4200/api/view'
+  loadingDocument = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,6 +27,10 @@ export class PreviewComponent implements OnInit {
       this.http.get(this.fakeBackend).subscribe(
         (response: string) =>{
           this.base64Src = response;
+          // Simulate long respone
+          setTimeout(() => {
+            this.loadingDocument = !this.loadingDocument;
+          }, 2000);
         }
       );
     });
