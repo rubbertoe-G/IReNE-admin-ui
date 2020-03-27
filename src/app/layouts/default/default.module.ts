@@ -1,5 +1,4 @@
 import { RouterModule } from '@angular/router';
-import { DashboardComponent } from './../../modules/dashboard/dashboard.component';
 import { DefaultComponent } from './default.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -31,7 +30,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   declarations: [
     DefaultComponent,
-    DashboardComponent,
     CollaboratorComponent,
     DocumentsComponent,
     AccessRequestsComponent,
