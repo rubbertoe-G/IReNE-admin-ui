@@ -16,6 +16,7 @@ export class CollaboratorComponent implements OnInit {
   // The data to be presented
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email','banned', 'actions'];
+  inputValue = '';
   
   constructor(
     private collaboratorService: CollaboratorsService,
@@ -40,9 +41,20 @@ export class CollaboratorComponent implements OnInit {
   }
 
   banCollaborator(id: string) {
+
     Swal.fire({
       title: 'Ban Collaborator',
-      text: 'Are you sure you want to ban this collaborator?',
+      text: `Enter the collaborator id to confirm: ${id}`,
+      input: 'text',
+      inputValue: '',
+      inputValidator: (value) =>{
+        if (!value) {
+          return 'No id given.';
+        }
+        if (value !== id) {
+          return 'Invalid id.';
+        }
+      },
       icon: 'warning',
       showCancelButton: true,
       showConfirmButton: true,
@@ -64,7 +76,17 @@ export class CollaboratorComponent implements OnInit {
   unbanCollaborator(id: string){
     Swal.fire({
       title: 'Unban Collaborator',
-      text: 'Are you sure you want to unban this collaborator?',
+      text: `Enter the collaborator id to confirm: ${id}`,
+      input: 'text',
+      inputValue: '',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'No id given.';
+        }
+        if (value !== id) {
+          return 'Invalid id.';
+        }
+      },
       icon: 'warning',
       showCancelButton: true,
       showConfirmButton: true,
@@ -82,28 +104,4 @@ export class CollaboratorComponent implements OnInit {
       }
     });
   }
-
-  // removeCollaborator(id: string){
-  //   Swal.fire({
-  //     title: 'Remove Collaborator',
-  //     text: 'Are you sure you want to remove this collaborator?',
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     showConfirmButton: true,
-  //     showLoaderOnConfirm: true,
-  //     confirmButtonColor: 'red',
-  //   }).then((result) => {
-  //     if (result.value){
-  //       this.collaboratorService.removeCollaborator(id).subscribe(
-  //         (response: string) => {
-  //           this.dataSource._updateChangeSubscription();
-  //           this.snackBar.open('Collaborator Removed', null, {
-  //             duration: 2000
-  //           });
-  //         }
-  //       );
-  //     }
-  //   });
-  // }
-
 }
