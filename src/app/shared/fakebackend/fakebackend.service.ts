@@ -1,3 +1,4 @@
+import { base64PDF } from './fake-data/samplePdf';
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
@@ -53,6 +54,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         return publishDocument();
                 case url.endsWith('/api/documents/unpublish') && method === 'PUT':
                         return unpublishDocument();
+                case url.endsWith('/api/view') && method === 'GET':
+                    return viewDocument();
                 default:
                     return next.handle(request);
             }
@@ -130,6 +133,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return ok(id);
                 }
               }
+        }
+
+        function viewDocument(){
+            return ok(base64PDF);
         }
 
         // helper functions

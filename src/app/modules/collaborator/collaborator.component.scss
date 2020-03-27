@@ -6,3 +6,14 @@
 table {
   width: 100%;
 }
+
+.mat-header-cell {
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.mat-cell {
+  text-align: center;
+  justify-content:center;
+}

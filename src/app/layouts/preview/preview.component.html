@@ -1,5 +1,10 @@
-<!-- <mat-card class="distance-16 mat-elevation-z8"> -->
-  <ngx-extended-pdf-viewer
+<div class="spinner-container" *ngIf="loadingDocument">
+  <mat-spinner></mat-spinner>
+</div>
+
+
+<div *ngIf="!loadingDocument">
+    <ngx-extended-pdf-viewer
     [base64Src]="base64Src"
     backgroundColor="#ffffff"
     [height]="'90vh'"
@@ -7,5 +12,5 @@
     [handTool]="false"
     [showHandToolButton]="true"
   >
-  </ngx-extended-pdf-viewer>
-<!-- </mat-card> -->
+  </ngx-extended-pdf-viewer>  
+</div>
