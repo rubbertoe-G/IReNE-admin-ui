@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import {MatSnackBar} from '@angular/material/snack-bar';
-
-export interface RequestMeta {
-  requestNbr: number;
-  name: string;
-}
+import { RequestMeta } from 'src/app/shared/models/access-requests.model';
 
 const ELEMENT_DATA: RequestMeta[] = [
   {requestNbr: 1, name: 'Roberto Guzman'},

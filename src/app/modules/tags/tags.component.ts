@@ -2,10 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import {MatSnackBar} from '@angular/material/snack-bar';
-export interface TagMeta {
-  tagNbr: number;
-  name: string;
-}
+import { TagMeta } from 'src/app/shared/models/tags.model';
 
 const ELEMENT_DATA: TagMeta[] = [
   {tagNbr: 1, name: 'Electric'},
