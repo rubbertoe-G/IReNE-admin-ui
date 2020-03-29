@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 export interface RequestMeta {
   requestNbr: number;
@@ -34,9 +35,9 @@ const ELEMENT_DATA: RequestMeta[] = [
 export class AccessRequestsComponent implements OnInit {
 
   dataSource = new MatTableDataSource<RequestMeta>(ELEMENT_DATA);
-
+  
   displayedColumns: string[] = ['requestNbr', 'name', 'actions'];
-  constructor() { }
+  constructor(private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -57,14 +58,8 @@ export class AccessRequestsComponent implements OnInit {
       confirmButtonColor: 'red',
     }).then((result) => {
       if (result.value) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Denied!',
-          text: "The access request has been denied.",
-          showConfirmButton: false,
-          timer: 1500
-        })
-        let index = this.dataSource.data.indexOf(request)
+        this.snackBar.open("The access request has been denied.",null,{duration:2000});
+        let index = this.dataSource.data.indexOf(request);
         this.dataSource.data.splice(index, 1);
         this.dataSource._updateChangeSubscription();
       }
@@ -82,14 +77,8 @@ export class AccessRequestsComponent implements OnInit {
       confirmButtonColor: 'green',
     }).then((result) => {
       if (result.value) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Accepted!',
-          text: "The access request has been accepted.",
-          showConfirmButton: false,
-          timer: 1500
-        })
-        let index = this.dataSource.data.indexOf(request)
+        this.snackBar.open("The access request has been accepted.",null,{duration:2000});
+        let index = this.dataSource.data.indexOf(request);
         this.dataSource.data.splice(index, 1);
         this.dataSource._updateChangeSubscription();
       }

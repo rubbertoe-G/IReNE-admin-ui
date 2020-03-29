@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
-
+import {MatSnackBar} from '@angular/material/snack-bar';
 export interface TagMeta {
   tagNbr: number;
   name: string;
@@ -25,7 +25,7 @@ export class TagsComponent implements OnInit {
 
   displayedColumns: string[] = ['tagNbr', 'name', 'actions'];
 
-  constructor() { }
+  constructor(private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -46,14 +46,8 @@ export class TagsComponent implements OnInit {
       confirmButtonColor: 'red',
     }).then((result) => {
       if (result.value) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Deleted!',
-          text: "The tag has been deleted.",
-          showConfirmButton: false,
-          timer: 1500
-        })
-        let index = this.dataSource.data.indexOf(tag)
+        this.snackBar.open("The tag has been removed.",null,{duration:2000});
+        let index = this.dataSource.data.indexOf(tag);
         this.dataSource.data.splice(index, 1);
         this.dataSource._updateChangeSubscription();
       }
