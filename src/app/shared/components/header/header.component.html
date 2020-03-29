@@ -3,15 +3,17 @@
     <button mat-icon-button (click)="toggleSideBar()">
       <mat-icon>menu</mat-icon>
     </button>
-    <span>APP LOGO</span>
+    <span>
+      <img src="assets/app_logo_white.png" alt="IReNE Logo" style="width: 30%;">
+    </span>
     
     <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
       <ul fxLayout="row" fxLayoutGap="20px">
-        <li>
-          <button mat-raised-button matTooltip="Logout" color="secondary">
+          <span>Admin</span>
+          <button mat-raised-button matTooltip="Logout" color="secondary" (click)="logout()">
             Logout
           </button>
-        </li>
+
       </ul>
     </div>
   </mat-toolbar-row>

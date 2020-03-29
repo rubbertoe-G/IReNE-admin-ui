@@ -1,8 +1,10 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PreviewComponent } from './preview.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { MatCardModule } from '@angular/material/card';
 
 
 
@@ -13,7 +15,8 @@ import { MatCardModule } from '@angular/material/card';
   ],
   imports: [
     CommonModule,
-    MatCardModule,
+    HttpClientModule,
+    MatProgressSpinnerModule,
     NgxExtendedPdfViewerModule
   ]
 })
