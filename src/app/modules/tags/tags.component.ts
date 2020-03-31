@@ -3,14 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { TagMeta } from 'src/app/shared/models/tags.model';
-
-const ELEMENT_DATA: TagMeta[] = [
-  {tagNbr: 1, name: 'Electric'},
-  {tagNbr: 2, name: 'Chaldish Gambino'},
-  {tagNbr: 3, name: 'Miss Keesha'},
-  {tagNbr: 4, name: 'Don Quijote'},
-  {tagNbr: 5, name: 'Volatile'},
-];
+import { TagsService } from 'src/app/shared/services/tags.service';
 
 @Component({
   selector: 'app-tags',
@@ -18,13 +11,15 @@ const ELEMENT_DATA: TagMeta[] = [
   styleUrls: ['./tags.component.scss']
 })
 export class TagsComponent implements OnInit {
-  dataSource = new MatTableDataSource<TagMeta>(ELEMENT_DATA);
-
+  dataSource = new MatTableDataSource<TagMeta>();
   displayedColumns: string[] = ['tagNbr', 'name', 'actions'];
 
-  constructor(private snackBar: MatSnackBar) { }
+  constructor( private tagsService: TagsService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.tagsService.getTags().add(() => {
+      this.dataSource = new MatTableDataSource<any>(this.tagsService.tags);
+    });
   }
 
   applyFilter(event: Event) {
@@ -43,10 +38,14 @@ export class TagsComponent implements OnInit {
       confirmButtonColor: 'red',
     }).then((result) => {
       if (result.value) {
-        this.snackBar.open("The tag has been removed.",null,{duration:2000});
-        let index = this.dataSource.data.indexOf(tag);
-        this.dataSource.data.splice(index, 1);
-        this.dataSource._updateChangeSubscription();
+        this.tagsService.removeTag(tag.tagNbr.toString()).subscribe(
+          () => {
+            this.snackBar.open("The tag has been removed.",null,{duration:2000});
+            let index = this.dataSource.data.indexOf(tag);
+            this.dataSource.data.splice(index, 1);
+            this.dataSource._updateChangeSubscription();
+          }
+        );
       }
     });
   }
