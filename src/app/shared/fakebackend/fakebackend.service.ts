@@ -5,6 +5,9 @@ import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import { DocumentMeta } from '../models/documents.model';
 import { CollaboratorMeta } from './../models/collaborators.model';
+import { TagMeta } from './../models/tags.model';
+import { getInterpolationArgsLength } from '@angular/compiler/src/render3/view/util';
+
 
 
 const collaborators: CollaboratorMeta[] = [
@@ -23,6 +26,15 @@ const dbDocuments: DocumentMeta[] = [
     {id: 'RYTSBZAiwlAG0t8EOb6B', creator: 'Alejandro Vasquez', published: true},
     {id: 'VzunBYihBS05mpj0U9pP', creator: 'Don Quijote', published: true},
 ];
+
+const tags: TagMeta[] = [
+    {tagNbr: 1, name: 'Electric'},
+    {tagNbr: 2, name: 'Chaldish Gambino'},
+    {tagNbr: 3, name: 'Miss Keesha'},
+    {tagNbr: 4, name: 'Don Quijote'},
+    {tagNbr: 5, name: 'Volatile'},
+  ];
+  
   
 
 
@@ -40,25 +52,44 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function handleRoute() {
             switch (true) {
-                case url.endsWith('/api/collaborators') && method === 'GET':
+                case url.endsWith('/admin/collaborators') && method === 'GET':
                     return getCollaborators();
-                case url.endsWith('/api/collaborators/ban') && method === 'PUT':
+                case url.endsWith('/admin/collaborators/ban') && method === 'PUT':
                     return banCollaborator();
-                case url.endsWith('/api/collaborators/unban') && method === 'PUT':
+                case url.endsWith('/admin/collaborators/unban') && method === 'PUT':
                     return unbanCollaborator();
-                case url.endsWith('api/collaborators/remove') && method === 'PUT':
+                case url.endsWith('admin/collaborators/remove') && method === 'PUT':
                         return removeCollaborator();
-                case url.endsWith('/api/documents') && method === 'GET':
+                case url.endsWith('/admin/documents') && method === 'GET':
                     return getDocuments();
-                case url.endsWith('/api/documents/publish') && method === 'PUT':
+                case url.endsWith('/admin/documents/publish') && method === 'PUT':
                         return publishDocument();
-                case url.endsWith('/api/documents/unpublish') && method === 'PUT':
+                case url.endsWith('/admin/documents/unpublish') && method === 'PUT':
                         return unpublishDocument();
-                case url.endsWith('/api/view') && method === 'GET':
+                case url.endsWith('/admin/view') && method === 'GET':
                     return viewDocument();
+                case url.endsWith('/admin/tags') && method === 'GET':
+                    return getTags();
+                case url.endsWith('/admin/tags/remove') && method === 'PUT':
+                    return removeTag();
                 default:
                     return next.handle(request);
             }
+        }
+
+        function getTags() {
+            return ok(tags);
+        }
+
+        function removeTag(){
+            const {tagID} = body;
+            for (let index = 0; index < tags.length; index++) {
+              const element = tags[index];
+              if (element.tagNbr.toString() === tagID){
+                  return ok(tagID);
+              }
+            }
+            return error('Something went wrong at /api/collaborators');
         }
 
         // Collaborators

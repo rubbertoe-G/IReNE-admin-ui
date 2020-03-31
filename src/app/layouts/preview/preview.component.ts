@@ -12,7 +12,7 @@ import { base64PDF } from '../../shared/fakebackend/fake-data/samplePdf';
 export class PreviewComponent implements OnInit {
 
   base64Src = '';
-  fakeBackend = 'http://localhost:4200/api/view'
+  fakeBackend = 'http://localhost:4200/admin/view'
   loadingDocument = true;
 
   constructor(
