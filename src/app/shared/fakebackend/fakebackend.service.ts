@@ -6,6 +6,7 @@ import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import { DocumentMeta } from '../models/documents.model';
 import { CollaboratorMeta } from './../models/collaborators.model';
 import { TagMeta } from './../models/tags.model';
+import { RequestMeta } from './../models/access-requests.model';
 import { getInterpolationArgsLength } from '@angular/compiler/src/render3/view/util';
 
 
@@ -34,7 +35,18 @@ const tags: TagMeta[] = [
     {tagNbr: 4, name: 'Don Quijote'},
     {tagNbr: 5, name: 'Volatile'},
   ];
-  
+
+const requests: RequestMeta[] = [
+    {requestNbr: 1, name: 'Sancho Panza'},
+    {requestNbr: 2, name: 'Dulcinea del Toboso'},
+    {requestNbr: 3, name: 'Rocinante'},
+    {requestNbr: 4, name: 'Don Quijote de la Mancha'},
+    {requestNbr: 5, name: 'Roberto Guzman'},
+    {requestNbr: 6, name: 'Yomar Ruiz'},
+    {requestNbr: 7, name: 'Jainel Torres'},
+    {requestNbr: 8, name: 'Alberto Canela'},
+    {requestNbr: 9, name: 'Alejandro Vasquez'},
+  ];
   
 
 
@@ -72,9 +84,41 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getTags();
                 case url.endsWith('/admin/tags/remove') && method === 'PUT':
                     return removeTag();
+                case url.endsWith('/admin/access-requests') && method === 'GET':
+                    return getRequests();
+                case url.endsWith('/admin/access-requests/accept') && method === 'PUT':
+                    return acceptRequest();
+                case url.endsWith('/admin/access-requests/deny') && method === 'PUT':
+                    return denyRequest();
                 default:
                     return next.handle(request);
             }
+        }
+
+        function getRequests() {
+            return ok(requests);
+        }
+
+        function acceptRequest() {
+            const {requestID} = body;
+            for (let index = 0; index < requests.length; index++) {
+              const element = requests[index];
+              if (element.requestNbr.toString() === requestID){
+                  return ok(requestID);
+              }
+            }
+            return error('Something went wrong at /admin/access-requests/accept');
+        }
+
+        function denyRequest() {
+            const {requestID} = body;
+            for (let index = 0; index < requests.length; index++) {
+              const element = requests[index];
+              if (element.requestNbr.toString() === requestID){
+                  return ok(requestID);
+              }
+            }
+            return error('Something went wrong at /admin/access-requests/deny');
         }
 
         function getTags() {
