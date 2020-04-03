@@ -1,14 +1,13 @@
 import { base64PDF } from './fake-data/samplePdf';
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpRequest, HttpErrorResponse, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import { DocumentMeta } from '../models/documents.model';
 import { CollaboratorMeta } from './../models/collaborators.model';
 import { TagMeta } from './../models/tags.model';
 import { RequestMeta } from './../models/access-requests.model';
-import { getInterpolationArgsLength } from '@angular/compiler/src/render3/view/util';
-
+import { AdminMeta } from './../models/admin.model';
 
 
 const collaborators: CollaboratorMeta[] = [
@@ -48,8 +47,11 @@ const requests: RequestMeta[] = [
     {requestNbr: 9, name: 'Alejandro Vasquez'},
   ];
   
+const users: AdminMeta[] = [
+    {username : "admin", password : "password"}
+    ];
 
-
+const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIn0.Xs1l2H7ui_yqE-GlQ2GARQ5ZpjuS8B8xQaooy89Q8y8";
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -90,27 +92,55 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return acceptRequest();
                 case url.endsWith('/admin/access-requests/deny') && method === 'PUT':
                     return denyRequest();
+                    case url.endsWith('/admin/login') && method === 'POST':
+                        return login();
                 default:
                     return next.handle(request);
             }
         }
 
+        function login() {
+            const { username, password } = body;
+            const user = users.find(x => x.username === username && x.password === password);
+            if (!user)
+            {
+                throw new HttpErrorResponse({
+                    statusText: 'Username or password is incorrect.',
+                    status: 401
+                });
+            } 
+            user.token = jwtToken;
+            return ok(user);
+        }
+        
         function getRequests() {
+            if (!isLoggedIn()) 
+                unauthorized();
             return ok(requests);
         }
 
         function acceptRequest() {
+            if (!isLoggedIn()) 
+                unauthorized();
             const {requestID} = body;
             for (let index = 0; index < requests.length; index++) {
               const element = requests[index];
               if (element.requestNbr.toString() === requestID){
-                  return ok(requestID);
+                  return of(new HttpResponse({
+                    statusText: 'Successful deletion.',
+                    status: 200
+                }));
               }
             }
-            return error('Something went wrong at /admin/access-requests/accept');
+            throw new HttpErrorResponse({
+                statusText: 'Something went wrong at /admin/access-requests/accept',
+                status: 500
+            });
         }
 
         function denyRequest() {
+            if (!isLoggedIn()) 
+                unauthorized();
             const {requestID} = body;
             for (let index = 0; index < requests.length; index++) {
               const element = requests[index];
@@ -118,14 +148,21 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                   return ok(requestID);
               }
             }
-            return error('Something went wrong at /admin/access-requests/deny');
+            throw new HttpErrorResponse({
+                statusText: 'Something went wrong at /admin/access-requests/deny',
+                status: 500
+            });
         }
 
         function getTags() {
+            if (!isLoggedIn()) 
+                unauthorized();
             return ok(tags);
         }
 
         function removeTag(){
+            if (!isLoggedIn()) 
+                unauthorized();
             const {tagID} = body;
             for (let index = 0; index < tags.length; index++) {
               const element = tags[index];
@@ -133,15 +170,22 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                   return ok(tagID);
               }
             }
-            return error('Something went wrong at /api/collaborators');
+            throw new HttpErrorResponse({
+                statusText: 'Something went wrong at /api/collaborators',
+                status: 500
+            });
         }
 
         // Collaborators
         function getCollaborators() {
+            if (!isLoggedIn()) 
+                unauthorized();
             return ok(collaborators);
         }
 
         function banCollaborator() {
+            if (!isLoggedIn()) 
+                unauthorized();
             const {collabId} = body;
             for (let index = 0; index < collaborators.length; index++) {
               const element = collaborators[index];
@@ -155,17 +199,21 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function unbanCollaborator() {
-          const {id} = body;
-          for (let index = 0; index < collaborators.length; index++) {
-            const element = collaborators[index];
-            if (element.id === id){
-                element.banned = false;
-              return ok(id);
+            if (!isLoggedIn()) 
+                unauthorized();
+            const {id} = body;
+            for (let index = 0; index < collaborators.length; index++) {
+                const element = collaborators[index];
+                if (element.id === id){
+                    element.banned = false;
+                return ok(id);
+                }
             }
-          }
         }
 
         function removeCollaborator() {
+            if (!isLoggedIn()) 
+                unauthorized();
             const { id } = body;
             let removeIndex = -1;
             for (let index = 0; index < collaborators.length; index++) {
@@ -185,10 +233,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // Documents
 
         function getDocuments() {
+            if (!isLoggedIn()) 
+                unauthorized();
             return ok(dbDocuments);
         }
 
         function publishDocument(){
+            if (!isLoggedIn()) 
+                unauthorized();
             const {id} = body;
             for (let index = 0; index < dbDocuments.length; index++) {
                 const element = dbDocuments[index];
@@ -200,6 +252,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function unpublishDocument(){
+            if (!isLoggedIn()) 
+                unauthorized();
             const {id} = body;
             for (let index = 0; index < dbDocuments.length; index++) {
                 const element = dbDocuments[index];
@@ -211,6 +265,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function viewDocument(){
+            if (!isLoggedIn()) 
+                unauthorized();
             return ok(base64PDF);
         }
 
@@ -221,7 +277,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function unauthorized() {
-            return throwError({ status: 401, error: { message: 'Unauthorised' } });
+            throw new HttpErrorResponse({
+                statusText: 'Forbidden.',
+                status: 403
+            });
         }
 
         function error(message) {
@@ -229,7 +288,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function isLoggedIn() {
-            return headers.get('Authorization') === 'Bearer fake-jwt-token';
+            return headers.get('Authorization') === "Bearer "+jwtToken;
         }
 
         function idFromUrl() {

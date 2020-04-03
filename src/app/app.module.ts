@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
+import { NgModule, ErrorHandler } from '@angular/core';
+import { GlobalErrorHandler } from 'src/app/shared/error-handler';
+import { ServerErrorInterceptor } from 'src/app/shared/error.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,6 +11,8 @@ import { LoginModule } from './layouts/login/login.module';
 import { fakeBackendProvider } from './shared/fakebackend/fakebackend.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PreviewModule } from './layouts/preview/preview.module';
+import { JwtInterceptor } from "src/app/layouts/login/jwt.interceptor"
+import { from } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,9 @@ import { PreviewModule } from './layouts/preview/preview.module';
     HttpClientModule
   ],
   providers: [
-    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptors, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true },
     fakeBackendProvider
   ],
   bootstrap: [AppComponent]
