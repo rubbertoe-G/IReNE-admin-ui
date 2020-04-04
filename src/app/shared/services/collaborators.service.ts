@@ -9,7 +9,7 @@ import { CollaboratorMeta } from '../models/collaborators.model';
 })
 export class CollaboratorsService {
 
-  fakeBackend = 'http://localhost:4200/api';
+  fakeBackend = 'http://localhost:4200/admin';
   collaborators: CollaboratorMeta[];
 
   constructor(private http: HttpClient) { }
