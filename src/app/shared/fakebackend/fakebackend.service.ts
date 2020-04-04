@@ -7,7 +7,7 @@ import { DocumentMeta } from '../models/documents.model';
 import { CollaboratorMeta } from './../models/collaborators.model';
 
 
-const collaborators: CollaboratorMeta[] = [
+const dbCollaborators: CollaboratorMeta[] = [
   {id: 'aq9zI01ORNE9Okyziblp', firstName: 'Roberto', lastName: 'Guzman', email: 'roberto.guzman3@upr.edu', banned: true},
   {id: '66BuIJ0kNTYPDGz405qb', firstName: 'Yomar', lastName: 'Ruiz', email: 'yomar.ruiz@upr.edu', banned: false},
   {id: 'W0SUHONPhPrkrvL3ruxj', firstName: 'Jainel', lastName: 'Torres', email: 'jainel.torrer@upr.edu', banned: false},
@@ -23,7 +23,6 @@ const dbDocuments: DocumentMeta[] = [
     {id: 'RYTSBZAiwlAG0t8EOb6B', creator: 'Alejandro Vasquez', published: true},
     {id: 'VzunBYihBS05mpj0U9pP', creator: 'Don Quijote', published: true},
 ];
-  
 
 
 @Injectable()
@@ -46,8 +45,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return banCollaborator();
                 case url.endsWith('/api/collaborators/unban') && method === 'PUT':
                     return unbanCollaborator();
-                case url.endsWith('api/collaborators/remove') && method === 'PUT':
-                        return removeCollaborator();
                 case url.endsWith('/api/documents') && method === 'GET':
                     return getDocuments();
                 case url.endsWith('/api/documents/publish') && method === 'PUT':
@@ -63,13 +60,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         // Collaborators
         function getCollaborators() {
-            return ok(collaborators);
+            return ok(dbCollaborators);
         }
 
         function banCollaborator() {
             const {collabId} = body;
-            for (let index = 0; index < collaborators.length; index++) {
-              const element = collaborators[index];
+            for (let index = 0; index < dbCollaborators.length; index++) {
+              const element = dbCollaborators[index];
               if (element.id === collabId){
                   element.banned = true;
                 return ok(collabId);
@@ -81,30 +78,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function unbanCollaborator() {
           const {id} = body;
-          for (let index = 0; index < collaborators.length; index++) {
-            const element = collaborators[index];
+          for (let index = 0; index < dbCollaborators.length; index++) {
+            const element = dbCollaborators[index];
             if (element.id === id){
                 element.banned = false;
               return ok(id);
             }
           }
-        }
-
-        function removeCollaborator() {
-            const { id } = body;
-            let removeIndex = -1;
-            for (let index = 0; index < collaborators.length; index++) {
-                const element = collaborators[index];
-                if (element.id === id){
-                   removeIndex = index;
-                }
-            }
-            if(removeIndex >= 0){
-                collaborators.splice(removeIndex, 1);
-                return ok(id);
-            }
-
-            
         }
 
         // Documents
