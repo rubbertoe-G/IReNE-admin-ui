@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 export class DocumentsComponent implements OnInit {
 
   dataSource: MatTableDataSource<DocumentMeta>;
-  displayedColumns: string[] = ['id', 'creator', 'published', 'actions'];
+  displayedColumns: string[] = ['title', 'creator', 'published', 'actions'];
   tempDataSource: MatTableDataSource<DocumentMeta>;
   checkPublished = false;
   checkUnpublished = false;
@@ -75,9 +75,20 @@ export class DocumentsComponent implements OnInit {
   }
 
   publishDoc(id: string) {
+
     Swal.fire({
-      title: 'Publish Document',
-      text: 'Are you sure you want to publish this document?',
+      title: 'Republish Document',
+      text: `Enter the document id to confirm: ${id}`,
+      input: 'text',
+      inputValue: '',
+      inputValidator: (value) =>{
+        if (!value) {
+          return 'No id given.';
+        }
+        if (value !== id) {
+          return 'Invalid id.';
+        }
+      },
       icon: 'warning',
       showCancelButton: true,
       showConfirmButton: true,
@@ -87,11 +98,11 @@ export class DocumentsComponent implements OnInit {
       if (result.value) {
         this.documentService.publishDocument(id).add(
           () => {
-            this.snackBar.open('Document published.', null, {
+            this.snackBar.open('Document Republished', null, {
               duration: 2000
             });
           }
-        )
+        );
       }
     });
   }
@@ -99,7 +110,17 @@ export class DocumentsComponent implements OnInit {
   unpublishDoc(id: string) {
     Swal.fire({
       title: 'Unpublish Document',
-      text: 'Are you sure you want to unpublish this document?',
+      text: `Enter the document id to confirm: ${id}`,
+      input: 'text',
+      inputValue: '',
+      inputValidator: (value) =>{
+        if (!value) {
+          return 'No id given.';
+        }
+        if (value !== id) {
+          return 'Invalid id.';
+        }
+      },
       icon: 'warning',
       showCancelButton: true,
       showConfirmButton: true,
@@ -109,7 +130,7 @@ export class DocumentsComponent implements OnInit {
       if (result.value) {
         this.documentService.unpublishDocument(id).add(
           () => {
-            this.snackBar.open('Document unpublished.', null, {
+            this.snackBar.open('Document Unpublished', null, {
               duration: 2000
             });
           }
