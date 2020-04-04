@@ -1,5 +1,4 @@
 import { RouterModule } from '@angular/router';
-import { DashboardComponent } from './../../modules/dashboard/dashboard.component';
 import { DefaultComponent } from './default.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -11,7 +10,6 @@ import { MatCardModule } from '@angular/material/card';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
-import { DashboardService } from 'src/app/modules/dashboard.service';
 import { CollaboratorComponent } from 'src/app/modules/collaborator/collaborator.component';
 import { DocumentsComponent } from 'src/app/modules/documents/documents.component';
 import { AccessRequestsComponent } from 'src/app/modules/access-requests/access-requests.component';
@@ -31,7 +29,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   declarations: [
     DefaultComponent,
-    DashboardComponent,
     CollaboratorComponent,
     DocumentsComponent,
     AccessRequestsComponent,
@@ -58,7 +55,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     FlexLayoutModule,
   ],
   providers: [
-    DashboardService,
     CollaboratorsService,
     DocumentsService
   ]

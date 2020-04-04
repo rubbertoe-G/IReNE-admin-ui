@@ -12,20 +12,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatListModule} from '@angular/material/list';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { AreaComponent } from './widgets/area/area.component';
-import { HighchartsChartModule } from 'highcharts-angular';
-import { CardComponent } from './widgets/card/card.component';
-import { PieComponent } from './widgets/pie/pie.component';
+
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
     SidebarComponent,
-    FooterComponent,
-    AreaComponent,
-    CardComponent,
-    PieComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +31,6 @@ import { PieComponent } from './widgets/pie/pie.component';
     MatMenuModule,
     MatListModule,
     MatTooltipModule,
-    HighchartsChartModule,
 
 
     
@@ -46,10 +39,7 @@ import { PieComponent } from './widgets/pie/pie.component';
   exports: [
     HeaderComponent,
     SidebarComponent,
-    FooterComponent,
-    AreaComponent,
-    CardComponent,
-    PieComponent
+    FooterComponent
   ]
 })
 export class SharedModule { }

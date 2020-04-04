@@ -48,6 +48,13 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/collaborators';
   }
 
+  // Run login if user pressed enter on form
+  keyDownLogin(e: KeyboardEvent){
+    if(e.keyCode == 13){
+      this.login()
+    }
+  }
+
   login(){
     this.submitted = true;
     this.loading = true;
@@ -55,12 +62,16 @@ export class LoginComponent implements OnInit {
         .pipe(first())
         .subscribe(
           data => {
+            // Simulate long request
+            setTimeout(() => {
               this.router.navigate([this.returnUrl]);
+            }, 1500);
           },
           error => {
-              this.incorrectFields = true;
-              //this.loginForm.reset()
-              throw error;
+            this.loading = false
+            this.incorrectFields = true;
+            //this.loginForm.reset()
+            throw error;
           });
   }
   

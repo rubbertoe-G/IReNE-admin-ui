@@ -14,16 +14,27 @@ import { AuthGuard } from './shared/authentication/auth.guard';
 const routes: Routes = [
   { path: '', component: DefaultComponent,
     children: [
-     // { path: '', redirectTo: '/collaborators', pathMatch: 'full' },
+      // { path: '', redirectTo: '/collaborators', pathMatch: 'full' },
       { path: '', component: CollaboratorComponent, canActivate: [AuthGuard] },
       { path: 'collaborators', component: CollaboratorComponent, canActivate: [AuthGuard]},
       { path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard] },
       { path: 'access-requests', component: AccessRequestsComponent, canActivate: [AuthGuard] },
       { path: 'tags', component: TagsComponent, canActivate: [AuthGuard] }
     ]},
-    {path: 'preview/:docId', component: PreviewComponent, canActivate: [AuthGuard]},
-    { path: 'login', component: LoginComponent },
-    { path: '**', component: NotfoundComponent }
+
+    { 
+      path: 'preview/:docId',
+      component: PreviewComponent, canActivate: [AuthGuard]
+    },
+
+    { 
+      path: 'login', 
+      component: LoginComponent 
+    },
+
+    { 
+      path: '**', component: NotfoundComponent
+    }
   ];
 
 @NgModule({
