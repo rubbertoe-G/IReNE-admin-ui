@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { CollaboratorsService } from 'src/app/shared/services/collaborators.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { CollaboratorMeta } from 'src/app/shared/models/collaborators.model';
 
 
 @Component({
@@ -14,9 +15,13 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class CollaboratorComponent implements OnInit {
 
   // The data to be presented
-  dataSource = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<CollaboratorMeta>();
+  tempDataSource: MatTableDataSource<CollaboratorMeta>;
+
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email','banned', 'actions'];
   inputValue = '';
+  checkBanned = false;
+  checkUnbanned = false;
   
   constructor(
     private collaboratorService: CollaboratorsService,
@@ -25,7 +30,8 @@ export class CollaboratorComponent implements OnInit {
 
   ngOnInit(): void {
     this.collaboratorService.getCollaborators().add(() => {
-      this.dataSource = new MatTableDataSource<any>(this.collaboratorService.collaborators);
+      this.dataSource = new MatTableDataSource<CollaboratorMeta>(this.collaboratorService.collaborators);
+      this.tempDataSource = this.dataSource;
     });
   }
 
@@ -40,26 +46,56 @@ export class CollaboratorComponent implements OnInit {
     }
   }
 
-  banCollaborator(id: string) {
+  filterBanned() {
+    this.checkUnbanned = false;
+    if (this.checkBanned && !this.checkUnbanned) {
+      const publishedData = new MatTableDataSource<CollaboratorMeta>();
+      this.tempDataSource.data.forEach(e => {
+        if (e.banned === true) {
+          publishedData.data.push(e);
+        }
+      });
+      this.dataSource = publishedData;
+      return;
+    }
+    this.dataSource = this.tempDataSource;
+  }
+
+  filterUnbanned() {
+    this.checkBanned = false;
+    if (!this.checkBanned && this.checkUnbanned) {
+      const publishedData = new MatTableDataSource<CollaboratorMeta>();
+      this.tempDataSource.data.forEach(e => {
+        if (e.banned === false) {
+          publishedData.data.push(e);
+        }
+      });
+      this.dataSource = publishedData;
+      return;
+    }
+    this.dataSource = this.tempDataSource;
+  }
+
+
+  banCollaborator(id: string, email: string) {
 
     Swal.fire({
       title: 'Ban Collaborator',
-      text: `Enter the collaborator id to confirm: ${id}`,
+      text: `Enter password to ban collaborator with email: "${email}"`,
       input: 'text',
       inputValue: '',
       inputValidator: (value) =>{
         if (!value) {
           return 'No id given.';
         }
-        if (value !== id) {
-          return 'Invalid id.';
-        }
       },
       icon: 'warning',
       showCancelButton: true,
       showConfirmButton: true,
       showLoaderOnConfirm: true,
-      confirmButtonColor: 'red',
+      confirmButtonText: 'Confirm',
+      confirmButtonColor: 'green',
+      cancelButtonColor: 'black'
     }).then((result) => {
       if (result.value) {
         this.collaboratorService.banCollaborator(id).subscribe(
@@ -73,25 +109,24 @@ export class CollaboratorComponent implements OnInit {
     });
   }
 
-  unbanCollaborator(id: string){
+  unbanCollaborator(id: string, email: string){
     Swal.fire({
       title: 'Unban Collaborator',
-      text: `Enter the collaborator id to confirm: ${id}`,
+      text: `Enter password to unban collaborator with email: "${email}"`,
       input: 'text',
       inputValue: '',
       inputValidator: (value) => {
         if (!value) {
-          return 'No id given.';
-        }
-        if (value !== id) {
-          return 'Invalid id.';
+          return 'No password given.';
         }
       },
       icon: 'warning',
       showCancelButton: true,
       showConfirmButton: true,
       showLoaderOnConfirm: true,
-      confirmButtonColor: 'red',
+      confirmButtonText: 'Confirm',
+      confirmButtonColor: 'green',
+      cancelButtonColor: 'black',
     }).then((result) => {
       if (result.value){
         this.collaboratorService.unbanCollaborator(id).subscribe(

@@ -37,13 +37,13 @@ export class DocumentsComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
+  
   filterPublished() {
-    this.checkPublished = !this.checkPublished;
+    this.checkUnpublished = false;
     if (this.checkPublished && !this.checkUnpublished) {
       const publishedData = new MatTableDataSource<DocumentMeta>();
-      this.dataSource.data.forEach(e => {
-        if (e.published) {
+      this.tempDataSource.data.forEach(e => {
+        if (e.published === true) {
           publishedData.data.push(e);
         }
       });
@@ -54,10 +54,10 @@ export class DocumentsComponent implements OnInit {
   }
 
   filterUnpublished() {
-    this.checkUnpublished = !this.checkUnpublished;
+    this.checkPublished = false;
     if (!this.checkPublished && this.checkUnpublished) {
       const publishedData = new MatTableDataSource<DocumentMeta>();
-      this.dataSource.data.forEach(e => {
+      this.tempDataSource.data.forEach(e => {
         if (e.published === false) {
           publishedData.data.push(e);
         }
@@ -74,26 +74,29 @@ export class DocumentsComponent implements OnInit {
     }
   }
 
-  publishDoc(id: string) {
+  publishDoc(id: string, title: string) {
 
     Swal.fire({
       title: 'Republish Document',
-      text: `Enter the document id to confirm: ${id}`,
-      input: 'text',
+      text: `Enter password to confirm republishiing of document: "${title}"`,
+      input: 'password',
+      inputPlaceholder:'password',
       inputValue: '',
       inputValidator: (value) =>{
         if (!value) {
-          return 'No id given.';
+          return 'Paswword field empty';
         }
-        if (value !== id) {
-          return 'Invalid id.';
-        }
+        // if (value ) {
+        //   return 'Invalid id.';
+        // }
       },
       icon: 'warning',
       showCancelButton: true,
       showConfirmButton: true,
       showLoaderOnConfirm: true,
-      confirmButtonColor: 'red',
+      confirmButtonText: 'Confirm',
+      confirmButtonColor: 'green',
+      cancelButtonColor: 'black',
     }).then((result) => {
       if (result.value) {
         this.documentService.publishDocument(id).add(
@@ -107,25 +110,27 @@ export class DocumentsComponent implements OnInit {
     });
   }
 
-  unpublishDoc(id: string) {
+  unpublishDoc(id: string, title: string) {
     Swal.fire({
       title: 'Unpublish Document',
-      text: `Enter the document id to confirm: ${id}`,
+      text: `Enter password to confirm republishiing of document: "${title}"`,
       input: 'text',
       inputValue: '',
       inputValidator: (value) =>{
         if (!value) {
-          return 'No id given.';
+          return 'Paswword field empty';
         }
-        if (value !== id) {
-          return 'Invalid id.';
-        }
+      //   if (value !== id) {
+      //     return 'Invalid id.';
+      //   }
       },
       icon: 'warning',
       showCancelButton: true,
       showConfirmButton: true,
       showLoaderOnConfirm: true,
-      confirmButtonColor: 'red',
+      confirmButtonText: 'Confirm',
+      confirmButtonColor: 'green',
+      cancelButtonColor: 'black',
     }).then((result) => {
       if (result.value) {
         this.documentService.unpublishDocument(id).add(
