@@ -29,14 +29,12 @@ table {
   height: 60px;
 }
 
-.center-header-content {
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  // font-size: medium;
-}
-
 .center-cell {
   text-align: center;
   justify-content:center;
+}
+
+.header-color-size{
+  font-size: medium;
+  color: black;
 }

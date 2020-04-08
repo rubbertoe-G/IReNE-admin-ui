@@ -48,7 +48,7 @@
 
     <!-- Banned Status Column -->
     <ng-container matColumnDef="banned">
-      <th class="center-header-content header-color-size" mat-header-cell *matHeaderCellDef>Banned</th>
+      <th class="center-cell header-color-size" mat-header-cell *matHeaderCellDef>Banned</th>
       <td class="center-cell" mat-cell *matCellDef="let element"> 
         <p *ngIf="element.banned">Yes</p>
         <p *ngIf="!element.banned">No</p>
@@ -57,7 +57,7 @@
 
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
-      <th class="center-header-content header-color-size" mat-header-cell *matHeaderCellDef>Actions</th>
+      <th class="center-cell header-color-size" mat-header-cell *matHeaderCellDef>Actions</th>
       <td class="center-cell" mat-cell *matCellDef="let element">
         <button mat-raised-button color="primary" 
           (click)="unbanCollaborator(element.id, element.email)" 

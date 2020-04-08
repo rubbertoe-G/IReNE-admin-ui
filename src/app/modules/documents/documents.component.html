@@ -16,7 +16,7 @@
 
     <!-- title Column -->
     <ng-container matColumnDef="title">
-      <th style="font-size: medium; color: black;" mat-header-cell *matHeaderCellDef> Title </th>
+      <th class="header-color-size" mat-header-cell *matHeaderCellDef> Title </th>
       <td mat-cell *matCellDef="let element" > 
         {{(element.title.length > 80)? (element.title | slice:0:80) + '...':(element.title)}}
       </td>
@@ -24,7 +24,7 @@
 
     <!-- Creator Column -->
     <ng-container matColumnDef="creator">
-      <th style="font-size: medium; color: black;" mat-header-cell *matHeaderCellDef> Creator </th>
+      <th class="header-color-size" mat-header-cell *matHeaderCellDef> Creator </th>
       <td mat-cell *matCellDef="let element" > 
         {{element.creator}}
       </td>
@@ -32,7 +32,7 @@
 
     <!-- Published Status Column -->
     <ng-container matColumnDef="published">
-      <th class="center-header-content" style="font-size: medium; color: black;" mat-header-cell *matHeaderCellDef> Published </th>
+      <th class="center-cell header-color-size"  mat-header-cell *matHeaderCellDef> Published </th>
       <td class="center-cell" mat-cell *matCellDef="let element" > 
         <p *ngIf="element.published">Yes</p>
         <p *ngIf="!element.published">No</p>
@@ -42,7 +42,7 @@
 
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
-      <th class="center-header-content" style="font-size: medium; color: black;" mat-header-cell *matHeaderCellDef>Actions</th>
+      <th class="center-cell header-color-size" mat-header-cell *matHeaderCellDef>Actions</th>
       <td class="center-cell" mat-cell *matCellDef="let element" >
         <button mat-raised-button color="primary"
           *ngIf="!element.published" 
@@ -54,10 +54,9 @@
           (click)="unpublishDoc(element.id, element.title)">
           UNPUBLISH
         </button>
-        <button mat-mini-fab color="primary" 
+        <button mat-icon-button color="primary" 
           (click)="previewDoc(element.id)"
           matTooltip="Preview Document"
-          matTooltipPosition="right"
           style="margin-left: 10px;">
           <mat-icon>visibility</mat-icon>
         </button>
