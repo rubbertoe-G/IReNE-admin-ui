@@ -9,22 +9,22 @@
   </mat-form-field>
 
   
-  <mat-checkbox style="margin: 10px;" color="primary" (click)="filterPublished()">Published</mat-checkbox>
-  <mat-checkbox style="margin: 10px;" color="primary" (click)="filterUnpublished()">Unpublished</mat-checkbox>
+  <mat-checkbox style="margin: 10px;" color="primary" (change)="filterPublished()" [(ngModel)]="checkPublished">Published</mat-checkbox>
+  <mat-checkbox style="margin: 10px;" color="primary" (change)="filterUnpublished()" [(ngModel)]="checkUnpublished">Unpublished</mat-checkbox>
 
   <table mat-table [dataSource]="dataSource" class="example-container mat-elevation-z8">
 
-    <!-- id Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> Id </th>
-      <td mat-cell *matCellDef="let element" >
-        {{element.id}}
+    <!-- title Column -->
+    <ng-container matColumnDef="title">
+      <th style="font-size: medium; color: black;" mat-header-cell *matHeaderCellDef> Title </th>
+      <td mat-cell *matCellDef="let element" > 
+        {{(element.title.length > 80)? (element.title | slice:0:80) + '...':(element.title)}}
       </td>
     </ng-container>
 
     <!-- Creator Column -->
     <ng-container matColumnDef="creator">
-      <th mat-header-cell *matHeaderCellDef> Creator </th>
+      <th style="font-size: medium; color: black;" mat-header-cell *matHeaderCellDef> Creator </th>
       <td mat-cell *matCellDef="let element" > 
         {{element.creator}}
       </td>
@@ -32,8 +32,8 @@
 
     <!-- Published Status Column -->
     <ng-container matColumnDef="published">
-      <th mat-header-cell *matHeaderCellDef> Published </th>
-      <td mat-cell *matCellDef="let element" > 
+      <th class="center-header-content" style="font-size: medium; color: black;" mat-header-cell *matHeaderCellDef> Published </th>
+      <td class="center-cell" mat-cell *matCellDef="let element" > 
         <p *ngIf="element.published">Yes</p>
         <p *ngIf="!element.published">No</p>
       </td>
@@ -42,14 +42,16 @@
 
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Actions</th>
-      <td mat-cell *matCellDef="let element" >
-        <button mat-raised-button color="primary" (click)="publishDoc(element.id)" *ngIf="!element.published" >
+      <th class="center-header-content" style="font-size: medium; color: black;" mat-header-cell *matHeaderCellDef>Actions</th>
+      <td class="center-cell" mat-cell *matCellDef="let element" >
+        <button mat-raised-button color="primary"
+          *ngIf="!element.published" 
+          (click)="publishDoc(element.id, element.title)">
           RE-PUBLISH
         </button>
-        <button mat-raised-button color="warn" 
-          (click)="unpublishDoc(element.id)"
-          *ngIf="element.published">
+        <button mat-raised-button color="warn"
+          *ngIf="element.published" 
+          (click)="unpublishDoc(element.id, element.title)">
           UNPUBLISH
         </button>
         <button mat-mini-fab color="primary" 
@@ -57,7 +59,7 @@
           matTooltip="Preview Document"
           matTooltipPosition="right"
           style="margin-left: 10px;">
-          <mat-icon>zoom_in</mat-icon>
+          <mat-icon>visibility</mat-icon>
         </button>
       </td>
     </ng-container>

@@ -10,24 +10,40 @@
     <mat-card class="login-card">
       <mat-card-content class="login-content">
         <img src="assets/app_logo.png" alt="IReNE Logo" style="width: 30%;">
-        <form>
-          <mat-form-field appearance="outline" style="width: 32em;">
-            <mat-label>Username</mat-label>
-            <!-- <input matInput placeholder="Username" [(ngModel)]="username" name="username" required> -->
-            <input matInput required>
-            <mat-icon matSuffix>perm_identity</mat-icon>
-          </mat-form-field>
-
+        <div *ngIf="!loading">
+          <div [style.display]="incorrectFields ? 'block' : 'none'" style="color: red;">The username and password you entered did not match our records.</div>
           <br>
+          <form
+          [formGroup]="loginForm"
+          (ngSubmit)="login()"
+          (keydown)="keyDownLogin($event)"
+          >
+            <mat-form-field appearance="outline" style="width: 32em;">
+              <mat-label>Username</mat-label>
+              <input matInput
+              formControlName="username"
+              id="username"
+              name="username"
+              placeholder="Username" required>
+              
+              <mat-icon matSuffix>perm_identity</mat-icon>
+            </mat-form-field>
+            
+            <br>
 
-          <mat-form-field appearance="outline" style="width: 32em;">
-            <mat-label>Password</mat-label>
-            <!-- <input matInput placeholder="Password" [(ngModel)]="password"type="password" name="password" required> -->
-            <input matInput placeholder="Password" required>
-            <mat-icon matSuffix>lock</mat-icon>
-          </mat-form-field>
-        </form>
-        <!-- <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner> -->
+            <mat-form-field appearance="outline" style="width: 32em;">
+              
+              <mat-label>Password</mat-label>
+              <input matInput
+              formControlName="password"
+              name="password"
+              placeholder="Password" type="password" required>
+              <mat-icon matSuffix>lock</mat-icon>
+            </mat-form-field>
+          </form>
+        </div>
+        
+        <mat-spinner *ngIf="loading"></mat-spinner>
       </mat-card-content>
 
       <mat-card-actions class="login-actions">
@@ -36,7 +52,8 @@
         <button mat-raised-button 
           color="primary" 
           style="width: 32em;"
-          (click)="toDashboard()">
+          [disabled]="!loginForm.valid"
+          (click)="login()">
             Login
           </button>
       </mat-card-actions>

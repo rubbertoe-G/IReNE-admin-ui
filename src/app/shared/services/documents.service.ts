@@ -7,7 +7,7 @@ import { DocumentMeta } from '../models/documents.model';
   providedIn: 'root'
 })
 export class DocumentsService {
-  fakeBackend = 'http://localhost:4200/api';
+  fakeBackend = 'http://localhost:4200/admin';
 
   documents: DocumentMeta[];
 

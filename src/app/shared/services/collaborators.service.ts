@@ -9,7 +9,7 @@ import { CollaboratorMeta } from '../models/collaborators.model';
 })
 export class CollaboratorsService {
 
-  fakeBackend = 'http://localhost:4200/api';
+  fakeBackend = 'http://localhost:4200/admin';
   collaborators: CollaboratorMeta[];
 
   constructor(private http: HttpClient) { }
@@ -29,7 +29,6 @@ export class CollaboratorsService {
      * Ban one collaborator from the database using the collaborator id.
      */
 
-     // TODO: Update the view model on success request.
      const body = {
        collabId: id
      }

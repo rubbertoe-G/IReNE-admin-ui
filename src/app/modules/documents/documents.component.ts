@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 export class DocumentsComponent implements OnInit {
 
   dataSource: MatTableDataSource<DocumentMeta>;
-  displayedColumns: string[] = ['id', 'creator', 'published', 'actions'];
+  displayedColumns: string[] = ['title', 'creator', 'published', 'actions'];
   tempDataSource: MatTableDataSource<DocumentMeta>;
   checkPublished = false;
   checkUnpublished = false;
@@ -37,13 +37,13 @@ export class DocumentsComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
+  
   filterPublished() {
-    this.checkPublished = !this.checkPublished;
+    this.checkUnpublished = false;
     if (this.checkPublished && !this.checkUnpublished) {
       const publishedData = new MatTableDataSource<DocumentMeta>();
-      this.dataSource.data.forEach(e => {
-        if (e.published) {
+      this.tempDataSource.data.forEach(e => {
+        if (e.published === true) {
           publishedData.data.push(e);
         }
       });
@@ -54,10 +54,10 @@ export class DocumentsComponent implements OnInit {
   }
 
   filterUnpublished() {
-    this.checkUnpublished = !this.checkUnpublished;
+    this.checkPublished = false;
     if (!this.checkPublished && this.checkUnpublished) {
       const publishedData = new MatTableDataSource<DocumentMeta>();
-      this.dataSource.data.forEach(e => {
+      this.tempDataSource.data.forEach(e => {
         if (e.published === false) {
           publishedData.data.push(e);
         }
@@ -74,42 +74,68 @@ export class DocumentsComponent implements OnInit {
     }
   }
 
-  publishDoc(id: string) {
+  publishDoc(id: string, title: string) {
+
     Swal.fire({
-      title: 'Publish Document',
-      text: 'Are you sure you want to publish this document?',
+      title: 'Republish Document',
+      text: `Enter password to confirm republishiing of document: "${title}"`,
+      input: 'password',
+      inputPlaceholder:'password',
+      inputValue: '',
+      inputValidator: (value) =>{
+        if (!value) {
+          return 'Paswword field empty';
+        }
+        // if (value ) {
+        //   return 'Invalid id.';
+        // }
+      },
       icon: 'warning',
       showCancelButton: true,
       showConfirmButton: true,
       showLoaderOnConfirm: true,
-      confirmButtonColor: 'red',
+      confirmButtonText: 'Confirm',
+      confirmButtonColor: 'green',
+      cancelButtonColor: 'black',
     }).then((result) => {
       if (result.value) {
         this.documentService.publishDocument(id).add(
           () => {
-            this.snackBar.open('Document published.', null, {
+            this.snackBar.open('Document Republished', null, {
               duration: 2000
             });
           }
-        )
+        );
       }
     });
   }
 
-  unpublishDoc(id: string) {
+  unpublishDoc(id: string, title: string) {
     Swal.fire({
       title: 'Unpublish Document',
-      text: 'Are you sure you want to unpublish this document?',
+      text: `Enter password to confirm republishiing of document: "${title}"`,
+      input: 'text',
+      inputValue: '',
+      inputValidator: (value) =>{
+        if (!value) {
+          return 'Paswword field empty';
+        }
+      //   if (value !== id) {
+      //     return 'Invalid id.';
+      //   }
+      },
       icon: 'warning',
       showCancelButton: true,
       showConfirmButton: true,
       showLoaderOnConfirm: true,
-      confirmButtonColor: 'red',
+      confirmButtonText: 'Confirm',
+      confirmButtonColor: 'green',
+      cancelButtonColor: 'black',
     }).then((result) => {
       if (result.value) {
         this.documentService.unpublishDocument(id).add(
           () => {
-            this.snackBar.open('Document unpublished.', null, {
+            this.snackBar.open('Document Unpublished', null, {
               duration: 2000
             });
           }

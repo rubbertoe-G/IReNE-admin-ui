@@ -7,6 +7,17 @@ table {
   width: 100%;
 }
 
+.header-cell-title {
+  flex-direction: column;
+  justify-content: left;
+  text-align: left;
+}
+
+.cell-title{
+  text-align: left;
+  justify-content:left;
+}
+
 .spacer {
   flex: 1 1 auto;
 }
@@ -18,13 +29,14 @@ table {
   height: 60px;
 }
 
-.mat-header-cell {
+.center-header-content {
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  // font-size: medium;
 }
 
-.mat-cell {
+.center-cell {
   text-align: center;
   justify-content:center;
 }
