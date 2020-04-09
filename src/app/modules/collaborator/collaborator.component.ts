@@ -18,7 +18,7 @@ export class CollaboratorComponent implements OnInit {
   dataSource = new MatTableDataSource<CollaboratorMeta>();
   tempDataSource: MatTableDataSource<CollaboratorMeta>;
 
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email','banned', 'actions'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'email','banned', 'actions'];
   inputValue = '';
   checkBanned = false;
   checkUnbanned = false;
@@ -33,6 +33,7 @@ export class CollaboratorComponent implements OnInit {
       this.dataSource = new MatTableDataSource<CollaboratorMeta>(this.collaboratorService.collaborators);
       this.tempDataSource = this.dataSource;
     });
+    console.log(window.location.port)
   }
 
   applyFilter(event: Event) {
@@ -81,8 +82,9 @@ export class CollaboratorComponent implements OnInit {
 
     Swal.fire({
       title: 'Ban Collaborator',
-      text: `Enter password to ban collaborator with email: "${email}"`,
-      input: 'text',
+      text: `Enter admin password to ban collaborator with email: "${email}"`,
+      input: 'password',
+      inputPlaceholder:'password',
       inputValue: '',
       inputValidator: (value) =>{
         if (!value) {
@@ -98,10 +100,10 @@ export class CollaboratorComponent implements OnInit {
       cancelButtonColor: 'black'
     }).then((result) => {
       if (result.value) {
-        this.collaboratorService.banCollaborator(id).subscribe(
+        this.collaboratorService.banCollaborator(id).add(
           () => {
             this.snackBar.open('Collaborator Banned', null, {
-              duration: 2000
+              duration: 3000
             });
           }
         );
@@ -112,8 +114,9 @@ export class CollaboratorComponent implements OnInit {
   unbanCollaborator(id: string, email: string){
     Swal.fire({
       title: 'Unban Collaborator',
-      text: `Enter password to unban collaborator with email: "${email}"`,
-      input: 'text',
+      text: `Enter administrator password to unban collaborator with email: "${email}"`,
+      input: 'password',
+      inputPlaceholder:'password',
       inputValue: '',
       inputValidator: (value) => {
         if (!value) {
@@ -129,10 +132,10 @@ export class CollaboratorComponent implements OnInit {
       cancelButtonColor: 'black',
     }).then((result) => {
       if (result.value){
-        this.collaboratorService.unbanCollaborator(id).subscribe(
+        this.collaboratorService.unbanCollaborator(id).add(
           () => {
             this.snackBar.open('Collaborator Unbanned', null, {
-              duration: 2000
+              duration: 3000
             });
           }
         );

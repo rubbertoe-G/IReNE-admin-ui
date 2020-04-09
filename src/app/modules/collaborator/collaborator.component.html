@@ -11,70 +11,72 @@
     <mat-checkbox style="margin: 10px;" color="primary" (change)="filterBanned()" [(ngModel)]="checkBanned">Banned</mat-checkbox>
     <mat-checkbox style="margin: 10px;" color="primary" (change)="filterUnbanned()" [(ngModel)]="checkUnbanned">Unbanned</mat-checkbox>
   </div>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="example-container mat-elevation-z8">
+
+      <!-- id Column -->
+      <!-- <ng-container matColumnDef="id">
+        <th class="header-color-size" mat-header-cell *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let element" >
+          {{element.id}}
+        </td>
+      </ng-container> -->
   
-  <table mat-table [dataSource]="dataSource" class="example-container mat-elevation-z8">
-
-    <!-- id Column -->
-    <ng-container matColumnDef="id">
-      <th class="header-color-size" mat-header-cell *matHeaderCellDef> Id </th>
-      <td mat-cell *matCellDef="let element" >
-        {{element.id}}
-      </td>
-    </ng-container>
-
-    <!-- First Name Column -->
-    <ng-container matColumnDef="firstName">
-      <th class="header-color-size" mat-header-cell *matHeaderCellDef> First Name </th>
-      <td mat-cell *matCellDef="let element"> 
-        {{element.firstName}}
-      </td>
-    </ng-container>
-
-    <!-- Last Name Column -->
-    <ng-container matColumnDef="lastName">
-      <th class="header-color-size" mat-header-cell *matHeaderCellDef> Last Name </th>
-      <td mat-cell *matCellDef="let element"> 
-        {{element.lastName}}
-      </td>
-    </ng-container>
-
-    <!-- Email Column -->
-    <ng-container matColumnDef="email">
-      <th class="header-color-size" mat-header-cell *matHeaderCellDef>Email</th>
-      <td mat-cell *matCellDef="let element"> 
-        {{element.email}} 
-      </td>
-    </ng-container>
-
-    <!-- Banned Status Column -->
-    <ng-container matColumnDef="banned">
-      <th class="center-cell header-color-size" mat-header-cell *matHeaderCellDef>Banned</th>
-      <td class="center-cell" mat-cell *matCellDef="let element"> 
-        <p *ngIf="element.banned">Yes</p>
-        <p *ngIf="!element.banned">No</p>
-      </td>
-    </ng-container>
-
-    <!-- Actions Column -->
-    <ng-container matColumnDef="actions">
-      <th class="center-cell header-color-size" mat-header-cell *matHeaderCellDef>Actions</th>
-      <td class="center-cell" mat-cell *matCellDef="let element">
-        <button mat-raised-button color="primary" 
-          (click)="unbanCollaborator(element.id, element.email)" 
-          *ngIf="element.banned" 
-          style="width: 7em;">
-          UNBAN
-        </button>
-        <button mat-raised-button color="warn" 
-          (click)="banCollaborator(element.id, element.email)" 
-          *ngIf="!element.banned" 
-          style="width: 7em;">
-          BAN
-        </button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+      <!-- First Name Column -->
+      <ng-container matColumnDef="firstName">
+        <th class="header-color-size" mat-header-cell *matHeaderCellDef> First Name </th>
+        <td mat-cell *matCellDef="let element"> 
+          {{element.firstName}}
+        </td>
+      </ng-container>
+  
+      <!-- Last Name Column -->
+      <ng-container matColumnDef="lastName">
+        <th class="header-color-size" mat-header-cell *matHeaderCellDef> Last Name </th>
+        <td mat-cell *matCellDef="let element"> 
+          {{element.lastName}}
+        </td>
+      </ng-container>
+  
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <th class="header-color-size" mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element"> 
+          {{element.email}} 
+        </td>
+      </ng-container>
+  
+      <!-- Banned Status Column -->
+      <ng-container matColumnDef="banned">
+        <th class="center-cell header-color-size" mat-header-cell *matHeaderCellDef>Banned</th>
+        <td class="center-cell" mat-cell *matCellDef="let element"> 
+          <p *ngIf="element.banned">Yes</p>
+          <p *ngIf="!element.banned">No</p>
+        </td>
+      </ng-container>
+  
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th class="center-cell header-color-size" mat-header-cell *matHeaderCellDef>Actions</th>
+        <td class="center-cell" mat-cell *matCellDef="let element">
+          <button mat-raised-button color="primary" 
+            (click)="unbanCollaborator(element.id, element.email)" 
+            *ngIf="element.banned" 
+            style="width: 7em;">
+            UNBAN
+          </button>
+          <button mat-raised-button color="warn" 
+            (click)="banCollaborator(element.id, element.email)" 
+            *ngIf="!element.banned" 
+            style="width: 7em;">
+            BAN
+          </button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
 </div>

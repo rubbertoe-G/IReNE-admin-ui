@@ -3,9 +3,15 @@
   overflow: auto;
 }
 
+.table-container{
+  height: 35em;
+  overflow: auto;
+}
+
 table {
   width: 100%;
 }
+
 
 .header-cell-title {
   flex-direction: column;

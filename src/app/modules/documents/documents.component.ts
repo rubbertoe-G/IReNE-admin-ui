@@ -78,7 +78,7 @@ export class DocumentsComponent implements OnInit {
 
     Swal.fire({
       title: 'Republish Document',
-      text: `Enter password to confirm republishiing of document: "${title}"`,
+      text: `Enter password to confirm republishing of document: "${title}"`,
       input: 'password',
       inputPlaceholder:'password',
       inputValue: '',
@@ -114,7 +114,8 @@ export class DocumentsComponent implements OnInit {
     Swal.fire({
       title: 'Unpublish Document',
       text: `Enter password to confirm republishiing of document: "${title}"`,
-      input: 'text',
+      input: 'password',
+      inputPlaceholder:'password',
       inputValue: '',
       inputValidator: (value) =>{
         if (!value) {
