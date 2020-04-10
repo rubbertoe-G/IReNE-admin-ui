@@ -26,7 +26,7 @@ export class DocumentsService {
        (response: DocumentMeta[]) => {
          this.documents = response;
        },
-       (error) => {throw Error('ERROR: Unable to get documents.');}
+       (error) => {throw Error('ERROR: Unable to retrieve documents.');}
      );
   }
 
@@ -37,6 +37,9 @@ export class DocumentsService {
     const body = {
       id: id
     };
+
+    if(environment.testErrors)
+      body.id = '-123'
 
     return this.http.put(`${this.fakeBackend}/documents/publish`, body).subscribe(
       (response) => {
