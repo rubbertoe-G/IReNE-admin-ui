@@ -36,15 +36,12 @@ const tags: TagMeta[] = [
   ];
 
 const requests: RequestMeta[] = [
-    {requestNbr: 1, name: 'Sancho Panza'},
-    {requestNbr: 2, name: 'Dulcinea del Toboso'},
-    {requestNbr: 3, name: 'Rocinante'},
-    {requestNbr: 4, name: 'Don Quijote de la Mancha'},
-    {requestNbr: 5, name: 'Roberto Guzman'},
-    {requestNbr: 6, name: 'Yomar Ruiz'},
-    {requestNbr: 7, name: 'Jainel Torres'},
-    {requestNbr: 8, name: 'Alberto Canela'},
-    {requestNbr: 9, name: 'Alejandro Vasquez'},
+  {id: 'aq9zI01ORNE9Okyziblp', firstName: 'Sancho', lastName: 'Panza', email: 'sancho.panza@upr.edu', banned: true},
+  {id: '66BuIJ0kNTYPDGz405qb', firstName: 'Dulcinea', lastName: 'del Toboso', email: 'dulcinea.deltoboso@upr.edu', banned: false},
+  {id: 'W0SUHONPhPrkrvL3ruxj', firstName: 'Quijote', lastName: 'de la Mancha', email: 'quijote.delamancha@upr.edu', banned: false},
+  {id: 'zOHEzUyIKZB3LsAiu2Kb', firstName: 'Dante', lastName: 'Alighieri', email: 'dante.alighieri@upr.edu', banned: false},
+  {id: '9XIu1jT96A5qz1Kpl90R', firstName: 'William', lastName: 'shakespeare', email: 'william.shakespeare@upr.edu', banned: false},
+  {id: 'jEFgdhchAjyVhJikg17s', firstName: 'Friedrich', lastName: 'Nietzsche', email: 'friedrich.nietzsche@upr.edu', banned: false}
   ];
   
 const users: AdminMeta[] = [
@@ -125,7 +122,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             const {requestID} = body;
             for (let index = 0; index < requests.length; index++) {
               const element = requests[index];
-              if (element.requestNbr.toString() === requestID){
+              if (element.id.toString() === requestID){
                   return of(new HttpResponse({
                     statusText: 'Successful deletion.',
                     status: 200
@@ -144,7 +141,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             const {requestID} = body;
             for (let index = 0; index < requests.length; index++) {
               const element = requests[index];
-              if (element.requestNbr.toString() === requestID){
+              if (element.id.toString() === requestID){
                   return ok(requestID);
               }
             }
