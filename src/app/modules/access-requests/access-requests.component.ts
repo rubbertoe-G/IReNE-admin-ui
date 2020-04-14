@@ -15,7 +15,7 @@ export class AccessRequestsComponent implements OnInit {
 
   dataSource = new MatTableDataSource<RequestMeta>();
   
-  displayedColumns: string[] = ['requestNbr', 'name', 'actions'];
+  displayedColumns: string[] = ['requestNbr', 'name', 'email','actions'];
   constructor(private requestsService: AccessRequestsService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
@@ -37,10 +37,11 @@ export class AccessRequestsComponent implements OnInit {
       showCancelButton: true,
       showConfirmButton: true,
       showLoaderOnConfirm: true,
-      confirmButtonColor: 'red',
+      confirmButtonColor: 'green',
+      cancelButtonColor: 'black',
     }).then((result) => {
       if (result.value) {
-        this.requestsService.denyRequest(request.requestNbr.toString()).subscribe(
+        this.requestsService.denyRequest(request.id.toString()).subscribe(
           () => {
             this.snackBar.open("The access request has been denied.",null,{duration:2000});
             let index = this.dataSource.data.indexOf(request);
@@ -61,9 +62,10 @@ export class AccessRequestsComponent implements OnInit {
       showConfirmButton: true,
       showLoaderOnConfirm: true,
       confirmButtonColor: 'green',
+      cancelButtonColor: 'black',
     }).then((result) => {
       if (result.value) {
-        this.requestsService.acceptRequest(request.requestNbr.toString()).subscribe(
+        this.requestsService.acceptRequest(request.id.toString()).subscribe(
           () => {
             this.snackBar.open("The access request has been accepted.",null,{duration:2000});
             let index = this.dataSource.data.indexOf(request);
