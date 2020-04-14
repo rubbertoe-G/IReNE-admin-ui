@@ -31,11 +31,11 @@ const dbDocuments: DocumentMeta[] = [
 ];
 
 const tags: TagMeta[] = [
-    {tagNbr: 1, name: 'Electric'},
-    {tagNbr: 2, name: 'Chaldish Gambino'},
-    {tagNbr: 3, name: 'Miss Keesha'},
-    {tagNbr: 4, name: 'Don Quijote'},
-    {tagNbr: 5, name: 'Volatile'},
+    {tagNbr: 'ak9zI01ORNE9Okyziblp', name: 'Electric'},
+    {tagNbr: '67BuIJ1kNTYPDGz405qb', name: 'Chaldish Gambino'},
+    {tagNbr: 'L1TUHONPhPrkrvL3ruxj', name: 'Miss Keesha'},
+    {tagNbr: 'yOHEzUyQKZB3LsAiu2Kb', name: 'Don Quijote'},
+    {tagNbr: 'uIXgdhchAjyVhJikg17s', name: 'Volatile'},
   ];
 
 const requests: RequestMeta[] = [

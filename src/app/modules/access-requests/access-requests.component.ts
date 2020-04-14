@@ -15,7 +15,7 @@ export class AccessRequestsComponent implements OnInit {
 
   dataSource = new MatTableDataSource<RequestMeta>();
   
-  displayedColumns: string[] = ['requestNbr', 'name', 'email','actions'];
+  displayedColumns: string[] = ['requestNbr', 'firstName', 'lastName', 'email','actions'];
   constructor(private requestsService: AccessRequestsService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
