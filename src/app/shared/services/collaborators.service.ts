@@ -29,7 +29,6 @@ export class CollaboratorsService {
      * Ban one collaborator from the database using the collaborator id.
      */
 
-     // TODO: Update the view model on success request.
      const body = {
        collabId: id
      }

@@ -10,7 +10,10 @@ import { RequestMeta } from './../models/access-requests.model';
 import { AdminMeta } from './../models/admin.model';
 
 
-const collaborators: CollaboratorMeta[] = [
+// const dbAdmin: AdminMeta[] = {
+// }
+
+const dbCollaborators: CollaboratorMeta[] = [
   {id: 'aq9zI01ORNE9Okyziblp', firstName: 'Roberto', lastName: 'Guzman', email: 'roberto.guzman3@upr.edu', banned: true},
   {id: '66BuIJ0kNTYPDGz405qb', firstName: 'Yomar', lastName: 'Ruiz', email: 'yomar.ruiz@upr.edu', banned: false},
   {id: 'W0SUHONPhPrkrvL3ruxj', firstName: 'Jainel', lastName: 'Torres', email: 'jainel.torrer@upr.edu', banned: false},
@@ -20,11 +23,11 @@ const collaborators: CollaboratorMeta[] = [
 ];
 
 const dbDocuments: DocumentMeta[] = [
-    {id: 'tPbl1DyxToy1FUHpfcqn', creator: 'Roberto Guzman', published: false},
-    {id: 'iO0PxjKJY0FwezeVq943', creator: 'Yomar Ruiz', published: true},
-    {id: 'qkdQoXSmnNeMISTmMP4f', creator: 'Alberto Canela', published: false},
-    {id: 'RYTSBZAiwlAG0t8EOb6B', creator: 'Alejandro Vasquez', published: true},
-    {id: 'VzunBYihBS05mpj0U9pP', creator: 'Don Quijote', published: true},
+    {id: 'tPbl1DyxToy1FUHpfcqn', title:'La gran inundacion del 2010.', creator: 'Roberto Guzman', published: false},
+    {id: 'iO0PxjKJY0FwezeVq943', title:'Temblores de 2020: Causa y Efecto.', creator: 'Yomar Ruiz', published: true},
+    {id: 'qkdQoXSmnNeMISTmMP4f', title:'Huracán Maria: 5 años despues.', creator: 'Alberto Canela', published: false},
+    {id: 'RYTSBZAiwlAG0t8EOb6B', title:'Inestabilidad Ferroviaria: Análisis técnico y monetario.', creator: 'Alejandro Vasquez', published: true},
+    {id: 'VzunBYihBS05mpj0U9pP', title:'Otro caso de estudio, en verdad que me cansé.', creator: 'Don Quijote', published: true},
 ];
 
 const tags: TagMeta[] = [
@@ -177,15 +180,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function getCollaborators() {
             if (!isLoggedIn()) 
                 unauthorized();
-            return ok(collaborators);
+            return ok(dbCollaborators);
         }
 
         function banCollaborator() {
             if (!isLoggedIn()) 
                 unauthorized();
             const {collabId} = body;
-            for (let index = 0; index < collaborators.length; index++) {
-              const element = collaborators[index];
+            for (let index = 0; index < dbCollaborators.length; index++) {
+              const element = dbCollaborators[index];
               if (element.id === collabId){
                   element.banned = true;
                 return ok(collabId);
@@ -199,8 +202,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             if (!isLoggedIn()) 
                 unauthorized();
             const {id} = body;
-            for (let index = 0; index < collaborators.length; index++) {
-                const element = collaborators[index];
+            for (let index = 0; index < dbCollaborators.length; index++) {
+                const element = dbCollaborators[index];
                 if (element.id === id){
                     element.banned = false;
                 return ok(id);
@@ -213,14 +216,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 unauthorized();
             const { id } = body;
             let removeIndex = -1;
-            for (let index = 0; index < collaborators.length; index++) {
-                const element = collaborators[index];
+            for (let index = 0; index < dbCollaborators.length; index++) {
+                const element = dbCollaborators[index];
                 if (element.id === id){
                    removeIndex = index;
                 }
             }
             if(removeIndex >= 0){
-                collaborators.splice(removeIndex, 1);
+                dbCollaborators.splice(removeIndex, 1);
                 return ok(id);
             }
 

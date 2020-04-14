@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
         const currentUser = this.authenticationService.currentUserValue;
         console.log(currentUser);
         if (currentUser) {
-            console.log("True AUTH");
+            // TODO: Perform http request to validate the token in the database
             return true;
         }
         console.log("False AUTH");

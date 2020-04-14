@@ -25,10 +25,6 @@ export class DocumentsService {
      );
   }
 
-  getDocumentById(id: string) {
-    return;
-  }
-
   publishDocument(id: string) {
     /**
      * Set a document to be published.

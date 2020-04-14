@@ -36,14 +36,23 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-        username: new FormControl('', 
-        [
+      username: new FormControl('', [
           Validators.required,
           ForbiddenUsernameValidator()
         ]),
-        password: new FormControl('', [Validators.required])
+      password: new FormControl('', [
+          Validators.required
+        ])
     });
+
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/collaborators';
+  }
+
+  // Run login if user pressed enter on form
+  keyDownLogin(e: KeyboardEvent){
+    if(e.keyCode == 13){
+      this.login()
+    }
   }
 
   login(){
@@ -52,14 +61,18 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password)
         .pipe(first())
         .subscribe(
-            data => {
-                this.router.navigate([this.returnUrl]);
-            },
-            error => {
-                this.incorrectFields = true;
-                //this.loginForm.reset()
-                throw error;
-            });
+          data => {
+            // Simulate long request
+            setTimeout(() => {
+              this.router.navigate([this.returnUrl]);
+            }, 1500);
+          },
+          error => {
+            this.loading = false
+            this.incorrectFields = true;
+            //this.loginForm.reset()
+            throw error;
+          });
   }
   
   toDashboard() {

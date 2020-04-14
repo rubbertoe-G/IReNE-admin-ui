@@ -11,7 +11,7 @@ import { LoginModule } from './layouts/login/login.module';
 import { fakeBackendProvider } from './shared/fakebackend/fakebackend.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PreviewModule } from './layouts/preview/preview.module';
-import { JwtInterceptor } from "src/app/layouts/login/jwt.interceptor"
+import { JwtInterceptor } from "src/app/shared/authentication/jwt.interceptor"
 import { from } from 'rxjs';
 
 @NgModule({

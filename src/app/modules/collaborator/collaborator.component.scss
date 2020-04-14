@@ -7,13 +7,18 @@ table {
   width: 100%;
 }
 
-.mat-header-cell {
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
+.header-color-size{
+  font-size: medium;
+  color: black;
 }
 
-.mat-cell {
+.center-header-content {
+  justify-content: center;
+  text-align: center;
+  // font-size: medium;
+}
+
+.center-cell {
   text-align: center;
   justify-content:center;
 }
