@@ -1,26 +1,39 @@
-import { LoginComponent } from './layouts/login/login.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
+import { NgModule, ErrorHandler } from '@angular/core';
+import { GlobalErrorHandler } from 'src/app/shared/error-handler';
+import { ServerErrorInterceptor } from 'src/app/shared/error.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DefaultModule } from './layouts/default/default.module';
 import { NotfoundComponent } from './modules/notfound/notfound.component';
+import { LoginModule } from './layouts/login/login.module';
+import { fakeBackendProvider } from './shared/fakebackend/fakebackend.service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { PreviewModule } from './layouts/preview/preview.module';
+import { JwtInterceptor } from "src/app/shared/authentication/jwt.interceptor"
+import { from } from 'rxjs';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    NotfoundComponent
+    NotfoundComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    DefaultModule
+    DefaultModule,
+    LoginModule,
+    PreviewModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true },
+    fakeBackendProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

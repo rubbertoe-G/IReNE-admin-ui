@@ -1,29 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 
-export interface CollaboratorMeta {
-  collabId: number;
-  name: string;
-}
-
-const ELEMENT_DATA: CollaboratorMeta[] = [
-  {collabId: 1, name: 'Roberto Guzman'},
-  {collabId: 2, name: 'Roberto Guzman'},
-  {collabId: 3, name: 'Roberto Guzman'},
-  {collabId: 4, name: 'Roberto Guzman'},
-  {collabId: 5, name: 'Roberto Guzman'},
-  {collabId: 6, name: 'Roberto Guzman'},
-  {collabId: 7, name: 'Roberto Guzman'},
-  {collabId: 8, name: 'Roberto Guzman'},
-  {collabId: 9, name: 'Roberto Guzman'},
-  {collabId: 10, name: 'Roberto Guzman'},
-  {collabId: 11, name: 'Roberto Guzman'},
-  {collabId: 12, name: 'Roberto Guzman'},
-  {collabId: 13, name: 'Roberto Guzman'},
-  {collabId: 14, name: 'Roberto Guzman'},
-
-
-];
+import Swal from 'sweetalert2';
+import { CollaboratorsService } from 'src/app/shared/services/collaborators.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { CollaboratorMeta } from 'src/app/shared/models/collaborators.model';
 
 
 @Component({
@@ -33,13 +14,25 @@ const ELEMENT_DATA: CollaboratorMeta[] = [
 })
 export class CollaboratorComponent implements OnInit {
 
-  dataSource = new MatTableDataSource<CollaboratorMeta>(ELEMENT_DATA);
+  // The data to be presented
+  dataSource = new MatTableDataSource<CollaboratorMeta>();
+  tempDataSource: MatTableDataSource<CollaboratorMeta>;
 
-  displayedColumns: string[] = ['collabId', 'name', 'actions'];
-
-  constructor() { }
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email','banned', 'actions'];
+  inputValue = '';
+  checkBanned = false;
+  checkUnbanned = false;
+  
+  constructor(
+    private collaboratorService: CollaboratorsService,
+    private snackBar: MatSnackBar
+    ) { }
 
   ngOnInit(): void {
+    this.collaboratorService.getCollaborators().add(() => {
+      this.dataSource = new MatTableDataSource<CollaboratorMeta>(this.collaboratorService.collaborators);
+      this.tempDataSource = this.dataSource;
+    });
   }
 
   applyFilter(event: Event) {
@@ -47,4 +40,103 @@ export class CollaboratorComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  isBanned(banned: boolean) {
+    if (banned) {
+      return 'salmon';
+    }
+  }
+
+  filterBanned() {
+    this.checkUnbanned = false;
+    if (this.checkBanned && !this.checkUnbanned) {
+      const publishedData = new MatTableDataSource<CollaboratorMeta>();
+      this.tempDataSource.data.forEach(e => {
+        if (e.banned === true) {
+          publishedData.data.push(e);
+        }
+      });
+      this.dataSource = publishedData;
+      return;
+    }
+    this.dataSource = this.tempDataSource;
+  }
+
+  filterUnbanned() {
+    this.checkBanned = false;
+    if (!this.checkBanned && this.checkUnbanned) {
+      const publishedData = new MatTableDataSource<CollaboratorMeta>();
+      this.tempDataSource.data.forEach(e => {
+        if (e.banned === false) {
+          publishedData.data.push(e);
+        }
+      });
+      this.dataSource = publishedData;
+      return;
+    }
+    this.dataSource = this.tempDataSource;
+  }
+
+
+  banCollaborator(id: string, email: string) {
+
+    Swal.fire({
+      title: 'Ban Collaborator',
+      text: `Enter password to ban collaborator with email: "${email}"`,
+      input: 'text',
+      inputValue: '',
+      inputValidator: (value) =>{
+        if (!value) {
+          return 'No id given.';
+        }
+      },
+      icon: 'warning',
+      showCancelButton: true,
+      showConfirmButton: true,
+      showLoaderOnConfirm: true,
+      confirmButtonText: 'Confirm',
+      confirmButtonColor: 'green',
+      cancelButtonColor: 'black'
+    }).then((result) => {
+      if (result.value) {
+        this.collaboratorService.banCollaborator(id).subscribe(
+          () => {
+            this.snackBar.open('Collaborator Banned', null, {
+              duration: 2000
+            });
+          }
+        );
+      }
+    });
+  }
+
+  unbanCollaborator(id: string, email: string){
+    Swal.fire({
+      title: 'Unban Collaborator',
+      text: `Enter password to unban collaborator with email: "${email}"`,
+      input: 'text',
+      inputValue: '',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'No password given.';
+        }
+      },
+      icon: 'warning',
+      showCancelButton: true,
+      showConfirmButton: true,
+      showLoaderOnConfirm: true,
+      confirmButtonText: 'Confirm',
+      confirmButtonColor: 'green',
+      cancelButtonColor: 'black',
+    }).then((result) => {
+      if (result.value){
+        this.collaboratorService.unbanCollaborator(id).subscribe(
+          () => {
+            this.snackBar.open('Collaborator Unbanned', null, {
+              duration: 2000
+            });
+          }
+        );
+      }
+    });
+  }
 }
