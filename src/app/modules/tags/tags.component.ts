@@ -35,7 +35,8 @@ export class TagsComponent implements OnInit {
       showCancelButton: true,
       showConfirmButton: true,
       showLoaderOnConfirm: true,
-      confirmButtonColor: 'red',
+      confirmButtonColor: 'green',
+      cancelButtonColor: 'black',
     }).then((result) => {
       if (result.value) {
         this.tagsService.removeTag(tag.tagNbr.toString()).subscribe(
