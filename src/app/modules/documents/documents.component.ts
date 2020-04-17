@@ -75,8 +75,13 @@ export class DocumentsComponent implements OnInit {
     }
   }
 
+  /**
+   * 
+   * 
+   * @param id the id of the document.
+   * @param title the title of the document.
+   */
   publishDoc(id: string, title: string) {
-
     Swal.fire({
       title: 'Republish Document',
       text: `Enter password to confirm republishing of document: "${title}"`,
@@ -85,11 +90,8 @@ export class DocumentsComponent implements OnInit {
       inputValue: '',
       inputValidator: (value) =>{
         if (!value) {
-          return 'Paswword field empty';
+          return 'Password field empty';
         }
-        // if (value ) {
-        //   return 'Invalid id.';
-        // }
       },
       icon: 'warning',
       showCancelButton: true,
@@ -111,6 +113,12 @@ export class DocumentsComponent implements OnInit {
     });
   }
 
+  /**
+   * Set a document to be unpublised.
+   * 
+   * @param id the id of the document.
+   * @param title the title of the document.
+   */
   unpublishDoc(id: string, title: string) {
     Swal.fire({
       title: 'Unpublish Document',
@@ -120,11 +128,8 @@ export class DocumentsComponent implements OnInit {
       inputValue: '',
       inputValidator: (value) =>{
         if (!value) {
-          return 'Paswword field empty';
+          return 'Password field empty';
         }
-      //   if (value !== id) {
-      //     return 'Invalid id.';
-      //   }
       },
       icon: 'warning',
       showCancelButton: true,

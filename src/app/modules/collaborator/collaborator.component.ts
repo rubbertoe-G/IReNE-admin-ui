@@ -31,9 +31,13 @@ export class CollaboratorComponent implements OnInit {
   inputValue = '';
   
   /**
-   * 
+   * Hold the state value of the "Banned" checkbox.
    */
   checkBanned = false;
+
+  /**
+   * Hold the state value of the "Unbanned" checkbox.
+   */
   checkUnbanned = false;
   
   constructor(
@@ -54,7 +58,7 @@ export class CollaboratorComponent implements OnInit {
   /**
    * Filters the table information based on the filter event value.
    * 
-   * @param event the search input event
+   * @param event the search input event.
    */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -80,7 +84,7 @@ export class CollaboratorComponent implements OnInit {
   }
 
   /**
-   * Filters the table information with the unbanned collaborators.
+   * Filters the table information with the unbanned collaborators. 
    */
   filterUnbanned() {
     this.checkBanned = false;
@@ -99,7 +103,7 @@ export class CollaboratorComponent implements OnInit {
 
 
   /**
-   * Ban a collaborator.
+   * Ban a collaborator. Perform http request to ban a specific collaborator using the collaborator id.
    * 
    * @param id the id of the collaborator to be banned.
    * @param email the email of the collaborator to be banned.
@@ -138,7 +142,7 @@ export class CollaboratorComponent implements OnInit {
 
 
   /**
-   * 
+   * Unban a collaborator. Perform http request to unban a specific collaborator using the collaborator id.
    * 
    * @param id the id of the collaborator.
    * @param email the email of the collaborator.
