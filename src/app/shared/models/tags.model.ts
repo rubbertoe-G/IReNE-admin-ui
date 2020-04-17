@@ -1,4 +1,4 @@
 export interface TagMeta {
-    tagNbr: number;
+    tagNbr: string;
     name: string;
   }

@@ -1,4 +1,7 @@
 export interface RequestMeta {
-    requestNbr: number;
-    name: string;
-  }
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  banned: boolean;
+}
