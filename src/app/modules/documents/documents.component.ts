@@ -5,6 +5,7 @@ import { DocumentsService } from 'src/app/shared/services/documents.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { DocumentMeta } from 'src/app/shared/models/documents.model';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -78,7 +79,7 @@ export class DocumentsComponent implements OnInit {
 
     Swal.fire({
       title: 'Republish Document',
-      text: `Enter password to confirm republishiing of document: "${title}"`,
+      text: `Enter password to confirm republishing of document: "${title}"`,
       input: 'password',
       inputPlaceholder:'password',
       inputValue: '',
@@ -114,7 +115,8 @@ export class DocumentsComponent implements OnInit {
     Swal.fire({
       title: 'Unpublish Document',
       text: `Enter password to confirm republishiing of document: "${title}"`,
-      input: 'text',
+      input: 'password',
+      inputPlaceholder:'password',
       inputValue: '',
       inputValidator: (value) =>{
         if (!value) {
@@ -145,6 +147,8 @@ export class DocumentsComponent implements OnInit {
   }
 
   previewDoc(docId: string) {
+    if(environment.testErrors)
+      throw Error('ERROR: Unable to preview document.')
     this.router.navigate([`/preview/${docId}`])
   }
 }

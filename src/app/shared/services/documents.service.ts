@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DocumentMeta } from '../models/documents.model';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -11,7 +12,10 @@ export class DocumentsService {
 
   documents: DocumentMeta[];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    if(environment.testErrorBackend) 
+      this.fakeBackend = 'http://idontexist';
+  }
 
   getDocuments() {
     /**
@@ -21,7 +25,8 @@ export class DocumentsService {
      return this.http.get(`${this.fakeBackend}/documents`).subscribe(
        (response: DocumentMeta[]) => {
          this.documents = response;
-       }
+       },
+       (error) => {throw Error('ERROR: Unable to retrieve documents.');}
      );
   }
 
@@ -33,6 +38,9 @@ export class DocumentsService {
       id: id
     };
 
+    if(environment.testErrors)
+      body.id = '-123'
+
     return this.http.put(`${this.fakeBackend}/documents/publish`, body).subscribe(
       (response) => {
         this.documents.forEach(e => {
@@ -40,7 +48,8 @@ export class DocumentsService {
             e.published = true;
           }
         });
-      }
+      },
+      (error) => {throw Error('ERROR: Unable to publish document.'); }
     );
 
   }
@@ -53,6 +62,9 @@ export class DocumentsService {
       id: id
     };
 
+    if(environment.testErrors)
+      body.id = '-123'
+
     return this.http.put(`${this.fakeBackend}/documents/unpublish`, body).subscribe(
       (response) => {
         this.documents.forEach(e => {
@@ -60,7 +72,8 @@ export class DocumentsService {
             e.published = false;
           }
         });
-      }
+      },
+      (error) => {throw Error('ERROR: Unable to unpublish document.');}
     );
 
   }

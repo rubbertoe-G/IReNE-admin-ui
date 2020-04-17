@@ -4,4 +4,5 @@ export interface CollaboratorMeta {
   lastName: string;
   email: string;
   banned: boolean;
+  approved: boolean;
 }

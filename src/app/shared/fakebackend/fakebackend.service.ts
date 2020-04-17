@@ -8,27 +8,13 @@ import { CollaboratorMeta } from './../models/collaborators.model';
 import { TagMeta } from './../models/tags.model';
 import { RequestMeta } from './../models/access-requests.model';
 import { AdminMeta } from './../models/admin.model';
+import {fakeCollaborators} from './fake-data/fake-collaborators';
+import { fakeDocuments } from './fake-data/fake-documents';
 
 
-// const dbAdmin: AdminMeta[] = {
-// }
+const dbCollaborators = fakeCollaborators;
 
-const dbCollaborators: CollaboratorMeta[] = [
-  {id: 'aq9zI01ORNE9Okyziblp', firstName: 'Roberto', lastName: 'Guzman', email: 'roberto.guzman3@upr.edu', banned: true},
-  {id: '66BuIJ0kNTYPDGz405qb', firstName: 'Yomar', lastName: 'Ruiz', email: 'yomar.ruiz@upr.edu', banned: false},
-  {id: 'W0SUHONPhPrkrvL3ruxj', firstName: 'Jainel', lastName: 'Torres', email: 'jainel.torrer@upr.edu', banned: false},
-  {id: 'zOHEzUyIKZB3LsAiu2Kb', firstName: 'Alberto', lastName: 'Canela', email: 'alberto.canela@upr.edu', banned: false},
-  {id: '9XIu1jT96A5qz1Kpl90R', firstName: 'Alejandro', lastName: 'Vasquez', email: 'alejandro.vasquez@upr.edu', banned: false},
-  {id: 'jEFgdhchAjyVhJikg17s', firstName: 'Don', lastName: 'Quijote', email: 'don.quijote@upr.edu', banned: true},
-];
-
-const dbDocuments: DocumentMeta[] = [
-    {id: 'tPbl1DyxToy1FUHpfcqn', title:'La gran inundacion del 2010.', creator: 'Roberto Guzman', published: false},
-    {id: 'iO0PxjKJY0FwezeVq943', title:'Temblores de 2020: Causa y Efecto.', creator: 'Yomar Ruiz', published: true},
-    {id: 'qkdQoXSmnNeMISTmMP4f', title:'Huracán Maria: 5 años despues.', creator: 'Alberto Canela', published: false},
-    {id: 'RYTSBZAiwlAG0t8EOb6B', title:'Inestabilidad Ferroviaria: Análisis técnico y monetario.', creator: 'Alejandro Vasquez', published: true},
-    {id: 'VzunBYihBS05mpj0U9pP', title:'Otro caso de estudio, en verdad que me cansé.', creator: 'Don Quijote', published: true},
-];
+const dbDocuments: DocumentMeta[] = fakeDocuments;
 
 const tags: TagMeta[] = [
     {tagNbr: 'ak9zI01ORNE9Okyziblp', name: 'Electric'},
@@ -178,42 +164,74 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         // Collaborators
         function getCollaborators() {
-            if (!isLoggedIn()) 
+            if (!isLoggedIn()) {
                 unauthorized();
-            return ok(dbCollaborators);
+            }
+            
+            const responseValues: CollaboratorMeta[] = [];
+            
+            dbCollaborators.forEach(c => {
+                if(c.approved){
+                    responseValues.push(c)
+                }
+                    
+            });
+            
+            
+            return ok(responseValues);
         }
 
+        /**
+         * Somulate the banning of a collaborator
+         */
         function banCollaborator() {
-            if (!isLoggedIn()) 
-                unauthorized();
-            const {collabId} = body;
+            // if (!isLoggedIn()) 
+            //     unauthorized();
+            const {id} = body;
             for (let index = 0; index < dbCollaborators.length; index++) {
-              const element = dbCollaborators[index];
-              if (element.id === collabId){
-                  element.banned = true;
-                return ok(collabId);
+              const collaborator = dbCollaborators[index];
+              if (collaborator.id === id){
+                collaborator.banned = true;
+                for (let index = 0; index < dbDocuments.length; index++) {
+                    const element = dbDocuments[index];
+                    if (element.creator === collaborator.firstName + ' ' + collaborator.lastName) {
+                        element.published = false;
+                    }
+                }
+                return ok(id)
               }
             }
+
+            
+
+
 
             return error('Something went wrong at /api/collaborators');
         }
 
+        /**
+         * Simulate the unbaning of a collaborator
+         */
         function unbanCollaborator() {
-            if (!isLoggedIn()) 
-                unauthorized();
             const {id} = body;
             for (let index = 0; index < dbCollaborators.length; index++) {
-                const element = dbCollaborators[index];
-                if (element.id === id){
-                    element.banned = false;
-                return ok(id);
+                const collaborator = dbCollaborators[index];
+                if (collaborator.id === id){
+                    collaborator.banned = false;
+                    for (let index = 0; index < dbDocuments.length; index++) {
+                        const element = dbDocuments[index];
+                        if (element.creator === collaborator.firstName + ' ' + collaborator.lastName) {
+                            element.published = true;
+                        }
+                    }
+                    return ok(id)
                 }
             }
         }
 
         function removeCollaborator() {
-            if (!isLoggedIn()) 
-                unauthorized();
+            // if (!isLoggedIn()) 
+            //     unauthorized();
             const { id } = body;
             let removeIndex = -1;
             for (let index = 0; index < dbCollaborators.length; index++) {
@@ -233,14 +251,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // Documents
 
         function getDocuments() {
-            if (!isLoggedIn()) 
-                unauthorized();
+            // if (!isLoggedIn()) 
+            //     unauthorized();
             return ok(dbDocuments);
         }
 
         function publishDocument(){
-            if (!isLoggedIn()) 
-                unauthorized();
+            // if (!isLoggedIn()) 
+            //     unauthorized();
             const {id} = body;
             for (let index = 0; index < dbDocuments.length; index++) {
                 const element = dbDocuments[index];
@@ -252,8 +270,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function unpublishDocument(){
-            if (!isLoggedIn()) 
-                unauthorized();
+            // if (!isLoggedIn()) 
+            //     unauthorized();
             const {id} = body;
             for (let index = 0; index < dbDocuments.length; index++) {
                 const element = dbDocuments[index];
@@ -288,7 +306,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function isLoggedIn() {
-            return headers.get('Authorization') === "Bearer "+jwtToken;
+            return headers.get('Authorization') === "Bearer "+ jwtToken;
         }
 
         function idFromUrl() {
