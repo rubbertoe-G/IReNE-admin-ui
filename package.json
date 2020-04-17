@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --output-path dist --aot --prod"
+    "postinstall": "ng build --output-path dist --aot --prod",
+    "compodoc": "npx compodoc -p tsconfig.json -w -s"
   },
   "private": true,
   "dependencies": {
@@ -43,6 +44,7 @@
     "@angular/cli": "~9.0.7",
     "@angular/compiler-cli": "~9.0.7",
     "@angular/language-service": "~9.0.7",
+    "@compodoc/compodoc": "^1.1.11",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/jsonwebtoken": "^8.3.8",
@@ -51,7 +53,7 @@
     "cz-conventional-changelog": "^3.1.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~4.3.0",
+    "karma": "^5.0.2",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage-istanbul-reporter": "~2.1.0",
     "karma-jasmine": "~2.0.1",

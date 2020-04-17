@@ -18,3 +18,7 @@ Run `ng build --output-path dist --aot` to build the project. The build artifact
 ## Running the app
 
 At this point you can either run `npm start` or `ng serve` to run the application.
+
+## Generating Documentation
+
+To generate documentation files, run `npm run compodoc`.

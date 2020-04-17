@@ -8,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class DefaultComponent implements OnInit {
 
 
+  /**
+   * The state of the sidebar
+   */
   sideBarOpen = true;
 
   constructor() { }
@@ -15,6 +18,9 @@ export class DefaultComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Toggle the sidebar of the application.
+   */
   sideBarToggler() {
       this.sideBarOpen = !this.sideBarOpen;
   }

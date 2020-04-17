@@ -14,12 +14,25 @@ import { CollaboratorMeta } from 'src/app/shared/models/collaborators.model';
 })
 export class CollaboratorComponent implements OnInit {
 
-  // The data to be presented
+  /**
+   * The collaborators data
+   */
   dataSource = new MatTableDataSource<CollaboratorMeta>();
+
+  /**@ignore */
   tempDataSource: MatTableDataSource<CollaboratorMeta>;
 
+  /**@ignore */
   displayedColumns: string[] = ['firstName', 'lastName', 'email','banned', 'actions'];
+
+  /**
+   * The value to be used from the input search filter.
+   */
   inputValue = '';
+  
+  /**
+   * 
+   */
   checkBanned = false;
   checkUnbanned = false;
   
@@ -28,25 +41,29 @@ export class CollaboratorComponent implements OnInit {
     private snackBar: MatSnackBar
     ) { }
 
+  /**
+   * Peform http request to retrieve all the approved collaborators.
+   */
   ngOnInit(): void {
     this.collaboratorService.getCollaborators().add(() => {
       this.dataSource = new MatTableDataSource<CollaboratorMeta>(this.collaboratorService.collaborators);
       this.tempDataSource = this.dataSource;
     });
-    console.log(window.location.port)
   }
 
+  /**
+   * Filters the table information based on the filter event value.
+   * 
+   * @param event the search input event
+   */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  isBanned(banned: boolean) {
-    if (banned) {
-      return 'salmon';
-    }
-  }
-
+  /**
+   * Filters the table information with the banned collaborators.
+   */
   filterBanned() {
     this.checkUnbanned = false;
     if (this.checkBanned && !this.checkUnbanned) {
@@ -62,6 +79,9 @@ export class CollaboratorComponent implements OnInit {
     this.dataSource = this.tempDataSource;
   }
 
+  /**
+   * Filters the table information with the unbanned collaborators.
+   */
   filterUnbanned() {
     this.checkBanned = false;
     if (!this.checkBanned && this.checkUnbanned) {
@@ -78,8 +98,13 @@ export class CollaboratorComponent implements OnInit {
   }
 
 
+  /**
+   * Ban a collaborator.
+   * 
+   * @param id the id of the collaborator to be banned.
+   * @param email the email of the collaborator to be banned.
+   */
   banCollaborator(id: string, email: string) {
-
     Swal.fire({
       title: 'Ban Collaborator',
       text: `Enter admin password to ban collaborator with email: "${email}"`,
@@ -111,6 +136,13 @@ export class CollaboratorComponent implements OnInit {
     });
   }
 
+
+  /**
+   * 
+   * 
+   * @param id the id of the collaborator.
+   * @param email the email of the collaborator.
+   */
   unbanCollaborator(id: string, email: string){
     Swal.fire({
       title: 'Unban Collaborator',
