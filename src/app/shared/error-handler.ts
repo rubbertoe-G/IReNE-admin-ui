@@ -4,12 +4,27 @@ import { ErrorService } from './services/error.service';
 import { NotificationService } from './services/notification.service';
 import { Router } from '@angular/router';
 
+
+/**
+ * Handler that manages all the errors that could surface in the system.
+*/
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
 
+    /**
+   * Constructor to initialized the error handler.
+   * 
+   * @param {Injector} injector injector to use the needed services
+   * @param {Router} router router object to manage navigation for error response
+   */ 
   constructor(private injector: Injector,
     private router: Router) { }
   
+  /**
+   * Manages the error and displays them accordingly.
+   * 
+   * @param {Error | HttpErrorResponse} error snackbar to be dispatched
+   */ 
   handleError(error: Error | HttpErrorResponse) {
     const errorService = this.injector.get(ErrorService);
     const notifier = this.injector.get(NotificationService);

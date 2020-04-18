@@ -6,6 +6,9 @@ import { RequestMeta } from 'src/app/shared/models/access-requests.model';
 import { AccessRequestsService } from 'src/app/shared/services/access-requests.service';
 
 
+/**
+ * Component that manages the operations concerning the access requests.
+*/
 @Component({
   selector: 'app-access-requests',
   templateUrl: './access-requests.component.html',
@@ -13,22 +16,50 @@ import { AccessRequestsService } from 'src/app/shared/services/access-requests.s
 })
 export class AccessRequestsComponent implements OnInit {
 
+  /**
+  *Data to be displayed in the view.
+  */
   dataSource = new MatTableDataSource<RequestMeta>();
   
-  displayedColumns: string[] = ['requestNbr', 'firstName', 'lastName', 'email','actions'];
+  /**
+  *Column fields of the model to be displayed in the table.
+  */
+  displayedColumns: string[] = ['requestNbr', 'firstName', 'lastName', 'email', 'actions'];
+   
+  /**
+   * Construct the Access Request component with an Access Request service and a Material Snackbar.
+   * 
+   * @param {AccessRequestsService} requestsService Access request service
+   * @param {MatSnackBar} snackBar Angular material snackbar
+   */
   constructor(private requestsService: AccessRequestsService, private snackBar: MatSnackBar) { }
 
+  /**
+   * Initializes the datasource by requesting the Access Request from the server.
+   * 
+   */
   ngOnInit(): void {
     this.requestsService.getRequests().add(() => {
       this.dataSource = new MatTableDataSource<any>(this.requestsService.requests);
     });
   }
 
+     /**
+   * Event manager of the search bar. Takes the input and filters the table accordingly.
+   * 
+   * @param {Event} event Event to be managed
+   */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+
+    /**
+   * Denies the Access Request chosen by the user.
+   * 
+   * @param {RequestMeta} request Request chosen by the user.
+   */
   denyAccessRequest(request: RequestMeta) {
     Swal.fire({
       title: 'Deny Access Request',
@@ -53,6 +84,12 @@ export class AccessRequestsComponent implements OnInit {
     });
   }
 
+
+      /**
+   * Accepts the Access Request chosen by the user.
+   * 
+   * @param {RequestMeta} request Request chosen by the user.
+   */
   acceptAccessRequest(request: RequestMeta){
     Swal.fire({
       title: 'Accept Access Request',
