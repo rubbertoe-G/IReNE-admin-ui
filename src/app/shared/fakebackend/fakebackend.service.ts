@@ -34,7 +34,8 @@ const requests: RequestMeta[] = [
   ];
   
 const users: AdminMeta[] = [
-    {username : "admin", password : "password"}
+    {username : "yomar.ruiz", password : "Password0"},
+    {username : "admin0", password : "Password0"}
     ];
 
 const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIn0.Xs1l2H7ui_yqE-GlQ2GARQ5ZpjuS8B8xQaooy89Q8y8";
@@ -87,7 +88,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function login() {
             const { username, password } = body;
-            const user = users.find(x => x.username === username && x.password === password);
+            const user = users.find(x => x.username === username.toLowerCase() && x.password === password);
             if (!user)
             {
                 throw new HttpErrorResponse({

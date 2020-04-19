@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from "src/app/shared/services/authentication.service";
 import { ForbiddenUsernameValidator } from "src/app/shared/forbiddenUsername.directive"
+import { ForbiddenPasswordValidator } from "src/app/shared/forbiddenPassword.directive"
 import {
   FormBuilder,
   FormGroup,
@@ -41,7 +42,8 @@ export class LoginComponent implements OnInit {
           ForbiddenUsernameValidator()
         ]),
       password: new FormControl('', [
-          Validators.required
+          Validators.required,
+          ForbiddenPasswordValidator()
         ])
     });
 
