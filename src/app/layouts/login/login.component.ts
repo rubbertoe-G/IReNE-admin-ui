@@ -110,6 +110,9 @@ export class LoginComponent implements OnInit {
           });
   }
   
+  /**
+   * @ignore
+   */
   toDashboard() {
     this.router.navigate(['/']);
 
