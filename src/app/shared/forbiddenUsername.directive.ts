@@ -9,8 +9,14 @@ import { AbstractControl } from '@angular/forms';
  */ 
 export function ForbiddenUsernameValidator() {
     return (control: AbstractControl): {[key: string]: any} | null => {
-        let reg = new RegExp('^(?=.{6,20}$)(?![.])(?!.*[.]{2})[a-zA-Z0-9.]+(?<![.])$');
-        const notForbidden = reg.test(control.value);
+        let reg = new RegExp('^[a-zA-Z0-9.]{6,20}$');
+        let notForbidden = reg.test(control.value);
+        if(notForbidden){
+            notForbidden = !new RegExp('[.]{2,}').test(control.value);
+            if(notForbidden){
+                notForbidden = !(control.value.charAt(control.value.length-1) == '.' || control.value.charAt(0) == '.');
+            }
+        }
         return notForbidden ? null : {'forbiddenUsername': {value: control.value}};
       };
   }
