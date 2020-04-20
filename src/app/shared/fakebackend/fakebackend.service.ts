@@ -16,7 +16,7 @@ const dbCollaborators = fakeCollaborators;
 
 const dbDocuments: DocumentMeta[] = fakeDocuments;
 
-const tags: TagMeta[] = [
+var tags: TagMeta[] = [
     {tagNbr: 'ak9zI01ORNE9Okyziblp', name: 'Electric'},
     {tagNbr: '67BuIJ1kNTYPDGz405qb', name: 'Chaldish Gambino'},
     {tagNbr: 'L1TUHONPhPrkrvL3ruxj', name: 'Miss Keesha'},
@@ -24,14 +24,6 @@ const tags: TagMeta[] = [
     {tagNbr: 'uIXgdhchAjyVhJikg17s', name: 'Volatile'},
   ];
 
-const requests: RequestMeta[] = [
-  {id: 'aq9zI01ORNE9Okyziblp', firstName: 'Sancho', lastName: 'Panza', email: 'sancho.panza@upr.edu', banned: true, approved: false},
-  {id: '66BuIJ0kNTYPDGz405qb', firstName: 'Dulcinea', lastName: 'del Toboso', email: 'dulcinea.deltoboso@upr.edu', banned: false, approved: false},
-  {id: 'W0SUHONPhPrkrvL3ruxj', firstName: 'Quijote', lastName: 'de la Mancha', email: 'quijote.delamancha@upr.edu', banned: false, approved: false},
-  {id: 'zOHEzUyIKZB3LsAiu2Kb', firstName: 'Dante', lastName: 'Alighieri', email: 'dante.alighieri@upr.edu', banned: false, approved: false},
-  {id: '9XIu1jT96A5qz1Kpl90R', firstName: 'William', lastName: 'shakespeare', email: 'william.shakespeare@upr.edu', banned: false, approved: false},
-  {id: 'jEFgdhchAjyVhJikg17s', firstName: 'Friedrich', lastName: 'Nietzsche', email: 'friedrich.nietzsche@upr.edu', banned: false, approved: false}
-  ];
   
 const users: AdminMeta[] = [
     {username : "yomar.ruiz", password : "Password0"},
@@ -103,18 +95,27 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function getRequests() {
             if (!isLoggedIn()) 
                 unauthorized();
-            return ok(requests);
+            const responseValues: RequestMeta[] = [];
+        
+            dbCollaborators.forEach(c => {
+                if(!c.approved){
+                    responseValues.push(c)
+                }
+                    
+            });
+            return ok(responseValues);
         }
 
         function acceptRequest() {
             if (!isLoggedIn()) 
                 unauthorized();
             const {requestID} = body;
-            for (let index = 0; index < requests.length; index++) {
-              const element = requests[index];
-              if (element.id.toString() === requestID){
+            for (let index = 0; index < dbCollaborators.length; index++) {
+              const element = dbCollaborators[index];
+              if (!element.approved && element.id.toString() === requestID){
+                  element.approved = true;
                   return of(new HttpResponse({
-                    statusText: 'Successful deletion.',
+                    statusText: 'Successful acceptance.',
                     status: 200
                 }));
               }
@@ -129,9 +130,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             if (!isLoggedIn()) 
                 unauthorized();
             const {requestID} = body;
-            for (let index = 0; index < requests.length; index++) {
-              const element = requests[index];
-              if (element.id.toString() === requestID){
+            for (let index = 0; index < dbCollaborators.length; index++) {
+              const element = dbCollaborators[index];
+              if (!element.approved && element.id.toString() === requestID){
+                    dbCollaborators.splice(index, 1);
                   return ok(requestID);
               }
             }
@@ -154,7 +156,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             for (let index = 0; index < tags.length; index++) {
               const element = tags[index];
               if (element.tagNbr.toString() === tagID){
-                  return ok(tagID);
+                tags = tags.filter(e => e.tagNbr.toString() !== tagID);
+                    //tags.splice(index, 1);
+                    return ok(tagID);
               }
             }
             throw new HttpErrorResponse({
