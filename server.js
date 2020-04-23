@@ -23,7 +23,11 @@ app.get('*', (req, res) => {
 
 
 //Set Port
+<<<<<<< Updated upstream
 const port = process.env.PORT || '8080';
+=======
+const port = process.env.PORT || '80';
+>>>>>>> Stashed changes
 app.set('port', port);
 
 const server = http.createServer(app);
