@@ -14,7 +14,7 @@ export class AccessRequestsService {
   /**
   * Variable that holds the ip address of the backend.
   */
-  fakeBackend = 'http://localhost:4200/admin';
+  fakeBackend = 'http://localhost:5000/admin';
 
   /**
   * Variable that holds the access requests sent by the server,
@@ -32,9 +32,9 @@ export class AccessRequestsService {
    * Gets all unapproved collabroators from the server.
    */
   getRequests() {
-    return this.http.get(`${this.fakeBackend}/access-requests`).subscribe(
-      (response: RequestMeta[]) => {
-        this.requests = response;
+    return this.http.get(`${this.fakeBackend}/access-requests/`).subscribe(
+      (response) => {
+        this.requests = response['requests'];
       });
   }
 
@@ -43,10 +43,9 @@ export class AccessRequestsService {
    * @param {string} id Identifier of the access request to be accepted
    */
   acceptRequest(id: string) {
-     const body = {
-       requestID: id
-     }
-     return this.http.put(`${this.fakeBackend}/access-requests/accept`, body);
+    const formData = new FormData();
+    formData.append('collabID', id);
+    return this.http.put(`${this.fakeBackend}/access-requests/approve`, formData);
   }
 
    /**
@@ -54,9 +53,8 @@ export class AccessRequestsService {
    * @param {string} id Identifier of the access request to be denied
    */
   denyRequest(id: string) {
-     const body = {
-       requestID: id
-     }
-     return this.http.put(`${this.fakeBackend}/access-requests/deny`, body);
+    const formData = new FormData();
+    formData.append('collabID', id);
+    return this.http.put(`${this.fakeBackend}/access-requests/deny`, formData);
   }
 }

@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CollaboratorsService {
 
-  fakeBackend = `http://${window.location.hostname}:${window.location.port}/admin`
+  fakeBackend = `http://localhost:5000/admin`
   collaborators: CollaboratorMeta[];
 
   constructor(private http: HttpClient) {
@@ -22,9 +22,9 @@ export class CollaboratorsService {
    * Retrieve the list of collaborators
    */
   getCollaborators() {
-    return this.http.get(`${this.fakeBackend}/collaborators`).subscribe(
-      (response: CollaboratorMeta[]) => {
-        this.collaborators = response;
+    return this.http.get(`${this.fakeBackend}/collaborators/`).subscribe(
+      (response) => {
+        this.collaborators = response['collaborators'];
       },
       (error) => {throw Error('ERROR: Unable to retrieve collaborators.')}
     );
@@ -35,15 +35,17 @@ export class CollaboratorsService {
    * @param id the collaborator id
    */
   banCollaborator(id: string) {
-    const body = {
-      id: id
-    }
+    const formData = new FormData();
+    formData.append('collabID', id);
 
-     if(environment.testErrors){
-       body.id = '-999'
-     }
-     return this.http.put(`${this.fakeBackend}/collaborators/ban`, body).subscribe(
-       () =>{},
+     return this.http.put(`${this.fakeBackend}/collaborators/ban`, formData).subscribe(
+       (response) =>{
+        this.collaborators.forEach(e => {
+          if(e._id === response['collabID']){
+            e.banned = true;
+          }
+        });
+       },
        (error) => {throw Error('ERROR: Unable to ban collaborator.')}
      );
   }
@@ -53,16 +55,17 @@ export class CollaboratorsService {
    * @param id the collaborator id to be banned 
    */
   unbanCollaborator(id: string) {
-    const body = {
-      id: id
-    }
+    const formData = new FormData();
+    formData.append('collabID', id);
 
-    if(environment.testErrors){
-      body.id = '-999'
-    }
-
-    return this.http.put(`${this.fakeBackend}/collaborators/unban`, body).subscribe(
-      () =>{},
+    return this.http.put(`${this.fakeBackend}/collaborators/unban`, formData).subscribe(
+      (response) =>{
+        this.collaborators.forEach(e => {
+          if(e._id === response['collabID']){
+            e.banned = false;
+          }
+        });
+      },
       (error) => {throw Error('ERROR: Unable to unban collaborator.')}
     );
   }

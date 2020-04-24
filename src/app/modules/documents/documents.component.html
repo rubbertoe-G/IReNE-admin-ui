@@ -47,16 +47,16 @@
         <td class="center-cell" mat-cell *matCellDef="let element" >
           <button mat-raised-button color="primary"
             *ngIf="!element.published" 
-            (click)="publishDoc(element.id, element.title)">
+            (click)="publishDoc(element._id, element.title)">
             RE-PUBLISH
           </button>
           <button mat-raised-button color="warn"
             *ngIf="element.published" 
-            (click)="unpublishDoc(element.id, element.title)">
+            (click)="unpublishDoc(element._id, element.title)">
             UNPUBLISH
           </button>
           <button mat-icon-button color="primary" 
-            (click)="previewDoc(element.id)"
+            (click)="previewDoc(element._id)"
             matTooltip="Preview Document"
             style="margin-left: 10px;">
             <mat-icon>visibility</mat-icon>

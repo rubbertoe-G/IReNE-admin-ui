@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class DocumentsService {
-  fakeBackend = 'http://localhost:4200/admin';
+  fakeBackend = 'http://localhost:5000/admin';
 
   documents: DocumentMeta[];
 
@@ -22,9 +22,9 @@ export class DocumentsService {
      * Get all documents with their needed data.
      */
 
-     return this.http.get(`${this.fakeBackend}/documents`).subscribe(
-       (response: DocumentMeta[]) => {
-         this.documents = response;
+     return this.http.get(`${this.fakeBackend}/documents/`).subscribe(
+       (response) => {
+         this.documents = response['documents'];
        },
        (error) => {throw Error('ERROR: Unable to retrieve documents.');}
      );
@@ -34,17 +34,13 @@ export class DocumentsService {
     /**
      * Set a document to be published.
      */
-    const body = {
-      id: id
-    };
+    const formData = new FormData();
+    formData.append('docID', id);
 
-    if(environment.testErrors)
-      body.id = '-123'
-
-    return this.http.put(`${this.fakeBackend}/documents/publish`, body).subscribe(
+    return this.http.put(`${this.fakeBackend}/documents/publish`, formData).subscribe(
       (response) => {
         this.documents.forEach(e => {
-          if(e.id === response){
+          if(e._id === response['docID']){
             e.published = true;
           }
         });
@@ -58,17 +54,13 @@ export class DocumentsService {
     /**
      * Set a document to be unpublished.
      */
-    const body = {
-      id: id
-    };
+    const formData = new FormData();
+    formData.append('docID', id);
 
-    if(environment.testErrors)
-      body.id = '-123'
-
-    return this.http.put(`${this.fakeBackend}/documents/unpublish`, body).subscribe(
+    return this.http.put(`${this.fakeBackend}/documents/unpublish`, formData).subscribe(
       (response) => {
         this.documents.forEach(e => {
-          if(e.id === response){
+          if(e._id === response['docID']){
             e.published = false;
           }
         });

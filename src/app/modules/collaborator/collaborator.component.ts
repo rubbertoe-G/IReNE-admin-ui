@@ -23,7 +23,7 @@ export class CollaboratorComponent implements OnInit {
   tempDataSource: MatTableDataSource<CollaboratorMeta>;
 
   /**@ignore */
-  displayedColumns: string[] = ['firstName', 'lastName', 'email','banned', 'actions'];
+  displayedColumns: string[] = ['first_name', 'last_name', 'email','banned', 'actions'];
 
   /**
    * The value to be used from the input search filter.
