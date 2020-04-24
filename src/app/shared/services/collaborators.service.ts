@@ -40,8 +40,9 @@ export class CollaboratorsService {
 
      return this.http.put(`${this.fakeBackend}/collaborators/ban`, formData).subscribe(
        (response) =>{
+        console.log(response);
         this.collaborators.forEach(e => {
-          if(e._id === response['collabID']){
+          if(e._id === response['collaborator']){
             e.banned = true;
           }
         });
@@ -60,8 +61,9 @@ export class CollaboratorsService {
 
     return this.http.put(`${this.fakeBackend}/collaborators/unban`, formData).subscribe(
       (response) =>{
+        console.log(response);
         this.collaborators.forEach(e => {
-          if(e._id === response['collabID']){
+          if(e._id === response['collaborator']){
             e.banned = false;
           }
         });

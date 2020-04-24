@@ -22,8 +22,6 @@ export class PreviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params =>{
-      // use params['docId] to get the docID
-      console.log(params['docId']);
       this.http.get(this.fakeBackend).subscribe(
         (response: string) =>{
           this.base64Src = response;

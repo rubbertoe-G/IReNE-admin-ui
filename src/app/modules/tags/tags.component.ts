@@ -38,7 +38,6 @@ export class TagsComponent implements OnInit {
    */
   ngOnInit(): void {
     this.tagsService.getTags().add(() => {
-      console.log(this.tagsService.tags);
       this.dataSource = new MatTableDataSource<any>(this.tagsService.tags);
     });
   }

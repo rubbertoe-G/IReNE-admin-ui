@@ -3,5 +3,6 @@
 */
 export interface AdminMeta {
     username: string;
+    password?: string;
     token?: string;
 }
