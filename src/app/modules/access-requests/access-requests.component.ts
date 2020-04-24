@@ -24,7 +24,7 @@ export class AccessRequestsComponent implements OnInit {
   /**
   *Column fields of the model to be displayed in the table.
   */
-  displayedColumns: string[] = ['requestNbr', 'firstName', 'lastName', 'email', 'actions'];
+  displayedColumns: string[] = ['_id', 'first_name', 'last_name', 'email', 'actions'];
    
   /**
    * Construct the Access Request component with an Access Request service and a Material Snackbar.
@@ -72,7 +72,7 @@ export class AccessRequestsComponent implements OnInit {
       cancelButtonColor: 'black',
     }).then((result) => {
       if (result.value) {
-        this.requestsService.denyRequest(request.id.toString()).subscribe(
+        this.requestsService.denyRequest(request._id.toString()).subscribe(
           () => {
             this.snackBar.open("The access request has been denied.",null,{duration:2000});
             let index = this.dataSource.data.indexOf(request);
@@ -102,7 +102,7 @@ export class AccessRequestsComponent implements OnInit {
       cancelButtonColor: 'black',
     }).then((result) => {
       if (result.value) {
-        this.requestsService.acceptRequest(request.id.toString()).subscribe(
+        this.requestsService.acceptRequest(request._id.toString()).subscribe(
           () => {
             this.snackBar.open("The access request has been accepted.",null,{duration:2000});
             let index = this.dataSource.data.indexOf(request);

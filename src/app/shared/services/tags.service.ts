@@ -14,7 +14,7 @@ export class TagsService {
 /**
  * Backend ip address
 */
-  fakeBackend = 'http://localhost:4200/admin';
+  fakeBackend = 'http://localhost:5000/admin';
 
   /**
   * Variable to hold the tags received by the backend.
@@ -35,9 +35,9 @@ export class TagsService {
     /**
      * Get all approved collabroators from the fake server.
      */
-    return this.http.get(`${this.fakeBackend}/tags`).subscribe(
-      (response: TagMeta[]) => {
-        this.tags = response;
+    return this.http.get(`${this.fakeBackend}/tags/`).subscribe(
+      (response) => {
+        this.tags = response['tags'];
       });
   }
 
@@ -46,9 +46,8 @@ export class TagsService {
    * @returns {Observable} observable object with the response from the server
    */ 
   removeTag(id: string) {
-     const body = {
-       tagID: id
-     }
-     return this.http.put(`${this.fakeBackend}/tags/remove`, body);
+    const formData = new FormData();
+    formData.append('tagID', id);
+    return this.http.put(`${this.fakeBackend}/tags/remove`, formData);
   }
 }

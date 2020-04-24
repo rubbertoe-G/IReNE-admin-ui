@@ -23,7 +23,7 @@ export class TagsComponent implements OnInit {
   /**
   *Column fields of the model to be displayed in the table.
   */
-  displayedColumns: string[] = ['tagNbr', 'name', 'actions'];
+  displayedColumns: string[] = ['_id', 'tagItem', 'actions'];
 
    /**
    * Construct the Access Request component with an Access Request service and a Material Snackbar.
@@ -38,6 +38,7 @@ export class TagsComponent implements OnInit {
    */
   ngOnInit(): void {
     this.tagsService.getTags().add(() => {
+      console.log(this.tagsService.tags);
       this.dataSource = new MatTableDataSource<any>(this.tagsService.tags);
     });
   }
@@ -69,7 +70,7 @@ export class TagsComponent implements OnInit {
       cancelButtonColor: 'black',
     }).then((result) => {
       if (result.value) {
-        this.tagsService.removeTag(tag.tagNbr.toString()).subscribe(
+        this.tagsService.removeTag(tag._id.toString()).subscribe(
           () => {
             this.snackBar.open("The tag has been removed.",null,{duration:2000});
             let index = this.dataSource.data.indexOf(tag);

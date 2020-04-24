@@ -1,5 +1,5 @@
 export interface DocumentMeta {
-  id: string;
+  _id: string;
   title: string;
   creator: string;
   published: boolean;

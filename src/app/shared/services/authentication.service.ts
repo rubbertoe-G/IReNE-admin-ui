@@ -22,7 +22,7 @@ export class AuthenticationService {
     /**
      * Variable that holds the ip address of the backend.
      */
-    private fakeBackend = 'http://localhost:4200/admin';
+    private fakeBackend = 'http://localhost:5000/admin';
 
     /**
      * Constructor that initializes the current user variables
@@ -49,9 +49,15 @@ export class AuthenticationService {
      * @returns {AdminMeta} returns the user account whose username and password belonged to
      */ 
     login(username: string, password: string) {
-        return this.http.post<any>(`${this.fakeBackend}/login`, { username, password })
-            .pipe(map(user => {
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('password', password);
+        return this.http.post<any>(`${this.fakeBackend}/auth/login`, formData)
+            .pipe(map(token => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
+                var parts = token['access_token'].split('.');
+                var jwt_decoded =  JSON.parse(atob(parts[1]));
+                var user = {'username': jwt_decoded['identity'], 'token':token['access_token']};
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
                 return user;
