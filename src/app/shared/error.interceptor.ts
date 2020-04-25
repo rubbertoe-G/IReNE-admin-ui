@@ -1,17 +1,21 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { 
   HttpEvent, HttpRequest, HttpHandler, 
   HttpInterceptor, HttpErrorResponse 
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { AuthenticationService } from './services/authentication.service';
 
 /**
 * Intercepts all the errors that could occur on the system.
 */
 @Injectable()
 export class ServerErrorInterceptor implements HttpInterceptor {
-
+  constructor(
+    private router: Router,
+    private injector: Injector){}
   /**
    * Interceptor for errors in order to implement custom functionality.
    * 
@@ -23,8 +27,11 @@ export class ServerErrorInterceptor implements HttpInterceptor {
     // TODO: Define behavior, do not delete. Functionality that could surface in the future could be implemented here
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 0) {
-          // example, here a token could be refreshed
+        if ([401,403].includes(error.status)) {
+          const service = this.injector.get(AuthenticationService);
+          service.logout();
+          this.router.navigate(['/login']);
+          return throwError(error);
         } else {
           return throwError(error);
         }

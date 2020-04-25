@@ -30,7 +30,7 @@ export class AuthenticationService {
      * @param {HttpClient} http client used to perform the requests to the server
      */
     constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<AdminMeta>(JSON.parse(localStorage.getItem('currentUser')));
+        this.currentUserSubject = new BehaviorSubject<AdminMeta>(JSON.parse(sessionStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
     }
 
@@ -58,7 +58,7 @@ export class AuthenticationService {
                 var parts = token['access_token'].split('.');
                 var jwt_decoded =  JSON.parse(atob(parts[1]));
                 var user = {'username': jwt_decoded['identity'], 'token':token['access_token']};
-                localStorage.setItem('currentUser', JSON.stringify(user));
+                sessionStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
                 return user;
             }));
@@ -69,7 +69,7 @@ export class AuthenticationService {
      */ 
     logout() {
         // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
+        sessionStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
     }
 }

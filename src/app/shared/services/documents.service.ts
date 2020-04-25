@@ -25,8 +25,7 @@ export class DocumentsService {
      return this.http.get(`${this.fakeBackend}/documents/`).subscribe(
        (response) => {
          this.documents = response['documents'];
-       },
-       (error) => {throw Error('ERROR: Unable to retrieve documents.');}
+       }
      );
   }
 
@@ -44,8 +43,7 @@ export class DocumentsService {
             e.published = true;
           }
         });
-      },
-      (error) => {throw Error('ERROR: Unable to publish document.'); }
+      }
     );
 
   }
@@ -64,8 +62,7 @@ export class DocumentsService {
             e.published = false;
           }
         });
-      },
-      (error) => {throw Error('ERROR: Unable to unpublish document.');}
+      }
     );
 
   }

@@ -38,7 +38,7 @@ export class GlobalErrorHandler implements ErrorHandler {
       notifier.showError(message);
       let statusCode = errorService.getServerErrorStatusCode(error);
       if(statusCode === 403)
-        this.router.navigate(['/']);
+        this.router.navigate(['/login']);
       
     } else {
       // Client Error

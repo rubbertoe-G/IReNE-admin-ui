@@ -120,7 +120,6 @@ export class DocumentsComponent implements OnInit {
    * @param title the title of the document.
    */
   unpublishDoc(id: string, title: string) {
-    console.log(id);
     Swal.fire({
       title: 'Unpublish Document',
       text: `Enter password to confirm republishiing of document: "${title}"`,

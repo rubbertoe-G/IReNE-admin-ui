@@ -25,8 +25,7 @@ export class CollaboratorsService {
     return this.http.get(`${this.fakeBackend}/collaborators/`).subscribe(
       (response) => {
         this.collaborators = response['collaborators'];
-      },
-      (error) => {throw Error('ERROR: Unable to retrieve collaborators.')}
+      }
     );
   }
 
@@ -40,14 +39,12 @@ export class CollaboratorsService {
 
      return this.http.put(`${this.fakeBackend}/collaborators/ban`, formData).subscribe(
        (response) =>{
-        console.log(response);
         this.collaborators.forEach(e => {
           if(e._id === response['collaborator']){
             e.banned = true;
           }
         });
-       },
-       (error) => {throw Error('ERROR: Unable to ban collaborator.')}
+       }
      );
   }
 
@@ -61,14 +58,12 @@ export class CollaboratorsService {
 
     return this.http.put(`${this.fakeBackend}/collaborators/unban`, formData).subscribe(
       (response) =>{
-        console.log(response);
         this.collaborators.forEach(e => {
           if(e._id === response['collaborator']){
             e.banned = false;
           }
         });
-      },
-      (error) => {throw Error('ERROR: Unable to unban collaborator.')}
+      }
     );
   }
 }
