@@ -9,13 +9,14 @@ import { AccessRequestsComponent } from './modules/access-requests/access-reques
 import { LoginComponent } from './layouts/login/login.component';
 import { PreviewComponent } from './layouts/preview/preview.component';
 import { AuthGuard } from './shared/authentication/auth.guard';
+import { RevisionsComponent } from './modules/revisions/revisions.component';
 
 
 const routes: Routes = [
   { path: '', component: DefaultComponent,
     children: [
       // { path: '', redirectTo: '/collaborators', pathMatch: 'full' },
-      { path: '', component: CollaboratorComponent, canActivate: [AuthGuard] },
+      { path: '', component: RevisionsComponent, canActivate: [AuthGuard] },
       { path: 'collaborators', component: CollaboratorComponent, canActivate: [AuthGuard]},
       { path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard] },
       { path: 'access-requests', component: AccessRequestsComponent, canActivate: [AuthGuard] },

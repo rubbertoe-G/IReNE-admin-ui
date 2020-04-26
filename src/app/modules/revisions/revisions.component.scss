@@ -1,0 +1,46 @@
+.example-container {
+    max-height: 590px;
+    overflow: auto;
+  }
+  
+  .table-container{
+    height: 35em;
+    overflow: auto;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+  
+  .header-cell-title {
+    flex-direction: column;
+    justify-content: left;
+    text-align: left;
+  }
+  
+  .cell-title{
+    text-align: left;
+    justify-content:left;
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  .example-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+  }
+  
+  .center-cell {
+    text-align: center;
+    justify-content:center;
+  }
+  
+  .header-color-size{
+    font-size: medium;
+    color: black;
+  }

@@ -8,7 +8,7 @@ import { MatDividerModule} from '@angular/material/divider';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatTableModule} from '@angular/material/table';
+import {MatTableModule, MatTableDataSource} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import { CollaboratorComponent } from 'src/app/modules/collaborator/collaborator.component';
 import { DocumentsComponent } from 'src/app/modules/documents/documents.component';
@@ -24,6 +24,8 @@ import { CollaboratorsService } from 'src/app/shared/services/collaborators.serv
 import { DocumentsService } from 'src/app/shared/services/documents.service';
 import { FormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RevisionsComponent } from 'src/app/modules/revisions/revisions.component';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     CollaboratorComponent,
     DocumentsComponent,
     AccessRequestsComponent,
-    TagsComponent
+    TagsComponent,
+    RevisionsComponent,
   ],
   imports: [
     CommonModule,
@@ -51,7 +54,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSnackBarModule,
     MatCheckboxModule,
     MatTooltipModule,
-
+    MatSortModule,
     FlexLayoutModule,
   ],
   providers: [

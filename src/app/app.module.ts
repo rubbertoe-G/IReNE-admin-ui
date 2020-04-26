@@ -13,6 +13,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PreviewModule } from './layouts/preview/preview.module';
 import { JwtInterceptor } from "src/app/shared/authentication/jwt.interceptor"
 import { from } from 'rxjs';
+import { RevisionsComponent } from './modules/revisions/revisions.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { from } from 'rxjs';
     DefaultModule,
     LoginModule,
     PreviewModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
