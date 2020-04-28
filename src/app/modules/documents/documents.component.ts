@@ -104,6 +104,8 @@ export class DocumentsComponent implements OnInit {
       if (result.value) {
         this.documentService.publishDocument(id).add(
           () => {
+            this.dataSource =  new MatTableDataSource<DocumentMeta>(this.documentService.documents);
+            this.tempDataSource = this.dataSource;
             this.snackBar.open('Document Republished', null, {
               duration: 2000
             });
@@ -142,6 +144,9 @@ export class DocumentsComponent implements OnInit {
       if (result.value) {
         this.documentService.unpublishDocument(id).add(
           () => {
+            
+
+            this.dataSource = new MatTableDataSource<DocumentMeta>(this.documentService.documents);
             this.snackBar.open('Document Unpublished', null, {
               duration: 2000
             });
