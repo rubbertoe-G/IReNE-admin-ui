@@ -15,8 +15,8 @@ import { RevisionsComponent } from './modules/revisions/revisions.component';
 const routes: Routes = [
   { path: '', component: DefaultComponent,
     children: [
-      // { path: '', redirectTo: '/collaborators', pathMatch: 'full' },
-      { path: '', component: RevisionsComponent, canActivate: [AuthGuard] },
+      { path: '', redirectTo: 'revision-history', pathMatch: 'full' },
+      { path: 'revision-history', component: RevisionsComponent, canActivate: [AuthGuard] },
       { path: 'collaborators', component: CollaboratorComponent, canActivate: [AuthGuard]},
       { path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard] },
       { path: 'access-requests', component: AccessRequestsComponent, canActivate: [AuthGuard] },

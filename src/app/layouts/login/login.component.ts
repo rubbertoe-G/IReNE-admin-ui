@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
         ])
     });
 
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/collaborators';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/revision-history';
   }
 
   /**
