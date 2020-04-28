@@ -1,0 +1,52 @@
+<mat-dialog-content>
+
+    <div mat-dialog-content>
+      <div style="padding: 2em;">
+        <div ng-include="'DialogHeader.html'"></div>
+        
+        <mat-card class="preview-card">
+            <div >
+                <h1 style="padding-bottom: 0%; margin-bottom: 0%; font-size:large; font-weight: bolder; width: 100%; text-align: right !important;">New</h1>
+            </div>
+          <mat-card-header>
+
+            <mat-card-subtitle>
+              <br>
+              <div *ngIf="descriptionRev?.new.length > 0">
+                <h2>Description</h2>
+                <div>{{descriptionRev?.new}}</div>
+              </div>
+                <div *ngIf="descriptionRev?.new.length == 0">
+                    <h2>No Description to Show</h2>
+                </div>
+            <br>
+            <br>
+   
+            </mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+        <br/>
+        <br/>
+        <mat-card class="preview-card">
+            <div style="padding-bottom: 0%; margin-bottom: 0%; ">
+                <h1 style="padding-bottom: 0%; margin-bottom: 0%; font-size:large; font-weight: bolder; width: 100%; text-align: right !important;">Old</h1>
+            </div>
+            <mat-card-header>
+              <mat-card-subtitle>
+                <br>
+                <div *ngIf="descriptionRev?.old.length > 0">
+                    <h2>Description</h2>
+                    <div>{{descriptionRev?.old}}</div>
+                </div>
+                  <div *ngIf="descriptionRev?.old.length == 0">
+                    <h2>No Description to Show</h2>
+                  </div>
+                <br>
+     
+              </mat-card-subtitle>
+            </mat-card-header>
+          </mat-card>
+      </div>
+  
+    </div>
+</mat-dialog-content>

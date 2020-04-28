@@ -14,6 +14,7 @@ import { PreviewModule } from './layouts/preview/preview.module';
 import { JwtInterceptor } from "src/app/shared/authentication/jwt.interceptor"
 import { from } from 'rxjs';
 import { RevisionsComponent } from './modules/revisions/revisions.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { RevisionsComponent } from './modules/revisions/revisions.component';
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true },
-    //fakeBackendProvider
+    //fakeBackendProvider,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

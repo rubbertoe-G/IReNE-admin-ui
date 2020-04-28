@@ -1,7 +1,9 @@
 export interface RevisionMeta {
     _id: string;
-    date: Date;
+    date: string;
     title: string;
     creator: string;
     revType: string;
+    index: number;
+    email: string;
   }

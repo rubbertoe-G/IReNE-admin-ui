@@ -19,13 +19,15 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { CollaboratorsService } from 'src/app/shared/services/collaborators.service';
 import { DocumentsService } from 'src/app/shared/services/documents.service';
 import { FormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RevisionsComponent } from 'src/app/modules/revisions/revisions.component';
+import { RevisionsComponent, CreationDialog, DescriptionDialog } from 'src/app/modules/revisions/revisions.component';
 import { MatSortModule } from '@angular/material/sort';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -36,6 +38,8 @@ import { MatSortModule } from '@angular/material/sort';
     AccessRequestsComponent,
     TagsComponent,
     RevisionsComponent,
+    CreationDialog,
+    DescriptionDialog,
   ],
   imports: [
     CommonModule,
@@ -56,6 +60,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatTooltipModule,
     MatSortModule,
     FlexLayoutModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     CollaboratorsService,

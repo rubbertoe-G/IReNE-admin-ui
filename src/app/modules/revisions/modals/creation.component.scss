@@ -1,0 +1,32 @@
+.spinner-container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .preview-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .preview-card {
+    padding-left: 2em;
+    /* 8in width */
+    width: 768px;
+  }
+  
+  .title-section{
+    display: flex; 
+    justify-content: flex-start space-between; 
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .title-box{
+    padding-left: 4em;
+  }

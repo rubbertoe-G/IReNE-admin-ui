@@ -1,14 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Injector } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { RevisionMeta } from 'src/app/shared/models/revision.model';
+import { CreationMeta } from 'src/app/shared/models/creation.model';
 import { RevisionService } from 'src/app/shared/services/revision.service';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import {MatDialog} from '@angular/material/dialog';
+import { DescriptionMeta } from 'src/app/shared/models/description.model';
+import { AnyARecord } from 'dns';
 
-
+var revisionSelected: RevisionMeta;
 @Component({
   selector: 'app-documents',
   templateUrl: './revisions.component.html',
@@ -17,19 +21,21 @@ import { MatPaginator } from '@angular/material/paginator';
 export class RevisionsComponent implements OnInit {
 
   dataSource: MatTableDataSource<RevisionMeta>;
-  displayedColumns: string[] = ['date', '_id', 'title', 'creator', 'revType','actions'];
+  displayedColumns: string[] = ['date', 'index', 'title', 'creator', 'revType'];
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(
-    private revisionService: RevisionService,
+    private injector: Injector,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
-    this.revisionService.getRevisions().add(() => {
-      this.dataSource =  new MatTableDataSource<RevisionMeta>(this.revisionService.revisions);
+    const revisionService = this.injector.get(RevisionService);
+    revisionService.getRevisions().add(() => {
+      this.dataSource =  new MatTableDataSource<RevisionMeta>(revisionService.revisions);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     });
@@ -40,10 +46,75 @@ export class RevisionsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   
-  previewDoc(docId: string) {
-    if(environment.testErrors)
-      throw Error('ERROR: Unable to preview document.')
-    this.router.navigate([`/preview/${docId}`])
+  previewRev(rev) {
+    revisionSelected=rev;
+    let activeComponent: any;
+    switch(revisionSelected.revType) { 
+      case "Creation": { 
+        activeComponent = CreationDialog; 
+        break; 
+      } 
+      case "Description": { 
+        activeComponent = DescriptionDialog; 
+        break; 
+      } 
+      default: { 
+         break; 
+      } 
+   } 
+    const dialogRef = this.dialog.open(activeComponent, {
+      width: '50%',
+      height: '65%'
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }
 
+
+@Component({
+selector: 'creation-dialog',
+templateUrl: './modals/creation.component.html',
+styleUrls: ['./modals/creation.component.scss']
+})
+export class CreationDialog implements OnInit{
+  creationRev: CreationMeta;
+  creatorEmail: string;
+  creatorFullName: string;
+  revisionSelected: RevisionMeta;
+
+  constructor(private injector: Injector){}
+
+ngOnInit(){
+    this.revisionSelected = revisionSelected;
+    const revisionService = this.injector.get(RevisionService);
+    revisionService.getCreationRevision(revisionSelected._id).add(() => {
+      this.creationRev = revisionService.creationRevision;
+      this.creatorEmail = revisionSelected.email;
+      this.creatorFullName = revisionSelected.creator;
+  });
+}
+
+}
+
+@Component({
+  selector: 'description-dialog',
+  templateUrl: './modals/description.component.html',
+  styleUrls: ['./modals/description.component.scss']
+  })
+  export class DescriptionDialog implements OnInit{
+    descriptionRev: DescriptionMeta;
+    revisionSelected: RevisionMeta;
+    constructor(private injector: Injector){}
+  
+  ngOnInit(){
+      this.revisionSelected = revisionSelected;
+      const revisionService = this.injector.get(RevisionService);
+      revisionService.getDescriptionRevision(revisionSelected._id, revisionSelected.index).add(() => {
+        this.descriptionRev = revisionService.descriptionRevision;
+    });
+  }
+  
+  }

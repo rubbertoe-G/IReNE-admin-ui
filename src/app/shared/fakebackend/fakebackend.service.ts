@@ -10,11 +10,15 @@ import { RequestMeta } from './../models/access-requests.model';
 import { AdminMeta } from './../models/admin.model';
 import {fakeCollaborators} from './fake-data/fake-collaborators';
 import { fakeDocuments } from './fake-data/fake-documents';
+import { fakeHist } from './fake-data/fake-revisions';
+import { RevisionMeta } from '../models/revision.model';
+import { element } from 'protractor';
 
 
 const dbCollaborators = fakeCollaborators;
 
 const dbDocuments: DocumentMeta[] = fakeDocuments;
+
 
 var tags: TagMeta[] = [
     {_id: 'ak9zI01ORNE9Okyziblp', tagItem: 'Electric'},
@@ -71,8 +75,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return acceptRequest();
                 case url.endsWith('/admin/access-requests/deny') && method === 'PUT':
                     return denyRequest();
-                    case url.endsWith('/admin/auth/login') && method === 'POST':
-                        return login();
+                case url.endsWith('/admin/auth/login') && method === 'POST':
+                    return login();
+                case url.endsWith('/admin/documents-hist/') && method === 'GET':
+                    return getAllHist();
+                case url.endsWith('/admin/documents-hist/revision') && method === 'POST':
+                    return getRevision();
                 default:
                     return next.handle(request);
             }
@@ -110,6 +118,53 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             });
             return of(new HttpResponse({
                 body: {'requests': responseValues},
+                status: 200
+            }));
+        }
+
+        function getAllHist(){
+            if (!isLoggedIn()) 
+                unauthorized();
+            var responseValues: RevisionMeta[] = [];
+            fakeHist.forEach(c => {
+                let data: RevisionMeta = {
+                    _id: '',
+                    date: '',
+                    title: '',
+                    creator: '',
+                    revType: '',
+                    index: 0,
+                    email: '',}
+                data._id=c._id;
+                var creator = dbCollaborators.find(element=> element._id==c.creatorId)
+                data.creator = creator.first_name + " " + creator.last_name;
+                data.email = creator.email;
+                for(let i = 0; i < c.revisions.length; i++){
+                        data.date=c.revisions[i].revDate;
+                        data.index = i;
+                        data.revType = c.revisions[i].revType;
+                        var doc = dbDocuments.find(element=> element._id==c.docId)
+                        data.title = doc.title;
+                        var clonedObj = { ...data }
+                        responseValues.push(clonedObj);
+                }
+                });
+            console.log(responseValues)
+            return of(new HttpResponse({
+                body: {'revision-history': responseValues},
+                status: 200
+            }));
+        }
+
+        function getRevision(){
+            if (!isLoggedIn()) 
+                unauthorized();
+            const index = body.get('index');
+            const revDocId = body.get('revDocId');
+            var revDoc = fakeHist.find(element => element._id == revDocId);
+            var revision = revDoc.revisions[index];
+            return of(new HttpResponse({
+                body: {'revision': revision.fields},
                 status: 200
             }));
         }
