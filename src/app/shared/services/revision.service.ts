@@ -4,12 +4,14 @@ import { RevisionMeta } from '../models/revision.model';
 import { DatePipe } from '@angular/common';
 import { CreationMeta } from '../models/creation.model';
 import { DescriptionMeta } from '../models/description.model';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RevisionService {
-  fakeBackend = 'http://localhost:5000/admin';
+  fakeBackend = environment.backend;
 
   revisions: RevisionMeta[];
   creationRevision: CreationMeta;

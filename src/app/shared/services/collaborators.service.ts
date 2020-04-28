@@ -10,7 +10,8 @@ import { environment } from 'src/environments/environment';
 })
 export class CollaboratorsService {
 
-  fakeBackend = `http://localhost:5000/admin`
+  fakeBackend = environment.backend;
+
   collaborators: CollaboratorMeta[];
 
   constructor(private http: HttpClient) {
