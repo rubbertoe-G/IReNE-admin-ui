@@ -6,6 +6,6 @@ export interface AuthorMeta{
   }
 
 export interface AuthorMetaDOC{
-  new: AuthorMeta;
-  old: AuthorMeta;
+  new: Array<AuthorMeta>;
+  old: Array<AuthorMeta>;
 }

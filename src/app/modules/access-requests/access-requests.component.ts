@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { RequestMeta } from 'src/app/shared/models/access-requests.model';
 import { AccessRequestsService } from 'src/app/shared/services/access-requests.service';
+import { MatPaginator } from '@angular/material/paginator';
 
 
 /**
@@ -20,6 +21,7 @@ export class AccessRequestsComponent implements OnInit {
   *Data to be displayed in the view.
   */
   dataSource = new MatTableDataSource<RequestMeta>();
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   
   /**
   *Column fields of the model to be displayed in the table.
@@ -41,6 +43,7 @@ export class AccessRequestsComponent implements OnInit {
   ngOnInit(): void {
     this.requestsService.getRequests().add(() => {
       this.dataSource = new MatTableDataSource<any>(this.requestsService.requests);
+      this.dataSource.paginator = this.paginator;
     });
   }
 

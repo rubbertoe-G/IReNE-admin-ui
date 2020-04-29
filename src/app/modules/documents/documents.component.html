@@ -12,8 +12,8 @@
   <mat-checkbox style="margin: 10px;" color="primary" (change)="filterPublished()" [(ngModel)]="checkPublished">Published</mat-checkbox>
   <mat-checkbox style="margin: 10px;" color="primary" (change)="filterUnpublished()" [(ngModel)]="checkUnpublished">Unpublished</mat-checkbox>
 
-  <div class="table-container">
-    <table mat-table [dataSource]="dataSource" class="example-container mat-elevation-z8">
+  <div class="table-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="example-container">
 
       <!-- title Column -->
       <ng-container matColumnDef="title">

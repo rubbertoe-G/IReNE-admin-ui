@@ -1,126 +1,92 @@
-<mat-dialog-content>
+<div>
+  <div style="padding: 2em;">
+    <header-component></header-component>
+    <mat-card class="preview-card">
+      <mat-card-header style="padding-top: 3em;">
+        <mat-card-title style="font-size: xx-large; font-weight: bolder;">{{creationRev?.title}}</mat-card-title>
+        <mat-card-subtitle>
+          <br>
+          <div *ngIf="creationRev?.description.length > 0">
+            <h2>Description</h2>
+            <div>{{creationRev?.description}}</div>
+          </div>
+          <br>
 
-    <div mat-dialog-content>
-      <div style="padding: 2em;">
-        <mat-dialog-content style="width:100%">
-          <table>
-                  <tr style="width: 100%; ">
-                    <td style="width: 50%; text-align: left; font-weight: normal;">
-                      <h4 style="display: inline-block; font-weight: bolder;">
-                          Date: 
-                      </h4>
-                      {{ revisionSelected?.date }}
-                      </td>
-                    <td style="width: 50%; text-align: left; font-weight: normal;">
-                      <h4 style="display: inline-block; font-weight: bolder;">
-                          Performed By: 
-                      </h4>
-                          {{ revisionSelected?.creator }} 
-                      <a style="font-weight: lighter;">
-                          ({{ revisionSelected?.email }})
-                      </a>
-                      </td>
-                  </tr>
-                  <tr>
-                  <td style="width: 50%; text-align: left; font-weight: normal;">
-                      <h4 style="display: inline-block; font-weight: bolder;">Revision #: </h4>
-                      {{ revisionSelected?.index }}
-                  </td>
-                  <td style="width: 50%; text-align: left; font-weight: normal;">
-                      <h4 style="display: inline-block; font-weight: bolder;">Performed On: </h4>
-                      {{ revisionSelected?.revType }}
-                  </td>
-                  </tr>
-          </table>
-          
-      </mat-dialog-content>
-        <mat-card class="preview-card">
-          <mat-card-header style="padding-top: 3em;">
-            <mat-card-title style="font-size: xx-large; font-weight: bolder;">{{creationRev?.title}}</mat-card-title>
-            <mat-card-subtitle>
-              <br>
-              <div *ngIf="creationRev?.description.length > 0">
-                <h2>Description</h2>
-                <div>{{creationRev?.description}}</div>
+          <p><b>Last Modified: </b>{{creationRev?.lastModificationDate}}</p>
+          <p><b>Incident Date: </b>{{creationRev?.incidentDate}}</p>
+
+          <br>
+
+          <p><b>Creator: </b>{{revisionSelected?.creator}} | {{revisionSelected?.email}}</p>
+
+          <div *ngIf="creationRev?.author.length > 0">
+            <p><b>Authors:</b></p>
+            <div class="title-section">
+              <div class="title-box" *ngFor="let author of creationRev?.author">
+                <p>{{author.firstName}} {{author.lastName}}</p>
+                <p>{{author.email}}</p>
+                <p>{{author.faculty}}</p>
               </div>
-              <br>
-  
-              <p><b>Last Modified: </b>{{creationRev?.lastModificationDate}}</p>
-              <p><b>Incident Date: </b>{{creationRev?.incidentDate}}</p>
-  
-              <br>
-  
-              <p><b>Creator: </b>{{revisionSelected?.creator}} | {{revisionSelected?.email}}</p>
-  
-              <div *ngIf="creationRev?.author.length > 0">
-                <p><b>Authors:</b></p>
-                <div class="title-section">
-                  <div class="title-box" *ngFor="let author of creationRev?.author">
-                    <p>{{author.firstName}} {{author.lastName}}</p>
-                    <p>{{author.email}}</p>
-                    <p>{{author.faculty}}</p>
-                  </div>
-                </div>
-              </div>
-  
-  
-              <div *ngIf="creationRev?.infrasDocList.length > 0">
-                <p><b>Infrastructures:</b></p>
-                <ul>
-                  <li *ngFor="let infra of creationRev?.infrasDocList">
-                    {{infra}}
-                  </li>
-                </ul>
-              </div>
-  
-              <div *ngIf="creationRev?.damageDocList.length > 0">
-                <p><b>Damages:</b></p>
-                <ul>
-                  <li *ngFor="let damage of creationRev?.damageDocList">
-                    {{damage}}
-                  </li>
-                </ul>
-              </div>
-  
-              <br>
-  
-              <div *ngIf="creationRev?.actor.length > 0">
-                <p><b>Actors:</b></p>
-                <div class="title-section">
-                  <div class="title-box" *ngFor="let actor of creationRev?.actor">
-                    <p>{{actor.firstName}} {{actor.lastName}}</p>
-                    <p>{{actor.role}}</p>
-                  </div>
-                </div>
-              </div>
-  
-              <br>
-  
-              <div *ngIf="creationRev?.tagsDoc.length > 0">
-                <p><b>Tags:</b></p>
-                <div class="title-section">
-                  <div class="title-box" *ngFor="let tag of creationRev?.tagsDoc">
-                    <p>{{tag}}</p>
-                  </div>
-                </div>
-              </div>
-  
-            </mat-card-subtitle>
-          </mat-card-header>
-        </mat-card>
-      </div>
-  
-  
-  
-      <div style="padding: 2em;" *ngFor="let section of creationRev?.section">
-        <mat-card class="preview-card">
-          <mat-card-content>
-            <div>
-              <h1 style="font-weight: bolder;">{{section.title}}</h1>
-              <div class="ck-content" [innerHTML]="section.content"></div>
             </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
-</mat-dialog-content>
+          </div>
+
+
+          <div *ngIf="creationRev?.infrasDocList.length > 0">
+            <p><b>Infrastructures:</b></p>
+            <ul>
+              <li *ngFor="let infra of creationRev?.infrasDocList">
+                {{infra}}
+              </li>
+            </ul>
+          </div>
+
+          <div *ngIf="creationRev?.damageDocList.length > 0">
+            <p><b>Damages:</b></p>
+            <ul>
+              <li *ngFor="let damage of creationRev?.damageDocList">
+                {{damage}}
+              </li>
+            </ul>
+          </div>
+
+          <br>
+
+          <div *ngIf="creationRev?.actor.length > 0">
+            <p><b>Actors:</b></p>
+            <div class="title-section">
+              <div class="title-box" *ngFor="let actor of creationRev?.actor">
+                <p>{{actor.firstName}} {{actor.lastName}}</p>
+                <p>{{actor.role}}</p>
+              </div>
+            </div>
+          </div>
+
+          <br>
+
+          <div *ngIf="creationRev?.tagsDoc.length > 0">
+            <p><b>Tags:</b></p>
+            <div class="title-section">
+              <div class="title-box" *ngFor="let tag of creationRev?.tagsDoc">
+                <p>{{tag}}</p>
+              </div>
+            </div>
+          </div>
+
+        </mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+  </div>
+
+
+
+  <div style="padding: 2em;" *ngFor="let section of creationRev?.section">
+    <mat-card class="preview-card">
+      <mat-card-content>
+        <div>
+          <h1 style="font-weight: bolder;">{{section.title}}</h1>
+          <div class="ck-content" [innerHTML]="section.content"></div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
