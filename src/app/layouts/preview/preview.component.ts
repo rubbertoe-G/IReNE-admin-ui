@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxExtendedPdfViewerService } from 'ngx-extended-pdf-viewer';
 import { base64PDF } from '../../shared/fakebackend/fake-data/samplePdf';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-preview',
@@ -12,7 +13,7 @@ import { base64PDF } from '../../shared/fakebackend/fake-data/samplePdf';
 export class PreviewComponent implements OnInit {
 
   base64Src = '';
-  fakeBackend = 'http://localhost:4200/admin/view'
+  fakeBackend = environment.backend
   loadingDocument = true;
 
   constructor(

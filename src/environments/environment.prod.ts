@@ -2,5 +2,5 @@ export const environment = {
   production: true,
   testErrorBackend: false,
   testErrors: false,
-  backend: 'http://localhost:5000/admin'
+  backend: 'https://test.irene.uprm.edu/admin-server/admin'
 };
