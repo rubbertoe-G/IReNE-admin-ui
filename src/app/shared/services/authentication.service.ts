@@ -53,7 +53,7 @@ export class AuthenticationService {
         const formData = new FormData();
         formData.append('username', username);
         formData.append('password', password);
-        return this.http.post<any>(`${this.fakeBackend}/auth/login`, formData)
+        return this.http.post<any>(`http://localhost:5000/admin/auth/login`, formData)
             .pipe(map(token => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 var parts = token['access_token'].split('.');
