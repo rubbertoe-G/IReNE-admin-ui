@@ -1,17 +1,13 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>
-      <img src="assets/app_logo_white.png" alt="IReNE Logo" style="width: 30%;">
-    </span>
     
-    <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
-      <ul fxLayout="row" fxLayoutGap="20px">
-          <span>Admin</span>
-          <button mat-icon-button matTooltip="Logout" color="secondary" (click)="logout()">
-            <mat-icon>exit_to_app</mat-icon>
-          </button>
-
-      </ul>
-    </div>
+    <img src="assets/app_logo_white.png" alt="IReNE Logo" width="50" height="50">
+    <h1 style="padding-left: 1em;">Admin Dashboard</h1>
+    <span class="spacer"></span>
+    
+    <button mat-icon-button matTooltip="Logout" color="secondary" (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+    
   </mat-toolbar-row>
 </mat-toolbar>

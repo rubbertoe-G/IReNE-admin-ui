@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TagMeta } from '../models/tags.model';
+import {environment} from '../../../environments/environment';
 
 
 /**
@@ -14,7 +15,7 @@ export class TagsService {
 /**
  * Backend ip address
 */
-  fakeBackend = 'http://localhost:5000/admin';
+  fakeBackend = environment.backend;
 
   /**
   * Variable to hold the tags received by the backend.
