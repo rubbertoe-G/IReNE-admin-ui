@@ -4,7 +4,7 @@
 }
 
 .table-container{
-  height: 35em;
+  height: 65vh;
   overflow: auto;
 }
 
@@ -26,4 +26,12 @@ table {
 .center-cell {
   text-align: center;
   justify-content:center;
+}
+
+.center-screen{
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }

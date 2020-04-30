@@ -16,6 +16,7 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./access-requests.component.scss']
 })
 export class AccessRequestsComponent implements OnInit {
+  loading = true;
 
   /**
   *Data to be displayed in the view.
@@ -44,6 +45,7 @@ export class AccessRequestsComponent implements OnInit {
     this.requestsService.getRequests().add(() => {
       this.dataSource = new MatTableDataSource<any>(this.requestsService.requests);
       this.dataSource.paginator = this.paginator;
+      this.loading = false;
     });
   }
 

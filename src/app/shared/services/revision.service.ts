@@ -14,12 +14,14 @@ import { IncidentMeta } from '../models/incident.model';
 import { AuthorMetaDOC, AuthorMeta } from '../models/author.model';
 import { ActorMetaDOC, ActorMeta } from '../models/actor.model';
 import { SectionMetaDOC } from '../models/section.model';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RevisionService {
-  fakeBackend = 'http://localhost:5000/admin';
+  fakeBackend = environment.backend;
 
   revisions: RevisionMeta[];
   creationRevision: CreationMeta;

@@ -15,6 +15,8 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./tags.component.scss']
 })
 export class TagsComponent implements OnInit {
+
+  loading = true;
   
   /**
   *Data to be displayed in the view.
@@ -42,6 +44,7 @@ export class TagsComponent implements OnInit {
     this.tagsService.getTags().add(() => {
       this.dataSource = new MatTableDataSource<any>(this.tagsService.tags);
       this.dataSource.paginator = this.paginator;
+      this.loading= false;
     });
   }
 

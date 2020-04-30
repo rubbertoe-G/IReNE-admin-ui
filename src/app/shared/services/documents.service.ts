@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class DocumentsService {
-  fakeBackend = 'http://localhost:5000/admin';
+  fakeBackend = environment.backend;
 
   documents: DocumentMeta[];
 

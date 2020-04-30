@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AdminMeta } from '../models/admin.model';
+import {environment} from '../../../environments/environment';
 
 /**
  * Service that sends the requests needed to the backend server in order to perform the necessary functions required for the Authentication process to work.
@@ -22,7 +23,7 @@ export class AuthenticationService {
     /**
      * Variable that holds the ip address of the backend.
      */
-    private fakeBackend = 'http://localhost:5000/admin';
+    private fakeBackend = environment.backend;
 
     /**
      * Constructor that initializes the current user variables

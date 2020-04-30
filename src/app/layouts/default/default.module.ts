@@ -29,6 +29,7 @@ import { RevisionsComponent, CreationDialog, DescriptionDialog, TitleDialog, Tim
   DamageDialog, LocationDialog, TagDialog, IncidentDialog, AuthorDialog, ActorDialog, SectionDialog, HeaderComponent } from 'src/app/modules/revisions/revisions.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatChipsModule} from '@angular/material/chips';
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     FlexLayoutModule,
     MatDialogModule,
     MatProgressSpinnerModule,
+    MatChipsModule
   ],
   providers: [
     CollaboratorsService,

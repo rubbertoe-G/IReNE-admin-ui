@@ -2,7 +2,10 @@
   max-height: 590px;
   overflow: auto;
 }
-
+.table-container{
+  height: 65vh;
+  overflow: auto;
+}
 table {
   width: 100%;
 }
@@ -10,4 +13,16 @@ table {
 .header-color-size{
   font-size: medium;
   color: black;
+}
+
+.center-cell {
+  text-align: center;
+  justify-content:center;
+}
+
+.center-screen{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }

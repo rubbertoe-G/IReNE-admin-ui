@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RequestMeta } from '../models/access-requests.model';
-
+import {environment} from '../../../environments/environment';
 
 /**
  * Service that sends the requests needed to the backend server in order to perform the necessary functions required for the Access Request module.
@@ -14,7 +14,7 @@ export class AccessRequestsService {
   /**
   * Variable that holds the ip address of the backend.
   */
-  fakeBackend = 'http://localhost:5000/admin';
+  fakeBackend = environment.backend;
 
   /**
   * Variable that holds the access requests sent by the server,

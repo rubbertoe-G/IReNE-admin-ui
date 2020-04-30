@@ -44,3 +44,10 @@ table {
   font-size: medium;
   color: black;
 }
+
+.center-screen{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
