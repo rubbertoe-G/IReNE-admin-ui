@@ -22,7 +22,7 @@ export class DocumentsService {
      * Get all documents with their needed data.
      */
 
-     return this.http.get(`${this.fakeBackend}/documents/`).subscribe(
+     return this.http.get(`${environment.backend}/documents/`).subscribe(
        (response) => {
          this.documents = response['documents'];
        }
@@ -36,7 +36,7 @@ export class DocumentsService {
     const formData = new FormData();
     formData.append('docID', id);
 
-    return this.http.put(`${this.fakeBackend}/documents/publish`, formData).subscribe(
+    return this.http.put(`${environment.backend}/documents/publish`, formData).subscribe(
       (response) => {
         this.documents.forEach(e => {
           if(e._id === response['docID']){
@@ -55,7 +55,7 @@ export class DocumentsService {
     const formData = new FormData();
     formData.append('docID', id);
 
-    return this.http.put(`${this.fakeBackend}/documents/unpublish`, formData).subscribe(
+    return this.http.put(`${environment.backend}/documents/unpublish`, formData).subscribe(
       (response) => {
         this.documents.forEach(e => {
           if(e._id === response['docID']){

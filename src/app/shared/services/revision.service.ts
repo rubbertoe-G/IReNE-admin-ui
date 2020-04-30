@@ -46,7 +46,7 @@ export class RevisionService {
      * Get all documents history with their needed data.
      */
 
-     return this.http.get(`${this.fakeBackend}/documents-hist/`).subscribe(
+     return this.http.get(`${environment.backend}/documents-hist/`).subscribe(
        (response) => {
          this.revisions = response['revision-history'];
        }
@@ -57,7 +57,7 @@ export class RevisionService {
     const formData = new FormData();
     formData.append('index', '0');
     formData.append('revDocId', docId);
-    return this.http.post(`${this.fakeBackend}/documents-hist/revision`, formData).subscribe(
+    return this.http.post(`${environment.backend}/documents-hist/revision`, formData).subscribe(
       (response: CreationMeta) => {
         this.creationRevision = response['revision']
         this.creationRevision.incidentDate = this.datePipe.transform(response['revision'].incidentDate, 'yyyy-MM-dd');
@@ -71,7 +71,7 @@ export class RevisionService {
     const formData = new FormData();
     formData.append('index', index);
     formData.append('revDocId', docId);
-    return this.http.post(`${this.fakeBackend}/documents-hist/revision`, formData).subscribe(
+    return this.http.post(`${environment.backend}/documents-hist/revision`, formData).subscribe(
       (response: DescriptionMeta) => {
         this.descriptionRevision = response['revision'];
       }
@@ -82,7 +82,7 @@ export class RevisionService {
     const formData = new FormData();
     formData.append('index', index);
     formData.append('revDocId', docId);
-    return this.http.post(`${this.fakeBackend}/documents-hist/revision`, formData).subscribe(
+    return this.http.post(`${environment.backend}/documents-hist/revision`, formData).subscribe(
       (response: TitleMeta) => {
         this.titleRevision = response['revision'];
       }
@@ -93,7 +93,7 @@ export class RevisionService {
     const formData = new FormData();
     formData.append('index', index);
     formData.append('revDocId', docId);
-    return this.http.post(`${this.fakeBackend}/documents-hist/revision`, formData).subscribe(
+    return this.http.post(`${environment.backend}/documents-hist/revision`, formData).subscribe(
       (response: TitleMeta) => {
         this.timelineRevision = response['revision'];
       }
@@ -105,7 +105,7 @@ export class RevisionService {
     const formData = new FormData();
     formData.append('index', index);
     formData.append('revDocId', docId);
-    return this.http.post(`${this.fakeBackend}/documents-hist/revision`, formData).subscribe(
+    return this.http.post(`${environment.backend}/documents-hist/revision`, formData).subscribe(
       (response: InfrastructureMeta) => {
         this.infrastructureRevision = response['revision'];
       }
@@ -116,7 +116,7 @@ export class RevisionService {
     const formData = new FormData();
     formData.append('index', index);
     formData.append('revDocId', docId);
-    return this.http.post(`${this.fakeBackend}/documents-hist/revision`, formData).subscribe(
+    return this.http.post(`${environment.backend}/documents-hist/revision`, formData).subscribe(
       (response: DamageMeta) => {
         this.damageRevision = response['revision'];
       }
@@ -127,7 +127,7 @@ export class RevisionService {
     const formData = new FormData();
     formData.append('index', index);
     formData.append('revDocId', docId);
-    return this.http.post(`${this.fakeBackend}/documents-hist/revision`, formData).subscribe(
+    return this.http.post(`${environment.backend}/documents-hist/revision`, formData).subscribe(
       (response: LocationMeta) => {
         this.locationRevision = response['revision'];
       }
@@ -138,7 +138,7 @@ export class RevisionService {
     const formData = new FormData();
     formData.append('index', index);
     formData.append('revDocId', docId);
-    return this.http.post(`${this.fakeBackend}/documents-hist/revision`, formData).subscribe(
+    return this.http.post(`${environment.backend}/documents-hist/revision`, formData).subscribe(
       (response: TagMeta) => {
         this.tagRevision = response['revision'];
       }
@@ -149,7 +149,7 @@ export class RevisionService {
     const formData = new FormData();
     formData.append('index', index);
     formData.append('revDocId', docId);
-    return this.http.post(`${this.fakeBackend}/documents-hist/revision`, formData).subscribe(
+    return this.http.post(`${environment.backend}/documents-hist/revision`, formData).subscribe(
       (response: IncidentMeta) => {
         this.incidentRevision = response['revision'];
       }
@@ -160,7 +160,7 @@ export class RevisionService {
     const formData = new FormData();
     formData.append('index', index);
     formData.append('revDocId', docId);
-    return this.http.post(`${this.fakeBackend}/documents-hist/revision`, formData).subscribe(
+    return this.http.post(`${environment.backend}/documents-hist/revision`, formData).subscribe(
       (response: AuthorMetaDOC) => {
         this.authorRevision = response['revision'];
       }
@@ -171,7 +171,7 @@ export class RevisionService {
     const formData = new FormData();
     formData.append('index', index);
     formData.append('revDocId', docId);
-    return this.http.post(`${this.fakeBackend}/documents-hist/revision`, formData).subscribe(
+    return this.http.post(`${environment.backend}/documents-hist/revision`, formData).subscribe(
       (response: ActorMetaDOC) => {
         this.actorRevision = response['revision'];
       }
@@ -183,7 +183,7 @@ export class RevisionService {
     const formData = new FormData();
     formData.append('index', index);
     formData.append('revDocId', docId);
-    return this.http.post(`${this.fakeBackend}/documents-hist/revision`, formData).subscribe(
+    return this.http.post(`${environment.backend}/documents-hist/revision`, formData).subscribe(
       (response: SectionMetaDOC) => {
         this.sectionRevision = response['revision'];
       }

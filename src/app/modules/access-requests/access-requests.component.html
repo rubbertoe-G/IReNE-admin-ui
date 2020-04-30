@@ -45,15 +45,15 @@
           mat-icon-button 
           matTooltip="Approve Access Request"
           matTooltipPosition="right"
-          style="color: green;" (click)="acceptAccessRequest(element)">
-            <mat-icon>check</mat-icon>
+          color="primary" (click)="acceptAccessRequest(element)">
+            <mat-icon>check_circle</mat-icon>
           </button>
           <button 
           mat-icon-button
           matTooltip="Deny Access Request"
           matTooltipPosition="right"
           color="warn" (click)="denyAccessRequest(element)">
-            <mat-icon>close</mat-icon>
+            <mat-icon>remove_circle</mat-icon>
           </button>
         </td>
       </ng-container>

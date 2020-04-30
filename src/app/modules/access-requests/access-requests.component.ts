@@ -73,8 +73,7 @@ export class AccessRequestsComponent implements OnInit {
       showCancelButton: true,
       showConfirmButton: true,
       showLoaderOnConfirm: true,
-      confirmButtonColor: 'green',
-      cancelButtonColor: 'black',
+      confirmButtonColor: '#37474f'
     }).then((result) => {
       if (result.value) {
         this.requestsService.denyRequest(request._id.toString()).subscribe(
@@ -103,8 +102,7 @@ export class AccessRequestsComponent implements OnInit {
       showCancelButton: true,
       showConfirmButton: true,
       showLoaderOnConfirm: true,
-      confirmButtonColor: 'green',
-      cancelButtonColor: 'black',
+      confirmButtonColor: '#37474f'
     }).then((result) => {
       if (result.value) {
         this.requestsService.acceptRequest(request._id.toString()).subscribe(

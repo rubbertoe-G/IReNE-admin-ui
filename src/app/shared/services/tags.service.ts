@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TagMeta } from '../models/tags.model';
-import { environment } from 'src/environments/environment';
+import {environment} from '../../../environments/environment';
 
 
 /**
@@ -49,6 +49,6 @@ export class TagsService {
   removeTag(id: string) {
     const formData = new FormData();
     formData.append('tagID', id);
-    return this.http.put(`${this.fakeBackend}/tags/remove`, formData);
+    return this.http.put(`${environment.backend}/tags/remove`, formData);
   }
 }
