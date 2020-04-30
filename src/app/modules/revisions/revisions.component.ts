@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Injector } from '@angular/core';
+import { Component, OnInit, ViewChild, Injector, ElementRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -20,6 +20,9 @@ import { AuthorMetaDOC } from 'src/app/shared/models/author.model';
 import { ActorMetaDOC } from 'src/app/shared/models/actor.model';
 import { SectionMetaDOC } from 'src/app/shared/models/section.model';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { RevisionsDataSource } from 'src/app/shared/services/revisions.datasource';
+import { fromEvent, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 var revisionSelected: RevisionMeta;
 @Component({
@@ -29,8 +32,9 @@ var revisionSelected: RevisionMeta;
 })
 export class RevisionsComponent implements OnInit {
 
-  dataSource: MatTableDataSource<RevisionMeta>;
+  dataSource: RevisionsDataSource;
   displayedColumns: string[] = ['date', 'index', 'title', 'creator', 'revType'];
+  @ViewChild('input') input: ElementRef;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -41,19 +45,42 @@ export class RevisionsComponent implements OnInit {
 
   ngOnInit(): void {
     const revisionService = this.injector.get(RevisionService);
-    revisionService.getRevisions().add(() => {
-      this.dataSource =  new MatTableDataSource<RevisionMeta>(revisionService.revisions);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    });
+    this.dataSource =  new RevisionsDataSource(revisionService);
+    this.dataSource.loadRevisions('date','', 'desc', 0, 10);
   }
 
-  textFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  ngAfterViewInit() {
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    fromEvent(this.input.nativeElement,'keyup')
+        .pipe(
+            debounceTime(150),
+            distinctUntilChanged(),
+            tap(() => {
+                this.paginator.pageIndex = 0;
+
+                this.loadRevisionsPage();
+            })
+        )
+        .subscribe();
+
+    merge(this.sort.sortChange, this.paginator.page)
+    .pipe(
+        tap(() => this.loadRevisionsPage())
+    )
+    .subscribe();
   }
-  
+
+  loadRevisionsPage() {
+      this.dataSource.loadRevisions(
+          this.sort.active,
+          this.input.nativeElement.value,
+          this.sort.direction,
+          this.paginator.pageIndex,
+          this.paginator.pageSize);
+  }
+
   previewRev(rev) {
+    console.log("pag1"+this.dataSource.loading$)
     revisionSelected=rev;
     let activeComponent: any;
     switch(revisionSelected.revType) { 

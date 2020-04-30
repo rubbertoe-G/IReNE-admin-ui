@@ -1,7 +1,7 @@
 import { base64PDF } from './fake-data/samplePdf';
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpErrorResponse, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, ObjectUnsubscribedError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import { DocumentMeta } from '../models/documents.model';
 import { CollaboratorMeta } from './../models/collaborators.model';
@@ -77,8 +77,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return denyRequest();
                 case url.endsWith('/admin/auth/login') && method === 'POST':
                     return login();
-                case url.endsWith('/admin/documents-hist/') && method === 'GET':
-                    return getAllHist();
+                case url.endsWith('/admin/documents-hist/') && method === 'POST':
+                    return getAllHistServerSide();
                 case url.endsWith('/admin/documents-hist/revision') && method === 'POST':
                     return getRevision();
                 default:
@@ -118,6 +118,63 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             });
             return of(new HttpResponse({
                 body: {'requests': responseValues},
+                status: 200
+            }));
+        }
+
+        function getAllHistServerSide(){
+            if (!isLoggedIn()) 
+                unauthorized();
+            var responseValues: RevisionMeta[] = [];
+            const sortSubject = body.get('sortSubject');
+            const filter = body.get('filter');
+            const sortOrder = body.get('sortOrder');
+            const pageNumber: number = parseInt(body.get('pageNumber'));
+            const pageSize: number = parseInt(body.get('pageSize'));
+            var invertValue = 1;
+            if(sortOrder == 'desc')
+                {invertValue = -1;}
+
+            fakeHist.forEach(c => {
+                let data: RevisionMeta = {
+                    _id: '',
+                    date: '',
+                    title: '',
+                    creator: '',
+                    revType: '',
+                    index: 0,
+                    email: '',}
+                data._id=c._id;
+                var creator = dbCollaborators.find(element=> element._id==c.creatorId)
+                data.creator = creator.first_name + " " + creator.last_name;
+                data.email = creator.email;
+                for(let i = 0; i < c.revisions.length; i++){
+                        data.date=c.revisions[i].revDate;
+                        data.index = i;
+                        data.revType = c.revisions[i].revType;
+                        var doc = dbDocuments.find(element=> element._id==c.docId)
+                        data.title = doc.title;
+                        var clonedObj = { ...data }
+                        responseValues.push(clonedObj);
+                }
+                });
+            
+            responseValues.sort((a, b) => invertValue*a[sortSubject].localeCompare(b[sortSubject]));
+            if(filter !==''){
+                responseValues= responseValues.filter(function(element) {
+
+                    return ((element.date.toLocaleLowerCase().indexOf(filter.toLowerCase())>=0)
+                    ||  (element.index.toString().indexOf(filter.toLowerCase())>=0) 
+                    || (element.title.toString().toLowerCase().indexOf(filter.toLowerCase())>=0) 
+                    || (element.creator.toLocaleLowerCase().indexOf(filter.toLowerCase())>=0)
+                    || (element.revType.toLocaleLowerCase().indexOf(filter.toLowerCase())>=0))
+                    });
+            }
+            var left = responseValues.length;
+            responseValues = responseValues.slice(pageNumber*pageSize, (pageNumber*pageSize) + pageSize);
+            return of(new HttpResponse({
+                body: {'revision-history': responseValues,
+            'revisions-length': left},
                 status: 200
             }));
         }
