@@ -1,8 +1,5 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <button mat-icon-button (click)="toggleSideBar()">
-      <mat-icon>menu</mat-icon>
-    </button>
     <span>
       <img src="assets/app_logo_white.png" alt="IReNE Logo" style="width: 30%;">
     </span>
@@ -10,8 +7,8 @@
     <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
       <ul fxLayout="row" fxLayoutGap="20px">
           <span>Admin</span>
-          <button mat-raised-button matTooltip="Logout" color="secondary" (click)="logout()">
-            Logout
+          <button mat-icon-button matTooltip="Logout" color="secondary" (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
           </button>
 
       </ul>

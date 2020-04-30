@@ -10,12 +10,18 @@
 
         <mat-card-subtitle>
             <br>
-            <div *ngIf="descriptionRev?.new.length > 0">
-            <h2>Description</h2>
-            <div>{{descriptionRev?.new}}</div>
+            <div *ngIf="infrastructureRev?.new.length > 0">
+            <h2>Infrastructure</h2>
+            <div>
+                <ul>
+                    <li *ngFor="let infra of infrastructureRev?.new">
+                    {{infra}}
+                    </li>
+                </ul>
             </div>
-            <div *ngIf="descriptionRev?.new.length == 0">
-                <h2>No New Description to Show</h2>
+        </div>
+            <div *ngIf="infrastructureRev?.new.length == 0">
+                <h2>No New Infrastructure to Show</h2>
             </div>
         <br>
         <br>
@@ -32,12 +38,18 @@
         <mat-card-header>
             <mat-card-subtitle>
             <br>
-            <div *ngIf="descriptionRev?.old.length > 0">
-                <h2>Description</h2>
-                <div>{{descriptionRev?.old}}</div>
+            <div *ngIf="infrastructureRev?.old.length > 0">
+                <h2>Infrastructure</h2>
+                <div>
+                    <ul>
+                        <li *ngFor="let infra of infrastructureRev?.old">
+                        {{infra}}
+                        </li>
+                    </ul>
+                </div>
             </div>
-                <div *ngIf="descriptionRev?.old.length == 0">
-                <h2>No Old Description to Show</h2>
+                <div *ngIf="infrastructureRev?.old.length == 0">
+                <h2>No Old Infrastructure to Show</h2>
                 </div>
             <br>
     
@@ -45,4 +57,5 @@
         </mat-card-header>
         </mat-card>
     </div>
+
 </div>

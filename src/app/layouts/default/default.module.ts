@@ -25,9 +25,11 @@ import { CollaboratorsService } from 'src/app/shared/services/collaborators.serv
 import { DocumentsService } from 'src/app/shared/services/documents.service';
 import { FormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RevisionsComponent, CreationDialog, DescriptionDialog } from 'src/app/modules/revisions/revisions.component';
+import { RevisionsComponent, CreationDialog, DescriptionDialog, TitleDialog, TimelineDialog, InfrastructureDialog, 
+  DamageDialog, LocationDialog, TagDialog, IncidentDialog, AuthorDialog, ActorDialog, SectionDialog, HeaderComponent } from 'src/app/modules/revisions/revisions.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatChipsModule} from '@angular/material/chips';
 
 
 @NgModule({
@@ -40,6 +42,17 @@ import { MatDialogModule } from '@angular/material/dialog';
     RevisionsComponent,
     CreationDialog,
     DescriptionDialog,
+    TitleDialog,
+    TimelineDialog,
+    InfrastructureDialog,
+    DamageDialog,
+    LocationDialog,
+    TagDialog,
+    IncidentDialog,
+    AuthorDialog,
+    ActorDialog,
+    SectionDialog,
+    HeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -62,6 +75,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     FlexLayoutModule,
     MatDialogModule,
     MatProgressSpinnerModule,
+    MatChipsModule
   ],
   providers: [
     CollaboratorsService,

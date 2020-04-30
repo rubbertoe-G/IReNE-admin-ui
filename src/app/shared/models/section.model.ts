@@ -4,7 +4,7 @@ export interface SectionMeta{
 }
 
 export interface SectionMetaDOC{
-    new: SectionMeta;
-    old: SectionMeta;
+    new: any;
+    old: any;
   }
   

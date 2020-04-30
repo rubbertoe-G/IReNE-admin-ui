@@ -8,8 +8,8 @@
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
   
-    <div class="table-container">
-      <table mat-table [dataSource]="dataSource" matSort matSortActive="date" matSortDirection="desc" class="mat-elevation-z8">
+    <div class="table-container mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort matSortActive="date" matSortDirection="desc" >
         <!-- date Column -->
         <ng-container matColumnDef="date">
             <th class="header-color-size" mat-header-cell mat-sort-header *matHeaderCellDef> Date </th>
@@ -53,7 +53,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row (click)="previewRev(element)" *matRowDef="let element; columns: displayedColumns;"></tr>
       </table>
-      <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[8, 16]" showFirstLastButtons></mat-paginator>
     </div>
     
   </div>

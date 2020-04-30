@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { TagMeta } from 'src/app/shared/models/tags.model';
 import { TagsService } from 'src/app/shared/services/tags.service';
+import { MatPaginator } from '@angular/material/paginator';
 
 /**
 * Component that manages the operations concerning the tags in the system.
@@ -14,11 +15,14 @@ import { TagsService } from 'src/app/shared/services/tags.service';
   styleUrls: ['./tags.component.scss']
 })
 export class TagsComponent implements OnInit {
+
+  loading = true;
   
   /**
   *Data to be displayed in the view.
   */
   dataSource = new MatTableDataSource<TagMeta>();
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   /**
   *Column fields of the model to be displayed in the table.
@@ -39,6 +43,8 @@ export class TagsComponent implements OnInit {
   ngOnInit(): void {
     this.tagsService.getTags().add(() => {
       this.dataSource = new MatTableDataSource<any>(this.tagsService.tags);
+      this.dataSource.paginator = this.paginator;
+      this.loading= false;
     });
   }
 

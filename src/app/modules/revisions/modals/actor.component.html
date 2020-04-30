@@ -1,0 +1,87 @@
+<div>
+    <div style="padding: 2em;">
+    <header-component></header-component>
+    
+    <mat-card class="preview-card">
+        <div >
+            <h1 style="padding-bottom: 0%; margin-bottom: 0%; font-size:large; font-weight: bolder; width: 100%; text-align: right !important;">New</h1>
+        </div>
+        <mat-card-header>
+
+        <mat-card-subtitle>
+            <br>
+            <div *ngIf="actorRev?.new.length > 0">
+            <h2>Actor</h2>
+            <div>
+                <table *ngFor="let actor of actorRev?.new; index as i" >
+                    <tr style="width: 100%; ">
+                        <td style="width: 50%; text-align: left; font-weight: normal;">
+                            <h4 style="display: inline; font-weight: bolder;">
+                                Name: 
+                            </h4>
+                            {{ actor.actor_FN }} {{actor.actor_LN}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%; text-align: left; font-weight: normal;">
+                            <h4 style="display: inline; font-weight: bolder;">
+                                Role: 
+                            </h4>
+                                {{ actor.role }} 
+                        </td>
+                    </tr>
+            </table>
+            </div>
+        </div>
+            <div *ngIf="actorRev?.new.length == 0">
+                <h2>No New Actors to Show</h2>
+            </div>
+        <br>
+        <br>
+
+        </mat-card-subtitle>
+        </mat-card-header>
+    </mat-card>
+    <br/>
+    <br/>
+    <mat-card class="preview-card">
+        <div style="padding-bottom: 0%; margin-bottom: 0%; ">
+            <h1 style="padding-bottom: 0%; margin-bottom: 0%; font-size:large; font-weight: bolder; width: 100%; text-align: right !important;">Old</h1>
+        </div>
+        <mat-card-header>
+            <mat-card-subtitle>
+            <br>
+            <div *ngIf="actorRev?.old.length > 0">
+                <h2>Actor</h2>
+                <div>
+                    <table *ngFor="let actor of actorRev?.old; index as i" >
+                        <tr style="width: 100%; ">
+                            <td style="width: 50%; text-align: left; font-weight: normal;">
+                                <h4 style="display: inline; font-weight: bolder;">
+                                    Name: 
+                                </h4>
+                                {{ actor.actor_FN }} {{actor.actor_LN}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%; text-align: left; font-weight: normal;">
+                                <h4 style="display: inline; font-weight: bolder;">
+                                    Role: 
+                                </h4>
+                                    {{ actor.role }} 
+                            </td>
+                        </tr>
+                </table>
+                </div>
+            </div>
+                <div *ngIf="actorRev?.old.length == 0">
+                <h2>No Old Actors to Show</h2>
+                </div>
+            <br>
+    
+            </mat-card-subtitle>
+        </mat-card-header>
+        </mat-card>
+    </div>
+
+</div>

@@ -5,6 +5,6 @@ export interface ActorMeta{
   }
 
 export interface ActorMetaDOC{
-  new: ActorMeta;
-  old: ActorMeta;
+  new: Array<ActorMeta>;
+  old: Array<ActorMeta>;
 }

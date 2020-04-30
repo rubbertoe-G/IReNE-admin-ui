@@ -149,7 +149,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         responseValues.push(clonedObj);
                 }
                 });
-            console.log(responseValues)
             return of(new HttpResponse({
                 body: {'revision-history': responseValues},
                 status: 200

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 
 import Swal from 'sweetalert2';
@@ -39,21 +39,23 @@ export class CollaboratorComponent implements OnInit {
    * Hold the state value of the "Unbanned" checkbox.
    */
   checkUnbanned = false;
+
+  loading = true;
   
   constructor(
     private collaboratorService: CollaboratorsService,
     private snackBar: MatSnackBar
     ) { }
 
-  /**
-   * Peform http request to retrieve all the approved collaborators.
-   */
+  
   ngOnInit(): void {
     this.collaboratorService.getCollaborators().add(() => {
       this.dataSource = new MatTableDataSource<CollaboratorMeta>(this.collaboratorService.collaborators);
       this.tempDataSource = this.dataSource;
+      this.loading = false;
     });
   }
+
 
   /**
    * Filters the table information based on the filter event value.

@@ -6,7 +6,7 @@ import { TimelineMeta } from '../../models/timeline.model';
 import { SectionMeta, SectionMetaDOC } from '../../models/section.model';
 import { InfrastructureMeta } from '../../models/infrastructure.model';
 import { DamageMeta } from '../../models/damage.model';
-import { LocationMeta } from '../../models/location.modal';
+import { LocationMeta } from '../../models/location.model';
 import { TagMetaDOC } from '../../models/tags.model';
 import { IncidentMeta } from '../../models/incident.model';
 import { AuthorMeta, AuthorMetaDOC } from '../../models/author.model';
@@ -26,7 +26,7 @@ const creation: CreationMeta[] = [
     creationDate: "2000-04-26", 
     lastModificationDate: "2020-04-26", 
     tagsDoc: [], 
-    infrasDocList: ["infrastrucutre1", "infrastructure2", "infrastructure3"], 
+    infrasDocList: ["infrastructure1", "infrastructure2", "infrastructure3"], 
     damageDocList: [], 
     author: [], 
     actor: [], 
@@ -77,97 +77,106 @@ const creation: CreationMeta[] = [
 
 const actor: ActorMetaDOC[] = [
     {
-        new:
+        new:[
+            {
+                actor_FN: "Dulcinea",
+                actor_LN: "Del Toboso",
+                role: "Advisor"
+            },
         {
             actor_FN: "Sancho",
             actor_LN: "Panza",
             role: "Advisor"
-        },
-        old:
+        }],
+        old:[
         {
             actor_FN: "Don",
             actor_LN: "Quijote",
             role: "Advisor"
-        }
+        }]
     },
     {
-        new:
+        new:[
         {
             actor_FN: "Sancho",
             actor_LN: "Panza",
             role: "Advisor"
-        },
-        old:
-        {
-            actor_FN: "Dulcinea",
-            actor_LN: "Del Toboso",
-            role: "Advisor"
-        }
+        }],
+        old:[
+        ]
     },
     {
-        new:
+        new:[
         {
             actor_FN: "Dulcinea",
             actor_LN: "Del Toboso",
             role: "Advisor"
-        },
-        old:
+        }],
+        old:[
+            {
+                actor_FN: "Sancho",
+                actor_LN: "Panza",
+                role: "Advisor"
+            },
         {
             actor_FN: "Don",
             actor_LN: "Quijote",
             role: "Advisor"
-        }
+        }]
     }
 ]
 
 const author: AuthorMetaDOC[] = [
     {
         new:
-        {
+        [{
             author_FN: "Sancho",
             author_LN: "Panza",
             author_email: "Sancho@Panza.com",
             author_faculty: "INEL"
         },
-        old:
         {
             author_FN: "Don",
             author_LN: "Quijote",
             author_email: "Don@Quijote.com",
             author_faculty: "INEL"
         }
+    ],
+        old:
+        []
     },
     {
         new:
-        {
+        [{
             author_FN: "Sancho",
             author_LN: "Panza",
             author_email: "Sancho@Panza.com",
             author_faculty: "INEL"
-        },
+        }],
         old:
-        {
+        [{
             author_FN: "Dulcinea",
             author_LN: "Del Toboso",
             author_email: "Dulcinea@email.com",
             author_faculty: "CIIC"
-        }
+        }]
     },
     {
         new:
-        {
-            author_FN: "Dulcinea",
-            author_LN: "Del Toboso",
-            author_email: "Dulcinea@email.com",
-            author_faculty: "CIIC"
-        },
+        [],
         old:
-        {
+        [{
             author_FN: "Don",
             author_LN: "Quijote",
             author_email: "Don@Quijote.com",
             author_faculty: "INEL"
-        }
+        },
+        {
+            author_FN: "Dulcinea",
+            author_LN: "Del Toboso",
+            author_email: "Dulcinea@email.com",
+            author_faculty: "CIIC"
+        }]
     }
 ]
 
@@ -259,19 +268,19 @@ const infrastructure: InfrastructureMeta[] = [
 
 const section: SectionMetaDOC[] = [
     {
-        new: {secTitle: "Section 2", content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore assumenda expedita ducimus nemo officiis cum nam recusandae, est omnis similique aliquam, quaerat aperiam tempore, eligendi nulla architecto hic minima labore?"}, 
-        old: {secTitle: null, content: null}
+        new: {secTitle: "Section 2", content: "<p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore assumenda expedita ducimus nemo officiis cum nam recusandae, est omnis similique aliquam, quaerat aperiam tempore, eligendi nulla architecto hic minima labore?</p>"}, 
+        old: {}
     },
 
     {
-        new: {secTitle: "Section 3", content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore assumenda expedita ducimus nemo officiis cum nam recusandae, est omnis similique aliquam, quaerat aperiam tempore, eligendi nulla architecto hic minima labore?"},
-        old: {secTitle: "Section 2", content: "This is an old description of a senction content for test..."}
+        new: {secTitle: "Section 3", content: "<p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore assumenda expedita ducimus nemo officiis cum nam recusandae, est omnis similique aliquam, quaerat aperiam tempore, eligendi nulla architecto hic minima labore?</p>"},
+        old: {secTitle: "Section 2", content: "<p> This is an old description of a senction content for test...</p>"}
     
     },
 
     {
-        new: {secTitle: null, content: null},
-        old: {secTitle: "Section 3", content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore assumenda expedita ducimus nemo officiis cum nam recusandae, est omnis similique aliquam, quaerat aperiam tempore, eligendi nulla architecto hic minima labore?"}
+        new: {},
+        old: {secTitle: "Section 3", content: "<p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore assumenda expedita ducimus nemo officiis cum nam recusandae, est omnis similique aliquam, quaerat aperiam tempore, eligendi nulla architecto hic minima labore? </p>"}
     }
 ]
 
@@ -418,20 +427,20 @@ const revisionsTest: Rev[] = [
         fields: section[2]
     },
 
-//Infrastruture
+//Infrastructure
     {
         revDate: "2002-06-30",
-        revType: "Infrastruture",
+        revType: "Infrastructure",
         fields: infrastructure[0]
     },
     {
         revDate: "2009-07-02",
-        revType: "Infrastruture",
+        revType: "Infrastructure",
         fields: infrastructure[1]
     },
     {
         revDate: "2010-07-03",
-        revType: "Infrastruture",
+        revType: "Infrastructure",
         fields: infrastructure[2]
     },
 
@@ -559,28 +568,3 @@ export const fakeHist: Hist[] = [
     }
 ]
 
-
-
-
-// {revDate: "2020-04-26", 
-// revType: "Creation", 
-// fields: 
-// {_id: {$oid: "5ea626b0c5bcd1a5cb4d864d"}, 
-// creatoriD: "5ea6269bc5bcd1a5cb4d8648", 
-// title: "Some Title121", 
-// language: "English", 
-// location: [], 
-// description: "this is a test", 
-// published: true, 
-// incidentDate: "2020-02-15", 
-// creationDate: "2020-04-26", 
-// lastModificationDate: "2020-04-26", 
-// tagsDoc: [], 
-// infrasDocList: ["infrastrucutre1", "infrastructure2", "infrastructure3"], 
-// damageDocList: [], 
-// author: [], 
-// actor: [], 
-// section: [], 
-// timeline: []
-// }
-// }

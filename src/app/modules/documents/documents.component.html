@@ -4,7 +4,7 @@
 <div>
   <mat-form-field appearance="outline">
     <mat-label>Filter</mat-label>
-    <input matInput (keyup)="textFilter($event)" placeholder="Ex. Roberto ...">
+    <input matInput (keyup)="textFilter($event)" placeholder="Ex. Sample Title ...">
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
 
@@ -12,7 +12,7 @@
   <mat-checkbox style="margin: 10px;" color="primary" (change)="filterPublished()" [(ngModel)]="checkPublished">Published</mat-checkbox>
   <mat-checkbox style="margin: 10px;" color="primary" (change)="filterUnpublished()" [(ngModel)]="checkUnpublished">Unpublished</mat-checkbox>
 
-  <div class="table-container">
+  <div class="table-container" *ngIf="!loading">
     <table mat-table [dataSource]="dataSource" class="example-container mat-elevation-z8">
 
       <!-- title Column -->
@@ -33,10 +33,26 @@
   
       <!-- Published Status Column -->
       <ng-container matColumnDef="published">
-        <th class="center-cell header-color-size"  mat-header-cell *matHeaderCellDef> Published </th>
-        <td class="center-cell" mat-cell *matCellDef="let element" > 
-          <p *ngIf="element.published">Yes</p>
-          <p *ngIf="!element.published">No</p>
+        <th class="header-color-size"  mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell class="center-cell" *matCellDef="let element" > 
+          <mat-chip-list aria-label="Banned or not">
+            <mat-chip
+            *ngIf="element.published" 
+            selectable="false"
+            disableRipple="true" 
+            style="background-color: green; color: white;">
+              Published
+            </mat-chip>
+
+            <mat-chip 
+            *ngIf="!element.published" 
+            selectable="false"
+            disableRipple="true"
+            style="background-color: rgb(255, 49, 49);color: white;">
+              Unpublished
+            </mat-chip>
+
+          </mat-chip-list>
         </td>
       </ng-container>
   
@@ -45,20 +61,21 @@
       <ng-container matColumnDef="actions">
         <th class="center-cell header-color-size" mat-header-cell *matHeaderCellDef>Actions</th>
         <td class="center-cell" mat-cell *matCellDef="let element" >
-          <button mat-raised-button color="primary"
-            *ngIf="!element.published" 
-            (click)="publishDoc(element._id, element.title)">
-            RE-PUBLISH
+          <button mat-icon-button color="primary"
+            [disabled]="element.published" 
+            (click)="publishDoc(element._id, element.title)"
+            matTootltip="Re-publish">
+            <mat-icon>check_circle</mat-icon>
           </button>
-          <button mat-raised-button color="warn"
-            *ngIf="element.published" 
-            (click)="unpublishDoc(element._id, element.title)">
-            UNPUBLISH
+          <button mat-icon-button color="warn"
+            [disabled]="!element.published" 
+            (click)="unpublishDoc(element._id, element.title)"
+            matTooltip="Unpublish">
+            <mat-icon>remove_circle</mat-icon>
           </button>
           <button mat-icon-button color="primary" 
             (click)="previewDoc(element._id)"
-            matTooltip="Preview Document"
-            style="margin-left: 10px;">
+            matTooltip="Preview">
             <mat-icon>visibility</mat-icon>
           </button>
         </td>
@@ -68,5 +85,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  
+  <div class="center-screen" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
 </div>

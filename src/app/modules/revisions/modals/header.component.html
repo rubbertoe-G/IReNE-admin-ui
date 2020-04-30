@@ -1,0 +1,32 @@
+<h2>{{revisionSelected?.title}}</h2>
+<mat-dialog-content style="width:100%">
+    <table>
+            <tr style="width: 100%; ">
+                <td style="width: 50%; text-align: left; font-weight: normal;">
+                <h4 style="display: inline-block; font-weight: bolder;">
+                    Date: 
+                </h4>
+                {{ revisionSelected?.date }}
+                </td>
+                <td style="width: 50%; text-align: left; font-weight: normal;">
+                <h4 style="display: inline-block; font-weight: bolder;">
+                    Performed By: 
+                </h4>
+                    {{ revisionSelected?.creator }} 
+                <a style="font-weight: lighter;">
+                    ({{ revisionSelected?.email }})
+                </a>
+                </td>
+            </tr>
+            <tr>
+            <td style="width: 50%; text-align: left; font-weight: normal;">
+                <h4 style="display: inline-block; font-weight: bolder;">Revision #: </h4>
+                {{ revisionSelected?.index }}
+            </td>
+            <td style="width: 50%; text-align: left; font-weight: normal;">
+                <h4 style="display: inline-block; font-weight: bolder;">Performed On: </h4>
+                {{ revisionSelected?.revType }}
+            </td>
+            </tr>
+    </table>
+</mat-dialog-content>

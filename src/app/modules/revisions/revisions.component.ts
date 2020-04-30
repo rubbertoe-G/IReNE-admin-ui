@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, Injector } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { RevisionMeta } from 'src/app/shared/models/revision.model';
 import { CreationMeta } from 'src/app/shared/models/creation.model';
 import { RevisionService } from 'src/app/shared/services/revision.service';
@@ -10,7 +9,17 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import { DescriptionMeta } from 'src/app/shared/models/description.model';
-import { AnyARecord } from 'dns';
+import { TitleMeta } from 'src/app/shared/models/title.model';
+import { TimelineMeta } from 'src/app/shared/models/timeline.model';
+import { InfrastructureMeta } from 'src/app/shared/models/infrastructure.model';
+import { DamageMeta } from 'src/app/shared/models/damage.model';
+import { LocationMeta } from 'src/app/shared/models/location.model';
+import { TagMetaDOC } from 'src/app/shared/models/tags.model';
+import { IncidentMeta } from 'src/app/shared/models/incident.model';
+import { AuthorMetaDOC } from 'src/app/shared/models/author.model';
+import { ActorMetaDOC } from 'src/app/shared/models/actor.model';
+import { SectionMetaDOC } from 'src/app/shared/models/section.model';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 var revisionSelected: RevisionMeta;
 @Component({
@@ -27,8 +36,6 @@ export class RevisionsComponent implements OnInit {
 
   constructor(
     private injector: Injector,
-    private router: Router,
-    private snackBar: MatSnackBar,
     public dialog: MatDialog
   ) { }
 
@@ -56,23 +63,77 @@ export class RevisionsComponent implements OnInit {
       } 
       case "Description": { 
         activeComponent = DescriptionDialog; 
+        break;
+      } 
+      case "Title": { 
+        activeComponent = TitleDialog; 
         break; 
       } 
+      case "Timeline": { 
+        activeComponent = TimelineDialog; 
+        break; 
+      } 
+      case "Infrastructure": { 
+        activeComponent = InfrastructureDialog; 
+        break; 
+      } 
+      case "Damage": { 
+        activeComponent = DamageDialog; 
+        break; 
+      }
+      case "Location": { 
+        activeComponent = LocationDialog; 
+        break; 
+      } 
+      case "Tag": { 
+        activeComponent = TagDialog; 
+        break; 
+      } 
+      case "Incident Date": { 
+        activeComponent = IncidentDialog; 
+        break; 
+      }
+      case "Author": { 
+        activeComponent = AuthorDialog; 
+        break; 
+      }
+      case "Actor": { 
+        activeComponent = ActorDialog; 
+        break; 
+      }
+      case "Section": { 
+        activeComponent = SectionDialog; 
+        break; 
+      }
       default: { 
          break; 
       } 
    } 
     const dialogRef = this.dialog.open(activeComponent, {
-      width: '50%',
+      width: '70%',
       height: '65%'
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
 }
 
+
+
+@Component({
+  selector: 'header-component',
+  templateUrl: './modals/header.component.html',
+  styleUrls: ['./modals/header.component.scss']
+  })
+  export class HeaderComponent implements OnInit{
+    sectionRev: SectionMetaDOC;
+    revisionSelected: RevisionMeta;
+
+    
+    constructor(){}
+  
+  ngOnInit(){
+      this.revisionSelected = revisionSelected;
+  }
+}
 
 @Component({
 selector: 'creation-dialog',
@@ -84,6 +145,7 @@ export class CreationDialog implements OnInit{
   creatorEmail: string;
   creatorFullName: string;
   revisionSelected: RevisionMeta;
+  
 
   constructor(private injector: Injector){}
 
@@ -107,14 +169,236 @@ ngOnInit(){
   export class DescriptionDialog implements OnInit{
     descriptionRev: DescriptionMeta;
     revisionSelected: RevisionMeta;
+
     constructor(private injector: Injector){}
   
   ngOnInit(){
       this.revisionSelected = revisionSelected;
       const revisionService = this.injector.get(RevisionService);
+      
       revisionService.getDescriptionRevision(revisionSelected._id, revisionSelected.index).add(() => {
         this.descriptionRev = revisionService.descriptionRevision;
     });
   }
   
   }
+
+  @Component({
+    selector: 'title-dialog',
+    templateUrl: './modals/title.component.html',
+    styleUrls: ['./modals/title.component.scss']
+    })
+    export class TitleDialog implements OnInit{
+      titleRev: TitleMeta;
+      revisionSelected: RevisionMeta;
+  
+      constructor(private injector: Injector){}
+    
+    ngOnInit(){
+        this.revisionSelected = revisionSelected;
+        const revisionService = this.injector.get(RevisionService);
+        
+        revisionService.getTitleRevision(revisionSelected._id, revisionSelected.index).add(() => {
+          this.titleRev = revisionService.titleRevision;
+      });
+    }
+}
+
+
+@Component({
+  selector: 'timeline-dialog',
+  templateUrl: './modals/timeline.component.html',
+  styleUrls: ['./modals/timeline.component.scss']
+  })
+  export class TimelineDialog implements OnInit{
+    timelineRev: TimelineMeta;
+    revisionSelected: RevisionMeta;
+
+    constructor(private injector: Injector){}
+  
+  ngOnInit(){
+      this.revisionSelected = revisionSelected;
+      const revisionService = this.injector.get(RevisionService);
+      
+      revisionService.getTimelineRev(revisionSelected._id, revisionSelected.index).add(() => {
+        this.timelineRev = revisionService.timelineRevision;
+    });
+  }
+  
+}
+
+@Component({
+  selector: 'infrastructure-dialog',
+  templateUrl: './modals/infrastructure.component.html',
+  styleUrls: ['./modals/infrastructure.component.scss']
+  })
+  export class InfrastructureDialog implements OnInit{
+    infrastructureRev: InfrastructureMeta;
+    revisionSelected: RevisionMeta;
+
+    constructor(private injector: Injector){}
+  
+  ngOnInit(){
+      this.revisionSelected = revisionSelected;
+      const revisionService = this.injector.get(RevisionService);
+      revisionService.getInfrastructureRev(revisionSelected._id, revisionSelected.index).add(() => {
+        this.infrastructureRev = revisionService.infrastructureRevision;
+    });
+  }
+  
+}
+
+@Component({
+  selector: 'damage-dialog',
+  templateUrl: './modals/damage.component.html',
+  styleUrls: ['./modals/damage.component.scss']
+  })
+  export class DamageDialog implements OnInit{
+    damageRev: DamageMeta;
+    revisionSelected: RevisionMeta;
+
+    constructor(private injector: Injector){}
+  
+  ngOnInit(){
+      this.revisionSelected = revisionSelected;
+      const revisionService = this.injector.get(RevisionService);
+      revisionService.getDamageRev(revisionSelected._id, revisionSelected.index).add(() => {
+        this.damageRev = revisionService.damageRevision;
+    });
+  }
+  
+}
+
+@Component({
+  selector: 'location-dialog',
+  templateUrl: './modals/location.component.html',
+  styleUrls: ['./modals/location.component.scss']
+  })
+  export class LocationDialog implements OnInit{
+    locationRev: LocationMeta;
+    revisionSelected: RevisionMeta;
+
+    constructor(private injector: Injector){}
+  
+  ngOnInit(){
+      this.revisionSelected = revisionSelected;
+      const revisionService = this.injector.get(RevisionService);
+      revisionService.getLocationRevision(revisionSelected._id, revisionSelected.index).add(() => {
+        this.locationRev = revisionService.locationRevision;
+    });
+  }
+  
+}
+
+@Component({
+  selector: 'tag-dialog',
+  templateUrl: './modals/tag.component.html',
+  styleUrls: ['./modals/tag.component.scss']
+  })
+  export class TagDialog implements OnInit{
+    tagRev: TagMetaDOC;
+    revisionSelected: RevisionMeta;
+
+    constructor(private injector: Injector){}
+  
+  ngOnInit(){
+      this.revisionSelected = revisionSelected;
+      const revisionService = this.injector.get(RevisionService);
+      revisionService.getTagRevision(revisionSelected._id, revisionSelected.index).add(() => {
+        this.tagRev = revisionService.tagRevision;
+    });
+  }
+}
+
+
+@Component({
+  selector: 'incidentDate-dialog',
+  templateUrl: './modals/incidentDate.component.html',
+  styleUrls: ['./modals/incidentDate.component.scss']
+  })
+  export class IncidentDialog implements OnInit{
+    incidentRev: IncidentMeta;
+    revisionSelected: RevisionMeta;
+
+    constructor(private injector: Injector){}
+  
+  ngOnInit(){
+      this.revisionSelected = revisionSelected;
+      const revisionService = this.injector.get(RevisionService);
+      revisionService.getIncidentRevision(revisionSelected._id, revisionSelected.index).add(() => {
+        this.incidentRev = revisionService.incidentRevision;
+    });
+  }
+}
+
+@Component({
+  selector: 'author-dialog',
+  templateUrl: './modals/author.component.html',
+  styleUrls: ['./modals/author.component.scss']
+  })
+  export class AuthorDialog implements OnInit{
+    authorRev: AuthorMetaDOC;
+    revisionSelected: RevisionMeta;
+
+    constructor(private injector: Injector){}
+  
+  ngOnInit(){
+      this.revisionSelected = revisionSelected;
+      const revisionService = this.injector.get(RevisionService);
+      revisionService.getAuthorRevision(revisionSelected._id, revisionSelected.index).add(() => {
+        this.authorRev = revisionService.authorRevision;
+    });
+  }
+}
+
+
+@Component({
+  selector: 'actor-dialog',
+  templateUrl: './modals/actor.component.html',
+  styleUrls: ['./modals/actor.component.scss']
+  })
+  export class ActorDialog implements OnInit{
+    actorRev: ActorMetaDOC;
+    revisionSelected: RevisionMeta;
+
+    constructor(private injector: Injector){}
+  
+  ngOnInit(){
+      this.revisionSelected = revisionSelected;
+      const revisionService = this.injector.get(RevisionService);
+      revisionService.getActorRevision(revisionSelected._id, revisionSelected.index).add(() => {
+        this.actorRev = revisionService.actorRevision;
+    });
+  }
+}
+
+@Component({
+  selector: 'section-dialog',
+  templateUrl: './modals/section.component.html',
+  styleUrls: ['./modals/section.component.scss']
+  })
+  export class SectionDialog implements OnInit{
+    sectionRev: SectionMetaDOC;
+    revisionSelected: RevisionMeta;
+    oldSectionContent: SafeHtml = '';
+    newSectionContent: SafeHtml = '';
+    oldSectionTitle: string;
+    newSectionTitle: string;
+    constructor(private injector: Injector,
+      private sanitizer: DomSanitizer){
+      
+    }
+  
+  ngOnInit(){
+    this.revisionSelected = revisionSelected;
+    const revisionService = this.injector.get(RevisionService);
+    revisionService.getSectionRevision(revisionSelected._id, revisionSelected.index).add(() => {
+      this.sectionRev = revisionService.sectionRevision;
+      console.log(this.sectionRev.old.content)
+      this.oldSectionContent = this.sanitizer.bypassSecurityTrustHtml(atob(this.sectionRev.old.content));
+      this.newSectionContent = this.sanitizer.bypassSecurityTrustHtml(atob(this.sectionRev.new.content));
+      this.oldSectionTitle = this.sectionRev.old.secTitle;
+      this.newSectionTitle=  this.sectionRev.new.secTitle;
+  });
+  }
+}
