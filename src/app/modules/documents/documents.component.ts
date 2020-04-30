@@ -20,6 +20,7 @@ export class DocumentsComponent implements OnInit {
   tempDataSource: MatTableDataSource<DocumentMeta>;
   checkPublished = false;
   checkUnpublished = false;
+  loading = true;
 
   constructor(
     private documentService: DocumentsService,
@@ -31,6 +32,7 @@ export class DocumentsComponent implements OnInit {
     this.documentService.getDocuments().add(() => {
       this.dataSource =  new MatTableDataSource<DocumentMeta>(this.documentService.documents);
       this.tempDataSource = this.dataSource;
+      this.loading = false;
     });
   }
 

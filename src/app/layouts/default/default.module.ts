@@ -28,6 +28,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RevisionsComponent, CreationDialog, DescriptionDialog } from 'src/app/modules/revisions/revisions.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatChipsModule} from '@angular/material/chips';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     FlexLayoutModule,
     MatDialogModule,
     MatProgressSpinnerModule,
+    MatChipsModule
   ],
   providers: [
     CollaboratorsService,

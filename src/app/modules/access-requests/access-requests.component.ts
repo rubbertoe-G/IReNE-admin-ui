@@ -15,6 +15,7 @@ import { AccessRequestsService } from 'src/app/shared/services/access-requests.s
   styleUrls: ['./access-requests.component.scss']
 })
 export class AccessRequestsComponent implements OnInit {
+  loading = true;
 
   /**
   *Data to be displayed in the view.
@@ -41,6 +42,7 @@ export class AccessRequestsComponent implements OnInit {
   ngOnInit(): void {
     this.requestsService.getRequests().add(() => {
       this.dataSource = new MatTableDataSource<any>(this.requestsService.requests);
+      this.loading = false;
     });
   }
 

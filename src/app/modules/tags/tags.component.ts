@@ -14,6 +14,8 @@ import { TagsService } from 'src/app/shared/services/tags.service';
   styleUrls: ['./tags.component.scss']
 })
 export class TagsComponent implements OnInit {
+
+  loading = true;
   
   /**
   *Data to be displayed in the view.
@@ -39,6 +41,7 @@ export class TagsComponent implements OnInit {
   ngOnInit(): void {
     this.tagsService.getTags().add(() => {
       this.dataSource = new MatTableDataSource<any>(this.tagsService.tags);
+      this.loading= false;
     });
   }
 
