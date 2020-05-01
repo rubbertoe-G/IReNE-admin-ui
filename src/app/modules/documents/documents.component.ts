@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DocumentMeta } from 'src/app/shared/models/documents.model';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { MatPaginator } from '@angular/material/paginator';
 
 
 @Component({
@@ -14,6 +15,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./documents.component.scss']
 })
 export class DocumentsComponent implements OnInit {
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   dataSource: MatTableDataSource<DocumentMeta>;
   displayedColumns: string[] = ['title', 'creator', 'published', 'actions'];
@@ -32,6 +35,7 @@ export class DocumentsComponent implements OnInit {
   ngOnInit(): void {
     this.documentService.getDocuments().add(() => {
       this.dataSource = new MatTableDataSource<DocumentMeta>(this.documentService.documents);
+      this.dataSource.paginator = this.paginator;
       this.tempDataSource = this.dataSource;
       this.loading = false;
     });
@@ -52,6 +56,7 @@ export class DocumentsComponent implements OnInit {
         }
       });
       this.dataSource = publishedData;
+      this.dataSource.paginator = this.paginator;
       return;
     }
     this.dataSource = this.tempDataSource;
@@ -67,6 +72,7 @@ export class DocumentsComponent implements OnInit {
         }
       });
       this.dataSource = publishedData;
+      this.dataSource.paginator = this.paginator;
       return;
     }
     this.dataSource = this.tempDataSource;
@@ -149,6 +155,6 @@ export class DocumentsComponent implements OnInit {
   previewDoc(docId: string) {
     if (environment.testErrors)
       throw Error('ERROR: Unable to preview document.')
-    this.router.navigate([`/preview/${docId}`])
+    this.router.navigate([`/documents/preview/${docId}`])
   }
 }

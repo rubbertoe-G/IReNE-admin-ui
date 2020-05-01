@@ -22,7 +22,7 @@ export class DocumentsService {
      * Get all documents with their needed data.
      */
 
-     return this.http.get(`${this.fakeBackend}/docs/`).subscribe(
+     return this.http.get(`${this.fakeBackend}/documents/`).subscribe(
        (response) => {
          this.documents = response['documents'];
        }
@@ -36,7 +36,7 @@ export class DocumentsService {
     const formData = new FormData();
     formData.append('docID', id);
 
-    return this.http.put(`${this.fakeBackend}/docs/publish`, formData).subscribe(
+    return this.http.put(`${this.fakeBackend}/documents/publish`, formData).subscribe(
       (response) => {
         this.documents.forEach(e => {
           if(e._id === response['docID']){
@@ -51,14 +51,15 @@ export class DocumentsService {
 
   }
 
+  /**
+   * Unpublish a specific document.
+   * @param id document identification number
+   */
   unpublishDocument(id: string) {
-    /**
-     * Set a document to be unpublished.
-     */
     const formData = new FormData();
     formData.append('docID', id);
 
-    return this.http.put(`${this.fakeBackend}/docs/unpublish`, formData).subscribe(
+    return this.http.put(`${this.fakeBackend}/documents/unpublish`, formData).subscribe(
       (response) => {
         this.documents.forEach(e => {
           if(e._id === response['docID']){

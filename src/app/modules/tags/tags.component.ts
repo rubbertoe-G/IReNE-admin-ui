@@ -76,7 +76,7 @@ export class TagsComponent implements OnInit {
       if (result.value) {
         this.tagsService.removeTag(tag._id.toString()).subscribe(
           () => {
-            this.snackBar.open("The tag has been removed.",null,{duration:2000});
+            this.snackBar.open("The tag has been removed.",null,{duration:2000, verticalPosition:'top'});
             let index = this.dataSource.data.indexOf(tag);
             this.dataSource.data.splice(index, 1);
             this.dataSource._updateChangeSubscription();

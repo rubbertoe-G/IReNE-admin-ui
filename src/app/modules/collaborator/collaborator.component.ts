@@ -87,6 +87,7 @@ export class CollaboratorComponent implements OnInit {
         }
       });
       this.dataSource = publishedData;
+      this.dataSource.paginator = this.paginator;
       return;
     }
     this.dataSource = this.tempDataSource;
@@ -105,6 +106,7 @@ export class CollaboratorComponent implements OnInit {
         }
       });
       this.dataSource = publishedData;
+      this.dataSource.paginator = this.paginator;
       return;
     }
     this.dataSource = this.tempDataSource;

@@ -1,16 +1,122 @@
-<div class="spinner-container" *ngIf="loadingDocument">
-  <mat-spinner></mat-spinner>
+<div style="overflow: hidden;" *ngIf="!notFound">
+  <div class="spinner-container" *ngIf="loadingDocument">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div class="preview-container">
+    <div style="padding: 2em;">
+      <mat-card class="preview-card">
+        <mat-card-header style="padding-top: 3em;">
+          <mat-card-title style="font-size: xx-large; font-weight: bolder;">{{title}}</mat-card-title>
+          <mat-card-subtitle>
+            <br>
+            <div *ngIf="description.length > 0">
+              <h2>Description</h2>
+              <div>{{description}}</div>
+            </div>
+            <br>
+
+            <p><b>Publication Date: </b>{{creationDate}}</p>
+            <p><b>Last Modified: </b>{{lastModificationDate}}</p>
+            <p><b>Incident Date: </b>{{incidentDate}}</p>
+
+            <br>
+
+            <p><b>Creator: </b>{{creatorFullName}} | {{creatorEmail}}</p>
+
+            <div *ngIf="author.length > 0">
+              <p><b>Authors:</b></p>
+              <div class="title-section">
+                <div class="title-box" *ngFor="let author of author">
+                  <p>{{author.author_FN}} {{author.author_LN}}</p>
+                  <p>{{author.author_email}}</p>
+                  <p>{{author.author_faculty}}</p>
+                </div>
+              </div>
+            </div>
+
+
+            <div *ngIf="infrasDocList.length > 0">
+              <p><b>Infrastructures:</b></p>
+              <ul>
+                <li *ngFor="let infra of infrasDocList">
+                  {{infra}}
+                </li>
+              </ul>
+            </div>
+
+            <div *ngIf="damageDocList.length > 0">
+              <p><b>Damages:</b></p>
+              <ul>
+                <li *ngFor="let damage of damageDocList">
+                  {{damage}}
+                </li>
+              </ul>
+            </div>
+
+            <br>
+
+            <div *ngIf="actor.length > 0">
+              <p><b>Actors:</b></p>
+              <div class="title-section">
+                <div class="title-box" *ngFor="let actor of actor">
+                  <p>{{actor.actor_FN}} {{actor.actor_LN}}</p>
+                  <p>{{actor.role}}</p>
+                </div>
+              </div>
+            </div>
+
+            <br>
+
+            <div *ngIf="tagsDoc.length > 0">
+              <p><b>Tags:</b></p>
+              <div class="title-section">
+                <div class="title-box" *ngFor="let tag of tagsDoc">
+                  <p>{{tag}}</p>
+                </div>
+              </div>
+            </div>
+
+          </mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </div>
+
+    <div style="padding: 2em;" *ngFor="let section of section">
+      <mat-card class="preview-card">
+        <mat-card-content>
+          <div>
+            <h1 style="font-weight: bolder;">{{section.secTitle}}</h1>
+            <div class="ck-content" [innerHTML]="section.content"></div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
 </div>
 
 
-<div *ngIf="!loadingDocument">
+<!-- Document is not found -->
+<div class="preview-container" style="padding: 2em;" *ngIf="notFound">
+  <mat-card class="preview-card">
+    <mat-card-content style="align-items: center; justify-content: center; text-align: center;">
+      <h1>Document Not Found</h1>
+      <p>Please try searching again</p>
+      <button mat-raised-button color="primary" style="width: 50em;" routerLink="/documents">RETURN</button>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+
+<!-- PDF Preview -->
+<!-- <div *ngIf="!loadingDocument">
     <ngx-extended-pdf-viewer
-    [base64Src]="base64Src"
-    backgroundColor="#ffffff"
-    [height]="'90vh'"
-    [useBrowserLocale]="true"
-    [handTool]="false"
-    [showHandToolButton]="true"
-  >
-  </ngx-extended-pdf-viewer>  
-</div>
+      [base64Src]="base64Src"
+      backgroundColor="#ffffff"
+      [height]="'90vh'"
+      [useBrowserLocale]="true"
+      [handTool]="false"
+      [showHandToolButton]="true"
+    >
+    </ngx-extended-pdf-viewer>
+  </div> -->
