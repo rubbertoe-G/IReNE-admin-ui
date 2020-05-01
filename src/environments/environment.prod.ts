@@ -3,4 +3,5 @@ export const environment = {
   testErrorBackend: false,
   testErrors: false,
   backend: 'http://localhost:5000/admin'
+  // backend: 'http://localhost:5000'
 };

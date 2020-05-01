@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   testErrorBackend: false,
   testErrors: false,
-  backend: 'https://test.irene.uprm.edu/admin-server/admin'
+  // backend: 'https://test.irene.uprm.edu/admin-server/admin'
+  backend: 'http://localhost:5000/admin'
 };
 
 /*

@@ -1,7 +1,7 @@
-.example-container {
-  max-height: 590px;
-  overflow: auto;
-}
+// .example-container {
+//   max-height: 590px;
+//   overflow: auto;
+// }
 
 .table-container{
   height: 65vh;
@@ -29,9 +29,9 @@ table {
 }
 
 .center-screen{
-  
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
+

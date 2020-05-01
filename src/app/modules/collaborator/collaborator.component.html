@@ -12,8 +12,8 @@
     <mat-checkbox style="margin: 10px;" color="primary" (change)="filterUnbanned()" [(ngModel)]="checkUnbanned">Unbanned</mat-checkbox>
   </div>
 
-  <div class="table-container" *ngIf="!loading">
-    <table mat-table [dataSource]="dataSource" class="example-container mat-elevation-z8">
+  <div class="table-container mat-elevation-z8" *ngIf="!loading">
+    <table mat-table [dataSource]="dataSource" class="example-container">
 
       <!-- First Name Column -->
       <ng-container matColumnDef="first_name">

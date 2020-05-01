@@ -75,7 +75,7 @@ import {MatChipsModule} from '@angular/material/chips';
     FlexLayoutModule,
     MatDialogModule,
     MatProgressSpinnerModule,
-    MatChipsModule
+    MatChipsModule,
   ],
   providers: [
     CollaboratorsService,
