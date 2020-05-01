@@ -5,6 +5,8 @@ import Swal from 'sweetalert2';
 import { CollaboratorsService } from 'src/app/shared/services/collaborators.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { CollaboratorMeta } from 'src/app/shared/models/collaborators.model';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 
 @Component({
@@ -13,6 +15,9 @@ import { CollaboratorMeta } from 'src/app/shared/models/collaborators.model';
   styleUrls: ['./collaborator.component.scss']
 })
 export class CollaboratorComponent implements OnInit {
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   /**
    * The collaborators data
@@ -51,6 +56,8 @@ export class CollaboratorComponent implements OnInit {
   ngOnInit(): void {
     this.collaboratorService.getCollaborators().add(() => {
       this.dataSource = new MatTableDataSource<CollaboratorMeta>(this.collaboratorService.collaborators);
+      this.dataSource.paginator = this.paginator
+      this.dataSource.sort = this.sort
       this.tempDataSource = this.dataSource;
       this.loading = false;
     });

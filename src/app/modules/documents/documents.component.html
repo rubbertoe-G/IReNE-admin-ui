@@ -12,8 +12,8 @@
   <mat-checkbox style="margin: 10px;" color="primary" (change)="filterPublished()" [(ngModel)]="checkPublished">Published</mat-checkbox>
   <mat-checkbox style="margin: 10px;" color="primary" (change)="filterUnpublished()" [(ngModel)]="checkUnpublished">Unpublished</mat-checkbox>
 
-  <div class="table-container" *ngIf="!loading">
-    <table mat-table [dataSource]="dataSource" class="example-container mat-elevation-z8">
+  <div class="table-container mat-elevation-z8" *ngIf="!loading">
+    <table mat-table [dataSource]="dataSource">
 
       <!-- title Column -->
       <ng-container matColumnDef="title">
@@ -85,7 +85,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <div class="center-screen" *ngIf="loading">
+  <!-- <div class="center-screen" *ngIf="loading">
     <mat-spinner></mat-spinner>
-  </div>
+  </div> -->
 </div>

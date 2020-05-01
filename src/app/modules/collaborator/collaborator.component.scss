@@ -1,14 +1,11 @@
-// .example-container {
-//   max-height: 590px;
-//   overflow: auto;
-// }
-
 .table-container{
-  height: 65vh;
+  position: relative;
+  height: 58.5vh;
   overflow: auto;
 }
 
 table {
+  overflow-y: scroll;
   width: 100%;
 }
 

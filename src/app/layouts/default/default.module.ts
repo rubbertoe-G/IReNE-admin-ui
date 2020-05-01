@@ -19,7 +19,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 import { CollaboratorsService } from 'src/app/shared/services/collaborators.service';
 import { DocumentsService } from 'src/app/shared/services/documents.service';
@@ -74,7 +74,7 @@ import {MatChipsModule} from '@angular/material/chips';
     MatSortModule,
     FlexLayoutModule,
     MatDialogModule,
-    MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatChipsModule,
   ],
   providers: [

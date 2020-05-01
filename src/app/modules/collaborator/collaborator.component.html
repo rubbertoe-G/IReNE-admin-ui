@@ -1,4 +1,4 @@
-<div fxLayout="column">
+<div style="display: flex; flex-direction: column;">
   <div>
     <h1>Collaborators</h1>
   </div>
@@ -8,89 +8,77 @@
       <input matInput (keyup)="applyFilter($event)" placeholder="Ex. John Smith">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
-    <mat-checkbox style="margin: 10px;" color="primary" (change)="filterBanned()" [(ngModel)]="checkBanned">Banned</mat-checkbox>
-    <mat-checkbox style="margin: 10px;" color="primary" (change)="filterUnbanned()" [(ngModel)]="checkUnbanned">Unbanned</mat-checkbox>
+    <mat-checkbox style="margin: 10px;" color="primary" (change)="filterBanned()" [(ngModel)]="checkBanned">Banned
+    </mat-checkbox>
+    <mat-checkbox style="margin: 10px;" color="primary" (change)="filterUnbanned()" [(ngModel)]="checkUnbanned">Unbanned
+    </mat-checkbox>
   </div>
+  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+  <div class="mat-elevation-z8">
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource" *ngIf="!loading">
+        <!-- First Name Column -->
+        <ng-container matColumnDef="first_name">
+          <th class="header-color-size" mat-header-cell *matHeaderCellDef> First Name </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.first_name}}
+          </td>
+        </ng-container>
 
-  <div class="table-container mat-elevation-z8" *ngIf="!loading">
-    <table mat-table [dataSource]="dataSource" class="example-container">
+        <!-- Last Name Column -->
+        <ng-container matColumnDef="last_name">
+          <th class="header-color-size" mat-header-cell *matHeaderCellDef> Last Name </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.last_name}}
+          </td>
+        </ng-container>
 
-      <!-- First Name Column -->
-      <ng-container matColumnDef="first_name">
-        <th class="header-color-size" mat-header-cell *matHeaderCellDef > First Name </th>
-        <td mat-cell *matCellDef="let element"> 
-          {{element.first_name}}
-        </td>
-      </ng-container>
-  
-      <!-- Last Name Column -->
-      <ng-container matColumnDef="last_name">
-        <th class="header-color-size" mat-header-cell *matHeaderCellDef> Last Name </th>
-        <td mat-cell *matCellDef="let element"> 
-          {{element.last_name}}
-        </td>
-      </ng-container>
-  
-      <!-- Email Column -->
-      <ng-container matColumnDef="email">
-        <th class="header-color-size" mat-header-cell *matHeaderCellDef>Email</th>
-        <td mat-cell *matCellDef="let element"> 
-          {{element.email}} 
-        </td>
-      </ng-container>
-  
-      <!-- Banned Status Column -->
-      <ng-container matColumnDef="banned">
-        <th class="header-color-size" mat-header-cell *matHeaderCellDef>Status</th>
-        <td mat-cell *matCellDef="let element">  
-          <mat-chip-list aria-label="Banned or not">
-            <mat-chip
-            *ngIf="element.banned" 
-            selectable="false"
-            disableRipple="true" 
-            style="background-color: rgb(255, 92, 92);color: white;">
-              Banned
-            </mat-chip>
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th class="header-color-size" mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let element">
+            {{element.email}}
+          </td>
+        </ng-container>
 
-            <mat-chip 
-            *ngIf="!element.banned"
-            disabled="true" 
-            selectable="false"
-            disableRipple="true">
-              Banned
-            </mat-chip>
+        <!-- Banned Status Column -->
+        <ng-container matColumnDef="banned">
+          <th class="header-color-size" mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-chip-list aria-label="Banned or not">
+              <mat-chip *ngIf="element.banned" selectable="false" disableRipple="true"
+                style="background-color: rgb(255, 92, 92);color: white;">
+                Banned
+              </mat-chip>
 
-          </mat-chip-list>
-        </td>
-      
-      </ng-container>
-  
-      <!-- Actions Column -->
-      <ng-container matColumnDef="actions">
-        <th class="center-cell header-color-size" mat-header-cell *matHeaderCellDef>Actions</th>
-        <td class="center-cell" mat-cell *matCellDef="let element">
-          <button mat-icon-button color="primary" 
-            (click)="unbanCollaborator(element._id, element.email)" 
-            [disabled]="!element.banned" 
-            style="width: 3em;"
-            matTooltip="Unban">
-            <mat-icon>check_circle</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" 
-            (click)="banCollaborator(element._id, element.email)" 
-            [disabled]="element.banned" 
-            style="width: 2em;"
-            matTooltip="Ban">
-            <mat-icon>remove_circle</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  </div>
-  <div class="center-screen" *ngIf="loading">
-    <mat-spinner></mat-spinner>
+              <mat-chip *ngIf="!element.banned" disabled="true" selectable="false" disableRipple="true">
+                Banned
+              </mat-chip>
+
+            </mat-chip-list>
+          </td>
+
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th class="center-cell header-color-size" mat-header-cell *matHeaderCellDef>Actions</th>
+          <td class="center-cell" mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" (click)="unbanCollaborator(element._id, element.email)"
+              [disabled]="!element.banned" style="width: 3em;" matTooltip="Unban">
+              <mat-icon>check_circle</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="banCollaborator(element._id, element.email)"
+              [disabled]="element.banned" style="width: 2em;" matTooltip="Ban">
+              <mat-icon>remove_circle</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-paginator [pageSizeOptions]="[8, 16]" showFirstLastButtons></mat-paginator>
   </div>
 </div>
