@@ -22,7 +22,7 @@ export class DocumentsService {
      * Get all documents with their needed data.
      */
 
-     return this.http.get(`${this.fakeBackend}/documents/`).subscribe(
+     return this.http.get(`${this.fakeBackend}/docs/`).subscribe(
        (response) => {
          this.documents = response['documents'];
        }
@@ -36,13 +36,16 @@ export class DocumentsService {
     const formData = new FormData();
     formData.append('docID', id);
 
-    return this.http.put(`${this.fakeBackend}/documents/publish`, formData).subscribe(
+    return this.http.put(`${this.fakeBackend}/docs/publish`, formData).subscribe(
       (response) => {
         this.documents.forEach(e => {
           if(e._id === response['docID']){
             e.published = true;
           }
         });
+      },
+      (error) =>{
+        Error('ERROR: Unable to change document status.')
       }
     );
 
@@ -55,13 +58,16 @@ export class DocumentsService {
     const formData = new FormData();
     formData.append('docID', id);
 
-    return this.http.put(`${this.fakeBackend}/documents/unpublish`, formData).subscribe(
+    return this.http.put(`${this.fakeBackend}/docs/unpublish`, formData).subscribe(
       (response) => {
         this.documents.forEach(e => {
           if(e._id === response['docID']){
             e.published = false;
           }
         });
+      },
+      (error) =>{
+        Error('ERROR: Unable to change document status.')
       }
     );
 

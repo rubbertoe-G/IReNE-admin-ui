@@ -130,13 +130,7 @@ export class CollaboratorComponent implements OnInit {
       confirmButtonColor: '#37474f',
     }).then((result) => {
       if (result.value) {
-        this.collaboratorService.banCollaborator(id).add(
-          () => {
-            this.snackBar.open('Collaborator Banned', null, {
-              duration: 3000
-            });
-          }
-        );
+        this.collaboratorService.banCollaborator(id);
       }
     });
   }
@@ -168,13 +162,7 @@ export class CollaboratorComponent implements OnInit {
       confirmButtonColor: '#37474f'
     }).then((result) => {
       if (result.value){
-        this.collaboratorService.unbanCollaborator(id).add(
-          () => {
-            this.snackBar.open('Collaborator Unbanned', null, {
-              duration: 3000
-            });
-          }
-        );
+        this.collaboratorService.unbanCollaborator(id);
       }
     });
   }

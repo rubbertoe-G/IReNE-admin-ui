@@ -40,7 +40,7 @@
             *ngIf="element.published" 
             selectable="false"
             disableRipple="true" 
-            style="background-color: rgb(55, 71, 79); color: white; padding-left: 16%">
+            class="publish-chip">
               Published
             </mat-chip>
 
@@ -48,7 +48,7 @@
             *ngIf="!element.published" 
             selectable="false"
             disableRipple="true"
-            style="background-color: rgb(255, 92, 92);color: white; padding-left: 10%">
+            class="unpublish-chip">
               Unpublished
             </mat-chip>
 
@@ -64,7 +64,7 @@
           <button mat-icon-button color="primary"
             [disabled]="element.published" 
             (click)="publishDoc(element._id, element.title)"
-            matTootltip="Re-publish">
+            matTooltip="Publish">
             <mat-icon>check_circle</mat-icon>
           </button>
           <button mat-icon-button color="warn"
