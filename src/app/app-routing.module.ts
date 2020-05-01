@@ -24,7 +24,7 @@ const routes: Routes = [
     ]},
 
     { 
-      path: 'preview/:docId',
+      path: 'documents/preview/:docId',
       component: PreviewComponent, canActivate: [AuthGuard]
     },
 

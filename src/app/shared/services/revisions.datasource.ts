@@ -39,7 +39,6 @@ export class RevisionsDataSource implements DataSource<RevisionMeta> {
     }
 
     connect(collectionViewer: CollectionViewer): Observable<RevisionMeta[]> {
-        console.log("Connecting data source");
         return this.revisionsSubject.asObservable();
     }
 

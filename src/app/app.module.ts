@@ -15,6 +15,7 @@ import { JwtInterceptor } from "src/app/shared/authentication/jwt.interceptor"
 import { from } from 'rxjs';
 import { RevisionsComponent } from './modules/revisions/revisions.component';
 import { DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { DatePipe } from '@angular/common';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     DefaultModule,

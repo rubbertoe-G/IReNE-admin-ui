@@ -154,6 +154,6 @@ export class DocumentsComponent implements OnInit {
   previewDoc(docId: string) {
     if(environment.testErrors)
       throw Error('ERROR: Unable to preview document.')
-    this.router.navigate([`/preview/${docId}`])
+    this.router.navigate([`/documents/preview/${docId}`])
   }
 }

@@ -80,7 +80,6 @@ export class RevisionsComponent implements OnInit {
   }
 
   previewRev(rev) {
-    console.log("pag1"+this.dataSource.loading$)
     revisionSelected=rev;
     let activeComponent: any;
     switch(revisionSelected.revType) { 
@@ -407,8 +406,8 @@ ngOnInit(){
   export class SectionDialog implements OnInit{
     sectionRev: SectionMetaDOC;
     revisionSelected: RevisionMeta;
-    oldSectionContent: SafeHtml = '';
-    newSectionContent: SafeHtml = '';
+    oldSectionContent: string;
+    newSectionContent: string;
     oldSectionTitle: string;
     newSectionTitle: string;
     constructor(private injector: Injector,
@@ -421,9 +420,8 @@ ngOnInit(){
     const revisionService = this.injector.get(RevisionService);
     revisionService.getSectionRevision(revisionSelected._id, revisionSelected.index).add(() => {
       this.sectionRev = revisionService.sectionRevision;
-      console.log(this.sectionRev.old.content)
-      this.oldSectionContent = this.sanitizer.bypassSecurityTrustHtml(atob(this.sectionRev.old.content));
-      this.newSectionContent = this.sanitizer.bypassSecurityTrustHtml(atob(this.sectionRev.new.content));
+      this.oldSectionContent = this.sectionRev.old.content;
+      this.newSectionContent = this.sectionRev.new.content
       this.oldSectionTitle = this.sectionRev.old.secTitle;
       this.newSectionTitle=  this.sectionRev.new.secTitle;
   });

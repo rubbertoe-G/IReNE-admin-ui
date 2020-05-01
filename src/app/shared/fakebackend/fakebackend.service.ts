@@ -9,7 +9,7 @@ import { TagMeta } from './../models/tags.model';
 import { RequestMeta } from './../models/access-requests.model';
 import { AdminMeta } from './../models/admin.model';
 import {fakeCollaborators} from './fake-data/fake-collaborators';
-import { fakeDocuments } from './fake-data/fake-documents';
+import { fakeDocuments, fakeViewDocuments } from './fake-data/fake-documents';
 import { fakeHist } from './fake-data/fake-revisions';
 import { RevisionMeta } from '../models/revision.model';
 import { element } from 'protractor';
@@ -63,7 +63,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         return publishDocument();
                 case url.endsWith('/admin/documents/unpublish') && method === 'PUT':
                         return unpublishDocument();
-                case url.endsWith('/admin/view') && method === 'GET':
+                case url.match(/\/admin\/documents\/view\/\w/) && method === 'GET':
                     return viewDocument();
                 case url.endsWith('/admin/tags/') && method === 'GET':
                     return getTags();
@@ -440,7 +440,18 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function viewDocument(){
             if (!isLoggedIn()) 
                 unauthorized();
-            return ok(base64PDF);
+            const urlParts = url.split("/");
+            var docId = urlParts[urlParts.length - 1];
+            for (let index = 0; index < fakeViewDocuments.length; index++) {
+                const element =fakeViewDocuments[index];
+                if( element._id === docId){
+                    return of(new HttpResponse({
+                        body: {'document': element},
+                        status: 200
+                    }));
+                }
+            }
+            return ok();
         }
 
         // helper functions
