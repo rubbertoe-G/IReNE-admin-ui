@@ -29,7 +29,6 @@ export class DocumentsComponent implements OnInit {
   constructor(
     private documentService: DocumentsService,
     private router: Router,
-    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {

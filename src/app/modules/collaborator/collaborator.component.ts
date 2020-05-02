@@ -136,7 +136,8 @@ export class CollaboratorComponent implements OnInit {
       showConfirmButton: true,
       showLoaderOnConfirm: true,
       confirmButtonText: 'Confirm',
-      confirmButtonColor: '#37474f',
+      confirmButtonColor: 'green',
+      cancelButtonColor: '#37474f'
     }).then((result) => {
       if (result.value) {
         this.collaboratorService.banCollaborator(id);
@@ -168,7 +169,8 @@ export class CollaboratorComponent implements OnInit {
       showConfirmButton: true,
       showLoaderOnConfirm: true,
       confirmButtonText: 'Confirm',
-      confirmButtonColor: '#37474f'
+      confirmButtonColor: 'green',
+      cancelButtonColor: '#37474f'
     }).then((result) => {
       if (result.value){
         this.collaboratorService.unbanCollaborator(id);

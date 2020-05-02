@@ -24,7 +24,9 @@ export class DocumentsService {
 
      return this.http.get(`${this.fakeBackend}/documents/`).subscribe(
        (response) => {
-         this.documents = response['documents'];
+         let docs: DocumentMeta[] = response['documents'];
+         console.log(docs)
+         this.documents = docs;
        }
      );
   }
@@ -37,7 +39,7 @@ export class DocumentsService {
     formData.append('docID', id);
 
     return this.http.put(`${this.fakeBackend}/documents/publish`, formData).subscribe(
-      (response) => {
+      (response: DocumentMeta) => {
         this.documents.forEach(e => {
           if(e._id === response['docID']){
             e.published = true;

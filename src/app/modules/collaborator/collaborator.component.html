@@ -64,12 +64,19 @@
         <ng-container matColumnDef="actions">
           <th class="center-cell header-color-size" mat-header-cell *matHeaderCellDef>Actions</th>
           <td class="center-cell" mat-cell *matCellDef="let element">
-            <button mat-icon-button color="primary" (click)="unbanCollaborator(element._id, element.email)"
-              [disabled]="!element.banned" style="width: 3em;" matTooltip="Unban">
+            <button mat-icon-button color="primary" 
+            (click)="unbanCollaborator(element._id, element.email)"
+            disableRipple="true"
+            [disabled]="!element.banned" 
+            style="width: 3em;" 
+            matTooltip="Unban">
               <mat-icon>check_circle</mat-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="banCollaborator(element._id, element.email)"
-              [disabled]="element.banned" style="width: 2em;" matTooltip="Ban">
+            <button mat-icon-button color="warn" 
+            (click)="banCollaborator(element._id, element.email)"
+            disableRipple="true"
+            [disabled]="element.banned" 
+            style="width: 2em;" matTooltip="Ban">
               <mat-icon>remove_circle</mat-icon>
             </button>
           </td>
