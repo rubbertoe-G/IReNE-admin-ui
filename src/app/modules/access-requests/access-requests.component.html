@@ -4,7 +4,7 @@
 <div>
   <mat-form-field appearance="outline">
     <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Roberto">
+    <input [disabled]="loading" matInput (keyup)="applyFilter($event)" placeholder="Ex. Roberto">
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
   <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>

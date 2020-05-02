@@ -25,7 +25,6 @@ export class DocumentsService {
      return this.http.get(`${this.fakeBackend}/documents/`).subscribe(
        (response) => {
          let docs: DocumentMeta[] = response['documents'];
-         console.log(docs)
          this.documents = docs;
        }
      );
