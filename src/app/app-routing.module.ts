@@ -15,12 +15,12 @@ import { RevisionsComponent } from './modules/revisions/revisions.component';
 const routes: Routes = [
   { path: '', component: DefaultComponent,
     children: [
-      { path: '', redirectTo: 'revision-history', pathMatch: 'full' },
-      { path: 'revision-history', component: RevisionsComponent, canActivate: [AuthGuard] },
+      { path: '', redirectTo: 'collaborators', pathMatch: 'full' },
       { path: 'collaborators', component: CollaboratorComponent, canActivate: [AuthGuard]},
       { path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard] },
       { path: 'access-requests', component: AccessRequestsComponent, canActivate: [AuthGuard] },
-      { path: 'tags', component: TagsComponent, canActivate: [AuthGuard] }
+      { path: 'tags', component: TagsComponent, canActivate: [AuthGuard] },
+      { path: 'revision-history', component: RevisionsComponent, canActivate: [AuthGuard] },
     ]},
 
     { 
