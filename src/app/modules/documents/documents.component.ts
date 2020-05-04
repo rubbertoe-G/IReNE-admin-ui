@@ -16,7 +16,7 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class DocumentsComponent implements OnInit {
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   dataSource: MatTableDataSource<DocumentMeta>;
   displayedColumns: string[] = ['title', 'creator', 'published', 'actions'];
@@ -24,6 +24,7 @@ export class DocumentsComponent implements OnInit {
   checkPublished = false;
   checkUnpublished = false;
   loading = true;
+  selectedId = ' ';
   usingFilter = false;
 
   constructor(
@@ -112,7 +113,10 @@ export class DocumentsComponent implements OnInit {
       cancelButtonColor: '#37474f'
     }).then((result) => {
       if (result.value) {
-        this.documentService.publishDocument(id);
+        this.selectedId = id;
+        this.documentService.publishDocument(id).add(() => {
+          this.selectedId = ' ';
+        });
       }
     });
   }
@@ -146,7 +150,10 @@ export class DocumentsComponent implements OnInit {
       cancelButtonColor: '#37474f'
     }).then((result) => {
       if (result.value) {
-        this.documentService.unpublishDocument(id);
+        this.selectedId = id;
+        this.documentService.unpublishDocument(id).add(() => {
+          this.selectedId = ' ';
+        });
       }
     });
   }

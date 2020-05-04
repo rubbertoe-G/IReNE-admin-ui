@@ -39,11 +39,17 @@
           <th class="header-color-size" mat-header-cell *matHeaderCellDef> Status </th>
           <td mat-cell class="center-cell" *matCellDef="let element">
             <mat-chip-list aria-label="Banned or not">
-              <mat-chip *ngIf="element.published" selectable="false" disableRipple="true" class="publish-chip">
+              <mat-chip 
+              [class.spinner]="element._id == selectedId"
+              [disabled]="element._id == selectedId"
+                *ngIf="element.published" selectable="false" disableRipple="true" class="publish-chip">
                 Published
               </mat-chip>
 
-              <mat-chip *ngIf="!element.published" selectable="false" disableRipple="true" class="unpublish-chip">
+              <mat-chip
+              [class.spinner]="element._id == selectedId"
+              [disabled]="element._id == selectedId" 
+              *ngIf="!element.published" selectable="false" disableRipple="true" class="unpublish-chip">
                 Unpublished
               </mat-chip>
 
@@ -56,11 +62,13 @@
         <ng-container matColumnDef="actions">
           <th class="center-cell header-color-size" mat-header-cell *matHeaderCellDef>Actions</th>
           <td class="center-cell" mat-cell *matCellDef="let element">
-            <button mat-icon-button color="primary" [disabled]="element.published"
+            <button mat-icon-button color="primary" 
+            [disabled]="element.published || element._id == selectedId" [class.spinner]="element._id == selectedId"
               (click)="publishDoc(element._id, element.title)" matTooltip="Publish">
               <mat-icon>check_circle</mat-icon>
             </button>
-            <button mat-icon-button color="warn" [disabled]="!element.published"
+            <button mat-icon-button color="warn" 
+            [disabled]="!element.published || element._id == selectedId" [class.spinner]="element._id == selectedId"
               (click)="unpublishDoc(element._id, element.title)" matTooltip="Unpublish">
               <mat-icon>remove_circle</mat-icon>
             </button>
