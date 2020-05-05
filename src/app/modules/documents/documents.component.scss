@@ -1,10 +1,10 @@
-.example-container {
-  max-height: 590px;
-  overflow: auto;
+mat-progress-bar{
+  height: 10px;
 }
 
 .table-container{
-  height: 35em;
+  position: relative;
+  height: 58.5vh;
   overflow: auto;
 }
 
@@ -50,4 +50,23 @@ table {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+// Chips
+mat-chip{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  pointer-events: none;
+  width: 60%;
+}
+
+.publish-chip{
+  background-color: rgb(55, 71, 79); 
+  color: white;
+}
+
+.unpublish-chip{
+  background-color: rgb(255, 92, 92);
+  color: white;
 }

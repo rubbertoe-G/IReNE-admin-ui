@@ -1,10 +1,12 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 
 import Swal from 'sweetalert2';
 import { CollaboratorsService } from 'src/app/shared/services/collaborators.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { CollaboratorMeta } from 'src/app/shared/models/collaborators.model';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 
 @Component({
@@ -13,6 +15,9 @@ import { CollaboratorMeta } from 'src/app/shared/models/collaborators.model';
   styleUrls: ['./collaborator.component.scss']
 })
 export class CollaboratorComponent implements OnInit {
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   /**
    * The collaborators data
@@ -51,6 +56,8 @@ export class CollaboratorComponent implements OnInit {
   ngOnInit(): void {
     this.collaboratorService.getCollaborators().add(() => {
       this.dataSource = new MatTableDataSource<CollaboratorMeta>(this.collaboratorService.collaborators);
+      this.dataSource.paginator = this.paginator
+      this.dataSource.sort = this.sort
       this.tempDataSource = this.dataSource;
       this.loading = false;
     });
@@ -80,6 +87,7 @@ export class CollaboratorComponent implements OnInit {
         }
       });
       this.dataSource = publishedData;
+      this.dataSource.paginator = this.paginator;
       return;
     }
     this.dataSource = this.tempDataSource;
@@ -98,6 +106,7 @@ export class CollaboratorComponent implements OnInit {
         }
       });
       this.dataSource = publishedData;
+      this.dataSource.paginator = this.paginator;
       return;
     }
     this.dataSource = this.tempDataSource;
@@ -127,16 +136,11 @@ export class CollaboratorComponent implements OnInit {
       showConfirmButton: true,
       showLoaderOnConfirm: true,
       confirmButtonText: 'Confirm',
-      confirmButtonColor: '#37474f',
+      confirmButtonColor: 'green',
+      cancelButtonColor: '#37474f'
     }).then((result) => {
       if (result.value) {
-        this.collaboratorService.banCollaborator(id).add(
-          () => {
-            this.snackBar.open('Collaborator Banned', null, {
-              duration: 3000
-            });
-          }
-        );
+        this.collaboratorService.banCollaborator(id);
       }
     });
   }
@@ -165,16 +169,11 @@ export class CollaboratorComponent implements OnInit {
       showConfirmButton: true,
       showLoaderOnConfirm: true,
       confirmButtonText: 'Confirm',
-      confirmButtonColor: '#37474f'
+      confirmButtonColor: 'green',
+      cancelButtonColor: '#37474f'
     }).then((result) => {
       if (result.value){
-        this.collaboratorService.unbanCollaborator(id).add(
-          () => {
-            this.snackBar.open('Collaborator Unbanned', null, {
-              duration: 3000
-            });
-          }
-        );
+        this.collaboratorService.unbanCollaborator(id);
       }
     });
   }

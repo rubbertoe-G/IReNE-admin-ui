@@ -8,13 +8,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DefaultModule } from './layouts/default/default.module';
 import { NotfoundComponent } from './modules/notfound/notfound.component';
 import { LoginModule } from './layouts/login/login.module';
-import { fakeBackendProvider } from './shared/fakebackend/fakebackend.service';
+// import { fakeBackendProvider } from './shared/fakebackend/fakebackend.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PreviewModule } from './layouts/preview/preview.module';
 import { JwtInterceptor } from "src/app/shared/authentication/jwt.interceptor"
 import { from } from 'rxjs';
 import { RevisionsComponent } from './modules/revisions/revisions.component';
 import { DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { DatePipe } from '@angular/common';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     DefaultModule,

@@ -4,35 +4,93 @@ import { ActivatedRoute } from '@angular/router';
 import { NgxExtendedPdfViewerService } from 'ngx-extended-pdf-viewer';
 import { base64PDF } from '../../shared/fakebackend/fake-data/samplePdf';
 import {environment} from '../../../environments/environment';
+import { DatePipe } from '@angular/common';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import {encoded_html} from './test_encoded_html';
+
+// Import CKEditor5-build-classic
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { AuthorMeta } from 'src/app/shared/models/author.model';
+import { ActorMeta } from 'src/app/shared/models/actor.model';
+import { SectionMeta } from 'src/app/shared/models/section.model';
+import { Document } from 'src/app/shared/models/documents.model';
 
 @Component({
   selector: 'app-preview',
   templateUrl: './preview.component.html',
-  styleUrls: ['./preview.component.scss']
+  styleUrls: ['./preview.component.css']
 })
 export class PreviewComponent implements OnInit {
 
   base64Src = '';
   fakeBackend = environment.backend
   loadingDocument = true;
+  notFound = false;
+
+  // Force the CSS to load the Classic editor CSS values.
+  public editor = ClassicEditor;
+
+  title: string = '';
+  description: string = '';
+  creatorFullName: string = '';
+  creatorEmail: string = '';
+  creationDate: string = '';
+  lastModificationDate: string = '';
+  incidentDate: string = '';
+  infrasDocList: Array<String> = [];
+  damageDocList: Array<String> = [];
+  tagsDoc: Array<String> = [];
+  author: Array<AuthorMeta> = [];
+  actor: Array<ActorMeta> = [];
+  section: Array<SectionMeta> = [];
+
+  ckeditorData: SafeHtml = '';
 
   constructor(
-    private route: ActivatedRoute,
-    private http: HttpClient
-  ) { }
+    private activatedRoute: ActivatedRoute,
+    private http: HttpClient,
+    private datePipe: DatePipe,
+    private sanitizer: DomSanitizer
+  ) {
+
+  }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params =>{
-      this.http.get(this.fakeBackend).subscribe(
-        (response: string) =>{
-          this.base64Src = response;
+    this.activatedRoute.params.subscribe(params => {
+      const id = params[`docId`];
+      this.http.get(`${environment.backend}/documents/view/` + id).subscribe(
+        (response) => {
+          const doc = response['document'];
+          this.title = doc.title;
+          this.description = doc.description;
+          this.creatorFullName = doc.creatorFullName;
+          this.creatorEmail = doc.creatorEmail;
+          this.creationDate = this.datePipe.transform(doc.creationDate, 'yyyy-MM-dd');
+          this.lastModificationDate = this.datePipe.transform(doc.lastModificationDate, 'yyyy-MM-dd');
+          this.incidentDate = this.datePipe.transform(doc.incidentDate, 'yyyy-MM-dd');
+          this.infrasDocList = doc.infrasDocList;
+          this.damageDocList = doc.damageDocList;
+          this.tagsDoc = doc.tagsDoc;
+          this.author = doc.author;
+          this.actor = doc.actor;
+          this.section = doc.section;
+
+          this.ckeditorData = this.sanitizer.bypassSecurityTrustHtml(atob(encoded_html));
+
           // Simulate long respone
-          setTimeout(() => {
-            this.loadingDocument = !this.loadingDocument;
-          }, 2000);
+//         setTimeout(() => {
+//           this.loadingDocument = false;
+//         }, 1500);
+          this.loadingDocument = false;
+        },
+        (error) => {
+//          setTimeout(() => {
+//            this.loadingDocument = false;
+//          }, 1500);
+          this.loadingDocument = false;
+          this.notFound = true;
         }
       );
     });
   }
-
 }

@@ -16,6 +16,8 @@ import { ActorMetaDOC, ActorMeta } from '../models/actor.model';
 import { SectionMetaDOC } from '../models/section.model';
 import { environment } from 'src/environments/environment';
 
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +54,20 @@ export class RevisionService {
        }
      );
   }
+
+
+  findRevisions(sortSubject ='date', filter = '', sortOrder = 'desc',
+    pageNumber = 0, pageSize = 10):  Observable<Object> {
+    const formData = new FormData();
+    formData.append('sortSubject', sortSubject);
+    formData.append('filter', filter);
+    formData.append('sortOrder', sortOrder);
+    formData.append('pageNumber', pageNumber.toString());
+    formData.append('pageSize', pageSize.toString());
+    return this.http.post(`${this.fakeBackend}/documents-hist/`, formData).pipe(
+        map(response =>  response)
+    );
+}
 
   getCreationRevision(docId){
     const formData = new FormData();

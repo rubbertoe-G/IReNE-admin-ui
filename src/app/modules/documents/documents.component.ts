@@ -2,10 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { DocumentsService } from 'src/app/shared/services/documents.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DocumentMeta } from 'src/app/shared/models/documents.model';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { MatPaginator } from '@angular/material/paginator';
 
 
 @Component({
@@ -15,22 +16,25 @@ import { environment } from 'src/environments/environment';
 })
 export class DocumentsComponent implements OnInit {
 
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
   dataSource: MatTableDataSource<DocumentMeta>;
   displayedColumns: string[] = ['title', 'creator', 'published', 'actions'];
   tempDataSource: MatTableDataSource<DocumentMeta>;
   checkPublished = false;
   checkUnpublished = false;
   loading = true;
+  usingFilter = false;
 
   constructor(
     private documentService: DocumentsService,
     private router: Router,
-    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
     this.documentService.getDocuments().add(() => {
-      this.dataSource =  new MatTableDataSource<DocumentMeta>(this.documentService.documents);
+      this.dataSource = new MatTableDataSource<DocumentMeta>(this.documentService.documents);
+      this.dataSource.paginator = this.paginator;
       this.tempDataSource = this.dataSource;
       this.loading = false;
     });
@@ -40,7 +44,7 @@ export class DocumentsComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  
+
   filterPublished() {
     this.checkUnpublished = false;
     if (this.checkPublished && !this.checkUnpublished) {
@@ -51,6 +55,7 @@ export class DocumentsComponent implements OnInit {
         }
       });
       this.dataSource = publishedData;
+      this.dataSource.paginator = this.paginator;
       return;
     }
     this.dataSource = this.tempDataSource;
@@ -66,6 +71,7 @@ export class DocumentsComponent implements OnInit {
         }
       });
       this.dataSource = publishedData;
+      this.dataSource.paginator = this.paginator;
       return;
     }
     this.dataSource = this.tempDataSource;
@@ -84,13 +90,15 @@ export class DocumentsComponent implements OnInit {
    * @param title the title of the document.
    */
   publishDoc(id: string, title: string) {
+    var textHtml = document.createElement('div')
+    textHtml.innerHTML = `<p>Enter password to confirm publishing of document:<p><p><strong>"${title}"</strong><p>`
     Swal.fire({
-      title: 'Republish Document',
-      text: `Enter password to confirm republishing of document: "${title}"`,
+      title: 'Publish Document',
+      html: textHtml,
       input: 'password',
-      inputPlaceholder:'password',
+      inputPlaceholder: 'password',
       inputValue: '',
-      inputValidator: (value) =>{
+      inputValidator: (value) => {
         if (!value) {
           return 'Password field empty';
         }
@@ -100,18 +108,11 @@ export class DocumentsComponent implements OnInit {
       showConfirmButton: true,
       showLoaderOnConfirm: true,
       confirmButtonText: 'Confirm',
-      confirmButtonColor: '#37474f'
+      confirmButtonColor: 'green',
+      cancelButtonColor: '#37474f'
     }).then((result) => {
       if (result.value) {
-        this.documentService.publishDocument(id).add(
-          () => {
-            this.dataSource =  new MatTableDataSource<DocumentMeta>(this.documentService.documents);
-            this.tempDataSource = this.dataSource;
-            this.snackBar.open('Document Republished', null, {
-              duration: 2000
-            });
-          }
-        );
+        this.documentService.publishDocument(id);
       }
     });
   }
@@ -123,13 +124,15 @@ export class DocumentsComponent implements OnInit {
    * @param title the title of the document.
    */
   unpublishDoc(id: string, title: string) {
+    var textHtml = document.createElement('div')
+    textHtml.innerHTML = `<p>Enter password to confirm unpublishing of document:<p><p><strong>"${title}"</strong><p>`
     Swal.fire({
       title: 'Unpublish Document',
-      text: `Enter password to confirm republishiing of document: "${title}"`,
+      html: textHtml,
       input: 'password',
-      inputPlaceholder:'password',
+      inputPlaceholder: 'password',
       inputValue: '',
-      inputValidator: (value) =>{
+      inputValidator: (value) => {
         if (!value) {
           return 'Password field empty';
         }
@@ -139,26 +142,18 @@ export class DocumentsComponent implements OnInit {
       showConfirmButton: true,
       showLoaderOnConfirm: true,
       confirmButtonText: 'Confirm',
-      confirmButtonColor: '#37474f'
+      confirmButtonColor: 'green',
+      cancelButtonColor: '#37474f'
     }).then((result) => {
       if (result.value) {
-        this.documentService.unpublishDocument(id).add(
-          () => {
-            
-
-            this.dataSource = new MatTableDataSource<DocumentMeta>(this.documentService.documents);
-            this.snackBar.open('Document Unpublished', null, {
-              duration: 2000
-            });
-          }
-        );
+        this.documentService.unpublishDocument(id);
       }
     });
   }
 
   previewDoc(docId: string) {
-    if(environment.testErrors)
+    if (environment.testErrors)
       throw Error('ERROR: Unable to preview document.')
-    this.router.navigate([`/preview/${docId}`])
+    this.router.navigate([`/documents/preview/${docId}`])
   }
 }

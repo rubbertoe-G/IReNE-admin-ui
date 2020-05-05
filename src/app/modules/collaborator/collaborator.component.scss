@@ -1,14 +1,15 @@
-.example-container {
-  max-height: 590px;
-  overflow: auto;
+mat-progress-bar{
+  height: 10px;
 }
 
 .table-container{
-  height: 65vh;
+  position: relative;
+  height: 58.5vh;
   overflow: auto;
 }
 
 table {
+  overflow-y: scroll;
   width: 100%;
 }
 
@@ -29,9 +30,9 @@ table {
 }
 
 .center-screen{
-  
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
+

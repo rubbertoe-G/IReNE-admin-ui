@@ -10,12 +10,12 @@
 
         <mat-card-subtitle>
             <br>
-            <div *ngIf="sectionRev?.new.length > 0">
+            <div *ngIf="newSectionContent !== undefined">
             <h2>{{newSectionTitle}}</h2>
             <div [innerHTML]="newSectionContent"></div>
             </div>
-            <div *ngIf="sectionRev?.new.length == 0">
-                <h2>No New Description to Show</h2>
+            <div *ngIf="newSectionContent === undefined">
+                <h2>No New Section to Show</h2>
             </div>
         <br>
         <br>
@@ -23,6 +23,7 @@
         </mat-card-subtitle>
         </mat-card-header>
     </mat-card>
+    
     <br/>
     <br/>
     <mat-card class="preview-card">
@@ -32,11 +33,11 @@
         <mat-card-header>
             <mat-card-subtitle>
             <br>
-            <div *ngIf="sectionRev?.old.length > 0">
+            <div *ngIf="oldSectionContent !== undefined">
                 <h2>{{oldSectionTitle}}</h2>
                 <div [innerHTML]="oldSectionContent"></div>
             </div>
-                <div *ngIf="sectionRev?.old.length == 0">
+                <div *ngIf="oldSectionContent === undefined">
                 <h2>No Old Description to Show</h2>
                 </div>
             <br>

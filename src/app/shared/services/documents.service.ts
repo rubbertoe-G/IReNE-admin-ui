@@ -24,7 +24,8 @@ export class DocumentsService {
 
      return this.http.get(`${environment.backend}/documents/`).subscribe(
        (response) => {
-         this.documents = response['documents'];
+         let docs: DocumentMeta[] = response['documents'];
+         this.documents = docs;
        }
      );
   }
@@ -43,15 +44,19 @@ export class DocumentsService {
             e.published = true;
           }
         });
+      },
+      (error) =>{
+        Error('ERROR: Unable to change document status.')
       }
     );
 
   }
 
+  /**
+   * Unpublish a specific document.
+   * @param id document identification number
+   */
   unpublishDocument(id: string) {
-    /**
-     * Set a document to be unpublished.
-     */
     const formData = new FormData();
     formData.append('docID', id);
 
@@ -62,6 +67,9 @@ export class DocumentsService {
             e.published = false;
           }
         });
+      },
+      (error) =>{
+        Error('ERROR: Unable to change document status.')
       }
     );
 
