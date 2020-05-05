@@ -3,7 +3,6 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import {encoded_html} from './test_encoded_html';
 
 // Import CKEditor5-build-classic
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -11,11 +10,14 @@ import { AuthorMeta } from 'src/app/shared/models/author.model';
 import { ActorMeta } from 'src/app/shared/models/actor.model';
 import { SectionMeta } from 'src/app/shared/models/section.model';
 import { Document } from 'src/app/shared/models/documents.model';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-preview',
   templateUrl: './preview.component.html',
-  styleUrls: ['./preview.component.css']
+  styleUrls: ['./preview.component.css'],
+
 })
 export class PreviewComponent implements OnInit {
   fakeBackend = 'http://localhost:4200/api/documents/view/';
@@ -37,9 +39,7 @@ export class PreviewComponent implements OnInit {
   tagsDoc: Array<String> = [];
   author: Array<AuthorMeta> = [];
   actor: Array<ActorMeta> = [];
-  section: Array<SectionMeta> = [];
-
-  ckeditorData: SafeHtml = '';
+  section = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -54,7 +54,7 @@ export class PreviewComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       const id = params[`docId`];
-      this.http.get(`http://localhost:5000/admin/documents/view/` + id).subscribe(
+      this.http.get(`${environment.backend}documents/view/` + id).subscribe(
         (response) => {
           const doc = response['document'];
           this.title = doc.title;
@@ -69,20 +69,12 @@ export class PreviewComponent implements OnInit {
           this.tagsDoc = doc.tagsDoc;
           this.author = doc.author;
           this.actor = doc.actor;
-          this.section = doc.section;
+          // this.section = this.sanitizer.bypassSecurityTrustHtml(doc.section);;
 
-          this.ckeditorData = this.sanitizer.bypassSecurityTrustHtml(atob(encoded_html));
-
-          // Simulate long respone
-//         setTimeout(() => {
-//           this.loadingDocument = false;
-//         }, 1500);
           this.loadingDocument = false;
         },
         (error) => {
-//          setTimeout(() => {
-//            this.loadingDocument = false;
-//          }, 1500);
+
           this.loadingDocument = false;
           this.notFound = true;
         }
