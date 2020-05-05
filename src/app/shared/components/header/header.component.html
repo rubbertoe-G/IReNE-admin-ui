@@ -2,9 +2,12 @@
   <mat-toolbar-row>
     
     <img src="assets/app_logo_white.png" alt="IReNE Logo" width="50" height="50">
-    <h1 style="padding-left: 1em;">Admin Dashboard</h1>
+    <h1 style="padding-left: 1em; cursor: pointer; ">Admin Dashboard</h1>
     <span class="spacer"></span>
     
+    <button mat-icon-button matTooltip="Home" color="secondary" (click)="home()">
+      <mat-icon>home</mat-icon>
+    </button>
     <button mat-icon-button matTooltip="Logout" color="secondary" (click)="logout()">
       <mat-icon>exit_to_app</mat-icon>
     </button>
