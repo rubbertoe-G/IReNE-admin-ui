@@ -75,10 +75,10 @@ export class PreviewComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       const id = params[`docId`];
       this.http.get(`${environment.backend}/documents/view/` + id).subscribe(
-        (response: Document) => {
-          const doc = response[`document`];
+        (response: any) => {
+          const doc: Document = response[`document`];
           this.title = doc.title;
-          this.description = doc.description;
+          doc.description ? this.description = doc.description : this.description = '';
           this.creatorFullName = doc.creatorFullName;
           this.creatorEmail = doc.creatorEmail;
           this.creationDate = this.datePipe.transform(doc.creationDate, 'yyyy-MM-dd');

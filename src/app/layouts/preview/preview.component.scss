@@ -201,6 +201,7 @@
   width: 100%;
   height: 100%;
   border: 1px double hsl(0, 0%, 70%);
+  border: 1px solid black;
 }
 
 /* ckeditor5-table/theme/table.css */
@@ -208,13 +209,15 @@
 .ck-content .table table th {
   min-width: 2em;
   padding: .4em;
-  border-color: hsl(0, 0%, 75%);
+  border-color: hsla(0, 0%, 0%, 5%);
+  border: 1px solid black;
 }
 
 /* ckeditor5-table/theme/table.css */
 .ck-content .table table th {
   font-weight: bold;
   background: hsla(0, 0%, 0%, 5%);
+  border: 2px solid black;
 }
 
 /* ckeditor5-list/theme/todolist.css */
