@@ -1,0 +1,31 @@
+<div class="modal-container">
+  <div class="center-content">
+    <h1 mat-dialog-title>
+      <strong>{{data.title}}</strong>
+    </h1>
+  </div>
+  <div [innerHTML]="data.message"></div>
+  <br>
+  <div>Please type the administrator password to confirm.</div>
+  <br>
+  <div class="center-content">
+    <form [formGroup]="passwordForm">
+      <mat-form-field appearance="outline" style="width: 30em;">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" name="password" placeholder="Password" type="password" required>
+      </mat-form-field>
+    </form>
+  </div>
+  <div class="filler"></div>
+  <div class="action-buttons-container">
+    <div style="padding-right: 0.5em;">
+      <button mat-raised-button 
+      [ngClass]="{'confirm-button': !passwordForm.valid}" 
+      [disabled]="!passwordForm.valid"
+      (click)="closeDialogSubmit()">
+        Confirm
+      </button>
+    </div>
+    <button mat-raised-button color="primary" (click)="closeDialogNoValue()">Cancel</button>
+  </div>
+</div>

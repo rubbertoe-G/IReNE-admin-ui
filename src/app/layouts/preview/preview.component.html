@@ -1,11 +1,14 @@
-<div style="overflow: hidden;" *ngIf="!notFound">
+<div class="toolbar">
+  <app-header></app-header>
+</div>
+<div style="overflow: hidden; " *ngIf="!notFound">
   <div class="spinner-container" *ngIf="loadingDocument">
     <mat-spinner></mat-spinner>
   </div>
 
   <div class="preview-container">
     <div style="padding: 2em;">
-      <mat-card class="preview-card">
+      <mat-card class="preview-card mat-elevation-z8">
         <mat-card-header style="padding-top: 3em;">
           <mat-card-title style="font-size: xx-large; font-weight: bolder;">{{title}}</mat-card-title>
           <mat-card-subtitle>
@@ -83,11 +86,11 @@
     </div>
 
     <div style="padding: 2em;" *ngFor="let section of section">
-      <mat-card class="preview-card">
+      <mat-card class="preview-card mat-elevation-z8">
         <mat-card-content>
           <div>
             <h1 style="font-weight: bolder;">{{section.secTitle}}</h1>
-            <div class="ck-content" [innerHTML]="section.content"></div>
+            <div class="ck-content" [innerHTML]="section.content | preview"></div>
           </div>
         </mat-card-content>
       </mat-card>
@@ -106,17 +109,3 @@
     </mat-card-content>
   </mat-card>
 </div>
-
-
-<!-- PDF Preview -->
-<!-- <div *ngIf="!loadingDocument">
-    <ngx-extended-pdf-viewer
-      [base64Src]="base64Src"
-      backgroundColor="#ffffff"
-      [height]="'90vh'"
-      [useBrowserLocale]="true"
-      [handTool]="false"
-      [showHandToolButton]="true"
-    >
-    </ngx-extended-pdf-viewer>
-  </div> -->

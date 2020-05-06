@@ -1,52 +1,73 @@
 import {HttpClient} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { DatePipe } from '@angular/common';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import {encoded_html} from './test_encoded_html';
+import {DatePipe} from '@angular/common';
+import {environment} from 'src/environments/environment';
 
-// Import CKEditor5-build-classic
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { AuthorMeta } from 'src/app/shared/models/author.model';
-import { ActorMeta } from 'src/app/shared/models/actor.model';
-import { SectionMeta } from 'src/app/shared/models/section.model';
-import { Document } from 'src/app/shared/models/documents.model';
+
+interface Author {
+  author_FN: string;
+  author_LN: string;
+  author_email: string;
+  author_faculty: string;
+}
+
+interface Actor {
+  actor_FN: string;
+  actor_LN: string;
+  role: string;
+}
+
+interface Section {
+  secTitle: string;
+  content: string;
+}
+
+interface Document {
+  title: string;
+  description: string;
+  creatorFullName: string;
+  creatorEmail: string;
+  creationDate: string;
+  lastModificationDate: string;
+  incidentDate: string;
+  infrasDocList: Array<string>;
+  damageDocList: Array<string>;
+  tagsDoc: Array<string>;
+  author: Array<Author>;
+  actor: Array<Actor>;
+  section: Array<Section>;
+}
 
 @Component({
   selector: 'app-preview',
   templateUrl: './preview.component.html',
-  styleUrls: ['./preview.component.css']
+  styleUrls: ['./preview.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
+
 export class PreviewComponent implements OnInit {
-  fakeBackend = 'http://localhost:4200/api/documents/view/';
+  
   loadingDocument = true;
   notFound = false;
-
-  // Force the CSS to load the Classic editor CSS values.
-  public editor = ClassicEditor;
-
-  title: string = '';
-  description: string = '';
-  creatorFullName: string = '';
-  creatorEmail: string = '';
-  creationDate: string = '';
-  lastModificationDate: string = '';
-  incidentDate: string = '';
-  infrasDocList: Array<String> = [];
-  damageDocList: Array<String> = [];
-  tagsDoc: Array<String> = [];
-  author: Array<AuthorMeta> = [];
-  actor: Array<ActorMeta> = [];
-  section: Array<SectionMeta> = [];
-
-  ckeditorData: SafeHtml = '';
-
+  title = '';
+  description = '';
+  creatorFullName = '';
+  creatorEmail = '';
+  creationDate = '';
+  lastModificationDate = '';
+  incidentDate = '';
+  infrasDocList: Array<string> = [];
+  damageDocList: Array<string> = [];
+  tagsDoc: Array<string> = [];
+  author: Array<Author> = [];
+  actor: Array<Actor> = [];
+  section: Array<Section> = [];
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
     private datePipe: DatePipe,
-    private sanitizer: DomSanitizer
   ) {
 
   }
@@ -54,11 +75,11 @@ export class PreviewComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       const id = params[`docId`];
-      this.http.get(`http://localhost:5000/admin/documents/view/` + id).subscribe(
-        (response) => {
-          const doc = response['document'];
+      this.http.get(`${environment.backend}/documents/view/` + id).subscribe(
+        (response: any) => {
+          const doc: Document = response[`document`];
           this.title = doc.title;
-          this.description = doc.description;
+          doc.description ? this.description = doc.description : this.description = '';
           this.creatorFullName = doc.creatorFullName;
           this.creatorEmail = doc.creatorEmail;
           this.creationDate = this.datePipe.transform(doc.creationDate, 'yyyy-MM-dd');
@@ -70,19 +91,9 @@ export class PreviewComponent implements OnInit {
           this.author = doc.author;
           this.actor = doc.actor;
           this.section = doc.section;
-
-          this.ckeditorData = this.sanitizer.bypassSecurityTrustHtml(atob(encoded_html));
-
-          // Simulate long respone
-//         setTimeout(() => {
-//           this.loadingDocument = false;
-//         }, 1500);
           this.loadingDocument = false;
         },
         (error) => {
-//          setTimeout(() => {
-//            this.loadingDocument = false;
-//          }, 1500);
           this.loadingDocument = false;
           this.notFound = true;
         }
