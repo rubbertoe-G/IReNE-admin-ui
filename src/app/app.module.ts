@@ -12,8 +12,6 @@ import { LoginModule } from './layouts/login/login.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PreviewModule } from './layouts/preview/preview.module';
 import { JwtInterceptor } from "src/app/shared/authentication/jwt.interceptor"
-import { from } from 'rxjs';
-import { RevisionsComponent } from './modules/revisions/revisions.component';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
