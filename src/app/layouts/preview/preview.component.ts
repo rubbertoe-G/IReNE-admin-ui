@@ -47,6 +47,7 @@ interface Document {
 })
 
 export class PreviewComponent implements OnInit {
+  
   loadingDocument = true;
   notFound = false;
   title = '';

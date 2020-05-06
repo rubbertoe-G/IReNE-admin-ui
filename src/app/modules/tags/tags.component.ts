@@ -5,6 +5,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import { TagMeta } from 'src/app/shared/models/tags.model';
 import { TagsService } from 'src/app/shared/services/tags.service';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmModalComponent } from 'src/app/shared/components/modals/confirm-modal/confirm-modal.component';
 
 /**
 * Component that manages the operations concerning the tags in the system.
@@ -35,7 +37,11 @@ export class TagsComponent implements OnInit {
    * @param {TagsService} tagsService Tags service from which to get the data
    * @param {MatSnackBar} snackBar Angular material snackbar
    */
-  constructor( private tagsService: TagsService, private snackBar: MatSnackBar) { }
+  constructor(
+    private tagsService: TagsService, 
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
+    ) { }
 
   /**
    * Initializes the datasource by requesting the Tags from the server.
@@ -64,16 +70,16 @@ export class TagsComponent implements OnInit {
    * @param {TagMeta} tag Tag chosen by the user.
    */
   removeTag(tag: TagMeta) {
-    Swal.fire({
-      title: 'Delete Tag',
-      text: 'Are you sure you want to delete this tag?',
-      icon: 'warning',
-      showCancelButton: true,
-      showConfirmButton: true,
-      showLoaderOnConfirm: true,
-      confirmButtonColor: '#37474f'
-    }).then((result) => {
-      if (result.value) {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: 'Remove Tag',
+        message: `The following action will remove the following tag from the database: ${tag.tagItem.bold()}. This will also\
+          remove this tag from all documents that use it.`
+      }
+    })
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if (result) {
         this.tagsService.removeTag(tag._id.toString()).subscribe(
           () => {
             this.snackBar.open("The tag has been removed.",null,{duration:2000});

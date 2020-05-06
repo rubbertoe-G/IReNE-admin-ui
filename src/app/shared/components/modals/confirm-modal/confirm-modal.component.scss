@@ -1,0 +1,39 @@
+
+
+.filler{
+  flex: 1;
+}
+
+.modal-container{
+  display: flex;
+  flex-direction: column;
+  width: 35em;
+  max-width: 35em;
+  height: 20em;
+  max-height: 20em;
+}
+
+.center-content{
+  display: flex;
+  justify-content: center;
+}
+
+.message-container{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.value-container{
+  display: flex;
+  justify-content: center;
+}
+
+.action-buttons-container{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.confirm-button{
+  background-color: green;
+  color: white;
+}

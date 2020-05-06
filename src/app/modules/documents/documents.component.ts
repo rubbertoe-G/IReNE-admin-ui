@@ -7,6 +7,8 @@ import { DocumentMeta } from 'src/app/shared/models/documents.model';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmModalComponent } from 'src/app/shared/components/modals/confirm-modal/confirm-modal.component';
 
 
 @Component({
@@ -30,6 +32,7 @@ export class DocumentsComponent implements OnInit {
   constructor(
     private documentService: DocumentsService,
     private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -91,28 +94,16 @@ export class DocumentsComponent implements OnInit {
    * @param title the title of the document.
    */
   publishDoc(id: string, title: string) {
-    var textHtml = document.createElement('div')
-    textHtml.innerHTML = `<p>Enter password to confirm publishing of document:<p><p><strong>"${title}"</strong><p>`
-    Swal.fire({
-      title: 'Publish Document',
-      html: textHtml,
-      input: 'password',
-      inputPlaceholder: 'password',
-      inputValue: '',
-      inputValidator: (value) => {
-        if (!value) {
-          return 'Password field empty';
-        }
-      },
-      icon: 'warning',
-      showCancelButton: true,
-      showConfirmButton: true,
-      showLoaderOnConfirm: true,
-      confirmButtonText: 'Confirm',
-      confirmButtonColor: 'green',
-      cancelButtonColor: '#37474f'
-    }).then((result) => {
-      if (result.value) {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: 'Publish Document',
+        message: `The following action will re-publish the document with the following title: ${title.bold()}.\
+          Please take notice that a banned collaborator's case study can be set to published.`,
+      }
+    })
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if (result) {
         this.selectedId = id;
         this.documentService.publishDocument(id).add(() => {
           this.selectedId = ' ';
@@ -128,28 +119,15 @@ export class DocumentsComponent implements OnInit {
    * @param title the title of the document.
    */
   unpublishDoc(id: string, title: string) {
-    var textHtml = document.createElement('div')
-    textHtml.innerHTML = `<p>Enter password to confirm unpublishing of document:<p><p><strong>"${title}"</strong><p>`
-    Swal.fire({
-      title: 'Unpublish Document',
-      html: textHtml,
-      input: 'password',
-      inputPlaceholder: 'password',
-      inputValue: '',
-      inputValidator: (value) => {
-        if (!value) {
-          return 'Password field empty';
-        }
-      },
-      icon: 'warning',
-      showCancelButton: true,
-      showConfirmButton: true,
-      showLoaderOnConfirm: true,
-      confirmButtonText: 'Confirm',
-      confirmButtonColor: 'green',
-      cancelButtonColor: '#37474f'
-    }).then((result) => {
-      if (result.value) {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
+      data: {
+        title: 'Unpublish Document',
+        message: `The following action will unpublish the document with the following title: ${title.bold()}.`
+      }
+    })
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if (result) {
         this.selectedId = id;
         this.documentService.unpublishDocument(id).add(() => {
           this.selectedId = ' ';
@@ -159,8 +137,6 @@ export class DocumentsComponent implements OnInit {
   }
 
   previewDoc(docId: string) {
-    if (environment.testErrors)
-      throw Error('ERROR: Unable to preview document.')
     this.router.navigate([`/documents/preview/${docId}`])
   }
 }
