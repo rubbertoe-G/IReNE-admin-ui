@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
    * @ignore 
    */
   keyDownLogin(e: KeyboardEvent){
-    if(e.keyCode == 13){
+    if(e.keyCode == 13 && this.loginForm.valid){
       this.login()
     }
   }

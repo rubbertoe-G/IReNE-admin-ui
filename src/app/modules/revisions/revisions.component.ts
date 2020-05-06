@@ -33,7 +33,7 @@ var revisionSelected: RevisionMeta;
 export class RevisionsComponent implements OnInit {
 
   dataSource: RevisionsDataSource;
-  displayedColumns: string[] = ['date', 'index', 'title', 'creator', 'revType'];
+  displayedColumns: string[] = ['revision_date', 'revision_number', 'document_title', 'creator_name', 'revision_type'];
   @ViewChild('input') input: ElementRef;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -46,7 +46,7 @@ export class RevisionsComponent implements OnInit {
   ngOnInit(): void {
     const revisionService = this.injector.get(RevisionService);
     this.dataSource =  new RevisionsDataSource(revisionService);
-    this.dataSource.loadRevisions('date','', 'desc', 0, 10);
+    this.dataSource.loadRevisions('revision_date','', 'desc', 0, 10);
   }
 
   ngAfterViewInit() {
@@ -82,7 +82,7 @@ export class RevisionsComponent implements OnInit {
   previewRev(rev) {
     revisionSelected=rev;
     let activeComponent: any;
-    switch(revisionSelected.revType) { 
+    switch(revisionSelected.revision_type) { 
       case "Creation": { 
         activeComponent = CreationDialog; 
         break; 
@@ -180,8 +180,8 @@ ngOnInit(){
     const revisionService = this.injector.get(RevisionService);
     revisionService.getCreationRevision(revisionSelected._id).add(() => {
       this.creationRev = revisionService.creationRevision;
-      this.creatorEmail = revisionSelected.email;
-      this.creatorFullName = revisionSelected.creator;
+      this.creatorEmail = revisionSelected.creator_email;
+      this.creatorFullName = revisionSelected.creator_name
   });
 }
 
@@ -202,7 +202,7 @@ ngOnInit(){
       this.revisionSelected = revisionSelected;
       const revisionService = this.injector.get(RevisionService);
       
-      revisionService.getDescriptionRevision(revisionSelected._id, revisionSelected.index).add(() => {
+      revisionService.getDescriptionRevision(revisionSelected._id, revisionSelected.revision_number).add(() => {
         this.descriptionRev = revisionService.descriptionRevision;
     });
   }
@@ -224,7 +224,7 @@ ngOnInit(){
         this.revisionSelected = revisionSelected;
         const revisionService = this.injector.get(RevisionService);
         
-        revisionService.getTitleRevision(revisionSelected._id, revisionSelected.index).add(() => {
+        revisionService.getTitleRevision(revisionSelected._id, revisionSelected.revision_number).add(() => {
           this.titleRev = revisionService.titleRevision;
       });
     }
@@ -246,7 +246,7 @@ ngOnInit(){
       this.revisionSelected = revisionSelected;
       const revisionService = this.injector.get(RevisionService);
       
-      revisionService.getTimelineRev(revisionSelected._id, revisionSelected.index).add(() => {
+      revisionService.getTimelineRev(revisionSelected._id, revisionSelected.revision_number).add(() => {
         this.timelineRev = revisionService.timelineRevision;
     });
   }
@@ -267,7 +267,7 @@ ngOnInit(){
   ngOnInit(){
       this.revisionSelected = revisionSelected;
       const revisionService = this.injector.get(RevisionService);
-      revisionService.getInfrastructureRev(revisionSelected._id, revisionSelected.index).add(() => {
+      revisionService.getInfrastructureRev(revisionSelected._id, revisionSelected.revision_number).add(() => {
         this.infrastructureRev = revisionService.infrastructureRevision;
     });
   }
@@ -288,7 +288,7 @@ ngOnInit(){
   ngOnInit(){
       this.revisionSelected = revisionSelected;
       const revisionService = this.injector.get(RevisionService);
-      revisionService.getDamageRev(revisionSelected._id, revisionSelected.index).add(() => {
+      revisionService.getDamageRev(revisionSelected._id, revisionSelected.revision_number).add(() => {
         this.damageRev = revisionService.damageRevision;
     });
   }
@@ -309,7 +309,7 @@ ngOnInit(){
   ngOnInit(){
       this.revisionSelected = revisionSelected;
       const revisionService = this.injector.get(RevisionService);
-      revisionService.getLocationRevision(revisionSelected._id, revisionSelected.index).add(() => {
+      revisionService.getLocationRevision(revisionSelected._id, revisionSelected.revision_number).add(() => {
         this.locationRev = revisionService.locationRevision;
     });
   }
@@ -330,7 +330,7 @@ ngOnInit(){
   ngOnInit(){
       this.revisionSelected = revisionSelected;
       const revisionService = this.injector.get(RevisionService);
-      revisionService.getTagRevision(revisionSelected._id, revisionSelected.index).add(() => {
+      revisionService.getTagRevision(revisionSelected._id, revisionSelected.revision_number).add(() => {
         this.tagRev = revisionService.tagRevision;
     });
   }
@@ -351,7 +351,7 @@ ngOnInit(){
   ngOnInit(){
       this.revisionSelected = revisionSelected;
       const revisionService = this.injector.get(RevisionService);
-      revisionService.getIncidentRevision(revisionSelected._id, revisionSelected.index).add(() => {
+      revisionService.getIncidentRevision(revisionSelected._id, revisionSelected.revision_number).add(() => {
         this.incidentRev = revisionService.incidentRevision;
     });
   }
@@ -371,8 +371,9 @@ ngOnInit(){
   ngOnInit(){
       this.revisionSelected = revisionSelected;
       const revisionService = this.injector.get(RevisionService);
-      revisionService.getAuthorRevision(revisionSelected._id, revisionSelected.index).add(() => {
+      revisionService.getAuthorRevision(revisionSelected._id, revisionSelected.revision_number).add(() => {
         this.authorRev = revisionService.authorRevision;
+        console.log(this.authorRev)
     });
   }
 }
@@ -392,7 +393,7 @@ ngOnInit(){
   ngOnInit(){
       this.revisionSelected = revisionSelected;
       const revisionService = this.injector.get(RevisionService);
-      revisionService.getActorRevision(revisionSelected._id, revisionSelected.index).add(() => {
+      revisionService.getActorRevision(revisionSelected._id, revisionSelected.revision_number).add(() => {
         this.actorRev = revisionService.actorRevision;
     });
   }
@@ -418,7 +419,7 @@ ngOnInit(){
   ngOnInit(){
     this.revisionSelected = revisionSelected;
     const revisionService = this.injector.get(RevisionService);
-    revisionService.getSectionRevision(revisionSelected._id, revisionSelected.index).add(() => {
+    revisionService.getSectionRevision(revisionSelected._id, revisionSelected.revision_number).add(() => {
       this.sectionRev = revisionService.sectionRevision;
       this.oldSectionContent = this.sectionRev.old.content;
       this.newSectionContent = this.sectionRev.new.content
