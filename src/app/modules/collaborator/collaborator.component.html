@@ -46,18 +46,26 @@
           <th class="header-color-size" mat-header-cell *matHeaderCellDef>Status</th>
           <td mat-cell *matCellDef="let element">
             <mat-chip-list aria-label="Banned or not">
-              <mat-chip *ngIf="element.banned" selectable="false" disableRipple="true"
+              <mat-chip
+                [class.spinner]="element._id == selectedId"
+                *ngIf="element.banned" 
+                selectable="false" 
+                disableRipple="true"
                 style="background-color: rgb(255, 92, 92);color: white;">
                 Banned
               </mat-chip>
 
-              <mat-chip *ngIf="!element.banned" disabled="true" selectable="false" disableRipple="true">
+              <mat-chip
+                [class.spinner]="element._id == selectedId"
+                *ngIf="!element.banned" 
+                disabled="true" 
+                selectable="false" 
+                disableRipple="true">
                 Banned
               </mat-chip>
 
             </mat-chip-list>
           </td>
-
         </ng-container>
 
         <!-- Actions Column -->
@@ -67,21 +75,22 @@
             <button mat-icon-button color="primary" 
             (click)="unbanCollaborator(element._id, element.email)"
             disableRipple="true"
-            [disabled]="!element.banned" 
+            [class.spinner]="element._id == selectedId"
+            [disabled]="!element.banned || element._id == selectedId" 
             style="width: 3em;" 
             matTooltip="Unban">
               <mat-icon>check_circle</mat-icon>
             </button>
             <button mat-icon-button color="warn" 
+            [class.spinner]="element._id == selectedId" 
             (click)="banCollaborator(element._id, element.email)"
             disableRipple="true"
-            [disabled]="element.banned" 
+            [disabled]="element.banned || element._id == selectedId" 
             style="width: 2em;" matTooltip="Ban">
               <mat-icon>remove_circle</mat-icon>
             </button>
           </td>
         </ng-container>
-
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
