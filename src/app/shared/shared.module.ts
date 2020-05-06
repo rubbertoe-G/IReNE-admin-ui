@@ -12,6 +12,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatListModule} from '@angular/material/list';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { ConfirmModalComponent } from './components/modals/confirm-modal/confirm-modal.component';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 
 
@@ -19,10 +23,15 @@ import {MatTooltipModule} from '@angular/material/tooltip';
   declarations: [
     HeaderComponent,
     SidebarComponent,
-    FooterComponent
+    FooterComponent,
+    ConfirmModalComponent,
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatFormFieldModule,
     MatDividerModule,
     MatToolbarModule,
     MatIconModule,
@@ -39,7 +48,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
   exports: [
     HeaderComponent,
     SidebarComponent,
-    FooterComponent
+    FooterComponent,
+    ConfirmModalComponent
   ]
 })
 export class SharedModule { }
