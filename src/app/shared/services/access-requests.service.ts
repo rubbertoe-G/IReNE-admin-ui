@@ -12,11 +12,6 @@ import {environment} from '../../../environments/environment';
 export class AccessRequestsService {
 
   /**
-  * Variable that holds the ip address of the backend.
-  */
-  fakeBackend = environment.backend;
-
-  /**
   * Variable that holds the access requests sent by the server,
   */
   requests: RequestMeta[];
@@ -32,7 +27,7 @@ export class AccessRequestsService {
    * Gets all unapproved collabroators from the server.
    */
   getRequests() {
-    return this.http.get(`${this.fakeBackend}/access-requests/`).subscribe(
+    return this.http.get(`${environment.backend}/access-requests/`).subscribe(
       (response) => {
         this.requests = response['requests'];
       });
@@ -45,7 +40,7 @@ export class AccessRequestsService {
   acceptRequest(id: string) {
     const formData = new FormData();
     formData.append('collabID', id);
-    return this.http.put(`${this.fakeBackend}/access-requests/approve`, formData);
+    return this.http.put(`${environment.backend}/access-requests/approve`, formData);
   }
 
    /**
@@ -55,6 +50,6 @@ export class AccessRequestsService {
   denyRequest(id: string) {
     const formData = new FormData();
     formData.append('collabID', id);
-    return this.http.put(`${this.fakeBackend}/access-requests/deny`, formData);
+    return this.http.put(`${environment.backend}/access-requests/deny`, formData);
   }
 }
