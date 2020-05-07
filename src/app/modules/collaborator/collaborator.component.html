@@ -17,7 +17,7 @@
   <div *ngIf="dataSource.data.length === 0 && !loading" class="center-screen">
     <h1>NO COLLABORATORS FOUND</h1>
   </div>
-  <div class="mat-elevation-z8" *ngIf="dataSource.data.length !== 0">
+  <div class="mat-elevation-z8">
     <div class="table-container">
       <table mat-table [dataSource]="dataSource" *ngIf="!loading">
         <!-- First Name Column -->

@@ -65,7 +65,7 @@ export class CollaboratorComponent implements OnInit {
    * Contructor of the collaborator component instance.
    * 
    * @param {CollaboratorsService} collaboratorService angular service object use to perform http requests related to a collaborator.
-   * @param {MatDialog} dialog material dialog box controller instance.
+   * @param {MatDialog} dialog material dialog box controller instance
    */
   constructor(
     private collaboratorService: CollaboratorsService,
@@ -75,19 +75,20 @@ export class CollaboratorComponent implements OnInit {
   /**
    * Initialize this compmonent object.
    */
-  ngOnInit(): void { }
-
-  /**
-   * Function triggered after all html entities have been compleatly loaded. Performs http request to retrive all the
-   * collaborators on the database.
-   */
-  ngAfterContentInit() {
+  ngOnInit(): void {
     this.collaboratorService.getCollaborators().add(() => {
       this.dataSource = new MatTableDataSource<CollaboratorMeta>(this.collaboratorService.collaborators);
       this.dataSource.paginator = this.paginator;
       this.tempDataSource = this.dataSource;
       this.loading = false;
     });
+   }
+
+  /**
+   * Function triggered after all html entities have been compleatly loaded. Performs http request to retrive all the
+   * collaborators on the database.
+   */
+  ngAfterContentInit() {
   }
 
 
