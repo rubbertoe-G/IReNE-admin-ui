@@ -1,9 +1,12 @@
 
 .table-container{
+  position: relative;
+  height: 58.5vh;
   overflow: auto;
 }
 
 table {
+  overflow-y: scroll;
   width: 100%;
 }
 
