@@ -4,7 +4,6 @@ import { SectionMeta } from './section.model';
 import { TimelineMeta } from './timeline.model';
 
 export interface CreationMeta{
-    _id: object;
     creatoriD: string;
     title: string;
     language: string;

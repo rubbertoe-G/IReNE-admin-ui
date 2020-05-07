@@ -59,8 +59,8 @@ export class RevisionService {
   findRevisions(sortSubject ='date', filter = '', sortOrder = 'desc',
     pageNumber = 0, pageSize = 10):  Observable<Object> {
     const formData = new FormData();
-    formData.append('sortSubject', sortSubject);
-    formData.append('filter', filter);
+    formData.append('sortField', sortSubject);
+    formData.append('filterVal', filter);
     formData.append('sortOrder', sortOrder);
     formData.append('pageNumber', pageNumber.toString());
     formData.append('pageSize', pageSize.toString());
@@ -75,10 +75,10 @@ export class RevisionService {
     formData.append('revDocId', docId);
     return this.http.post(`${environment.backend}/documents-hist/revision`, formData).subscribe(
       (response: CreationMeta) => {
-        this.creationRevision = response['revision']
-        this.creationRevision.incidentDate = this.datePipe.transform(response['revision'].incidentDate, 'yyyy-MM-dd');
-        this.creationRevision.lastModificationDate = this.datePipe.transform(response['revision'].lastModificationDate, 'yyyy-MM-dd')
-        this.creationRevision.creationDate = this.datePipe.transform(response['revision'].creationDate, 'yyyy-MM-dd')
+        this.creationRevision = response['revision']['new']
+        this.creationRevision.incidentDate = this.datePipe.transform(response['revision']['new'].incidentDate, 'yyyy-MM-dd');
+        this.creationRevision.lastModificationDate = this.datePipe.transform(response['revision']['new'].lastModificationDate, 'yyyy-MM-dd')
+        this.creationRevision.creationDate = this.datePipe.transform(response['revision']['new'].creationDate, 'yyyy-MM-dd')
       }
     );
   }

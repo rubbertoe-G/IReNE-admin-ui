@@ -14,42 +14,42 @@
       <table mat-table [dataSource]="dataSource" matSort matSortActive="date" matSortDirection="desc" matSortDisableClear>
 
         <!-- date Column -->
-        <ng-container matColumnDef="date">
+        <ng-container matColumnDef="revision_date">
             <th class="header-color-size" mat-header-cell mat-sort-header *matHeaderCellDef> Date </th>
             <td mat-cell *matCellDef="let element" > 
-                {{element.date}}
+                {{element.revision_date}}
             </td>
           </ng-container>
 
         <!-- revision number Column -->
-        <ng-container matColumnDef="index">
+        <ng-container matColumnDef="revision_number">
             <th class="header-color-size" mat-header-cell mat-sort-header *matHeaderCellDef> Revision # </th>
             <td mat-cell *matCellDef="let element" > 
-                {{element.index}}
+                {{element.revision_number}}
             </td>
           </ng-container>
 
         <!-- title Column -->
-        <ng-container matColumnDef="title">
+        <ng-container matColumnDef="document_title">
           <th class="header-color-size" mat-header-cell mat-sort-header *matHeaderCellDef> Title </th>
           <td mat-cell *matCellDef="let element" > 
-            {{(element.title.length > 40)? (element.title | slice:0:40) + '...':(element.title)}}
+            {{(element.document_title?.length > 40)? (element.document_title | slice:0:40) + '...':(element.document_title)}}
           </td>
         </ng-container>
     
         <!-- Creator Column -->
-        <ng-container matColumnDef="creator">
+        <ng-container matColumnDef="creator_name">
           <th class="header-color-size" mat-header-cell mat-sort-header *matHeaderCellDef> Performed by </th>
           <td mat-cell *matCellDef="let element" > 
-            {{element.creator}}
+            {{element.creator_name}}
           </td>
         </ng-container>
     
         <!-- Type Column -->
-        <ng-container matColumnDef="revType">
+        <ng-container matColumnDef="revision_type">
             <th class="header-color-size" mat-header-cell *matHeaderCellDef mat-sort-header > Performed on </th>
             <td mat-cell *matCellDef="let element" > 
-                {{element.revType}}
+                {{element.revision_type}}
             </td>
         </ng-container>
     

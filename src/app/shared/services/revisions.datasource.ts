@@ -33,7 +33,7 @@ export class RevisionsDataSource implements DataSource<RevisionMeta> {
             )
             .subscribe((revisions) => {
                 this.revisionsSubject.next(revisions['revision-history']);
-                this.quantitySubject.next(revisions['revisions-length']);
+                this.quantitySubject.next(revisions['revision-history-length']);
             });
 
     }
