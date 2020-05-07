@@ -80,7 +80,8 @@ export class TagsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result) {
-        this.tagsService.removeTag(tag._id.toString()).subscribe(
+        console.log(result)
+        this.tagsService.removeTag(tag._id.toString(), result).subscribe(
           () => {
             this.snackBar.open("The tag has been removed.",null,{duration:2000});
             let index = this.dataSource.data.indexOf(tag);

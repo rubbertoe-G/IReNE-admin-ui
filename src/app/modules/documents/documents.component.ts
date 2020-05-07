@@ -105,7 +105,7 @@ export class DocumentsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result) {
         this.selectedId = id;
-        this.documentService.publishDocument(id).add(() => {
+        this.documentService.publishDocument(id, result).add(() => {
           this.selectedId = ' ';
         });
       }
@@ -129,7 +129,7 @@ export class DocumentsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result) {
         this.selectedId = id;
-        this.documentService.unpublishDocument(id).add(() => {
+        this.documentService.unpublishDocument(id, result).add(() => {
           this.selectedId = ' ';
         });
       }

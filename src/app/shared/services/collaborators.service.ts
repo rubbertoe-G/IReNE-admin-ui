@@ -34,9 +34,10 @@ export class CollaboratorsService {
    * Ban collaborator
    * @param id the collaborator id
    */
-  banCollaborator(id: string) {
+  banCollaborator(id: string, password: string) {
     const formData = new FormData();
     formData.append('collabID', id);
+    formData.append('password', password);
 
      return this.http.put(`${this.fakeBackend}/collaborators/ban`, formData).subscribe(
        (response) =>{
@@ -53,10 +54,10 @@ export class CollaboratorsService {
    * Unban one collaborator from the database using the collaborator id.
    * @param id the collaborator id to be banned 
    */
-  unbanCollaborator(id: string) {
+  unbanCollaborator(id: string, password: string) {
     const formData = new FormData();
     formData.append('collabID', id);
-
+    formData.append('password', password);
     return this.http.put(`${this.fakeBackend}/collaborators/unban`, formData).subscribe(
       (response) =>{
         this.collaborators.forEach(e => {

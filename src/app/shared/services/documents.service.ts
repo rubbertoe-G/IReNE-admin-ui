@@ -30,13 +30,13 @@ export class DocumentsService {
      );
   }
 
-  publishDocument(id: string) {
+  publishDocument(id: string, password: string) {
     /**
      * Set a document to be published.
      */
     const formData = new FormData();
     formData.append('docID', id);
-
+    formData.append('password', password);
     return this.http.put(`${this.fakeBackend}/documents/publish`, formData).subscribe(
       (response: DocumentMeta) => {
         this.documents.forEach(e => {
@@ -56,10 +56,10 @@ export class DocumentsService {
    * Unpublish a specific document.
    * @param id document identification number
    */
-  unpublishDocument(id: string) {
+  unpublishDocument(id: string, password: string) {
     const formData = new FormData();
     formData.append('docID', id);
-
+    formData.append('password', password);
     return this.http.put(`${this.fakeBackend}/documents/unpublish`, formData).subscribe(
       (response) => {
         this.documents.forEach(e => {

@@ -42,9 +42,10 @@ export class AccessRequestsService {
    * Accepts one access request by sending the request to the backend server.
    * @param {string} id Identifier of the access request to be accepted
    */
-  acceptRequest(id: string) {
+  acceptRequest(id: string, password: string) {
     const formData = new FormData();
     formData.append('collabID', id);
+    formData.append('password', password);
     return this.http.put(`${this.fakeBackend}/access-requests/approve`, formData);
   }
 
@@ -52,9 +53,10 @@ export class AccessRequestsService {
    * Denies one access request by sending the request to the backend server.
    * @param {string} id Identifier of the access request to be denied
    */
-  denyRequest(id: string) {
+  denyRequest(id: string, password: string) {
     const formData = new FormData();
     formData.append('collabID', id);
+    formData.append('password', password);
     return this.http.put(`${this.fakeBackend}/access-requests/deny`, formData);
   }
 }
