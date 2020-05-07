@@ -46,9 +46,10 @@ export class TagsService {
    * Remove a tag currently in the database.
    * @returns {Observable} observable object with the response from the server
    */ 
-  removeTag(id: string) {
+  removeTag(id: string, password: string) {
     const formData = new FormData();
     formData.append('tagID', id);
+    formData.append('password', password);
     return this.http.put(`${this.fakeBackend}/tags/remove`, formData);
   }
 }

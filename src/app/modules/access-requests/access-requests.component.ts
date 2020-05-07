@@ -84,7 +84,7 @@ export class AccessRequestsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result) {
         this.selectedId = request._id.toString();
-        this.requestsService.denyRequest(request._id.toString()).subscribe(
+        this.requestsService.denyRequest(request._id.toString(), result).subscribe(
           () => {
             this.snackBar.open("The access request has been denied.", null, { duration: 2000 });
             let index = this.dataSource.data.indexOf(request);
@@ -116,8 +116,9 @@ export class AccessRequestsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result) {
+        console.log(result)
         this.selectedId = request._id.toString();
-        this.requestsService.acceptRequest(request._id.toString()).subscribe(
+        this.requestsService.acceptRequest(request._id.toString(), result).subscribe(
           () => {
             this.snackBar.open("The access request has been accepted.", null, { duration: 2000 });
             let index = this.dataSource.data.indexOf(request);

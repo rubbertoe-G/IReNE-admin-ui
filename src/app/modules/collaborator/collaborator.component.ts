@@ -154,7 +154,7 @@ export class CollaboratorComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result != null) {
         this.selectedId = id;
-        this.collaboratorService.unbanCollaborator(id).add(() => {
+        this.collaboratorService.unbanCollaborator(id, result).add(() => {
           this.selectedId = null;
         });
       }
@@ -180,8 +180,9 @@ export class CollaboratorComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result) {
+        console.log(result)
         this.selectedId = id;
-        this.collaboratorService.banCollaborator(id).add(() => {
+        this.collaboratorService.banCollaborator(id, result).add(() => {
           this.selectedId = null;
         });
       }

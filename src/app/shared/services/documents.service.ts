@@ -33,9 +33,10 @@ export class DocumentsService {
    * 
    * @param id the id of the document to publish.
    */
-  publishDocument(id: string): Subscription {
+  publishDocument(id: string, password: string): Subscription {
     const formData = new FormData();
     formData.append('docID', id);
+    formData.append('password', password);
 
     return this.http.put(`${environment.backend}/documents/publish`, formData).subscribe(
       (response: DocumentMeta) => {
@@ -56,10 +57,10 @@ export class DocumentsService {
    * Perform HTTP PUT request to set the status of a document as unpublished.
    * @param id document identification number
    */
-  unpublishDocument(id: string): Subscription {
+  unpublishDocument(id: string, password: string): Subscription {
     const formData = new FormData();
     formData.append('docID', id);
-
+    formData.append('password', password);
     return this.http.put(`${environment.backend}/documents/unpublish`, formData).subscribe(
       (response) => {
         this.documents.forEach(e => {
