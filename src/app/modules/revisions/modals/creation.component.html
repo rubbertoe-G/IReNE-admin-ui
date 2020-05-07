@@ -6,7 +6,7 @@
         <mat-card-title style="font-size: xx-large; font-weight: bolder;">{{creationRev?.title}}</mat-card-title>
         <mat-card-subtitle>
           <br>
-          <div *ngIf="creationRev?.description !== undefined && creationRev?.description.length > 0">
+          <div *ngIf="creationRev?.description !== undefined || creationRev?.description.length > 0">
             <h2>Description</h2>
             <div>{{creationRev?.description}}</div>
           </div>
