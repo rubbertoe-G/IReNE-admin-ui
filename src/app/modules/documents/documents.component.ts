@@ -1,11 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import Swal from 'sweetalert2';
 import { DocumentsService } from 'src/app/shared/services/documents.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { DocumentMeta } from 'src/app/shared/models/documents.model';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModalComponent } from 'src/app/shared/components/modals/confirm-modal/confirm-modal.component';
@@ -18,16 +15,46 @@ import { ConfirmModalComponent } from 'src/app/shared/components/modals/confirm-
 })
 export class DocumentsComponent implements OnInit {
 
+  /**
+   * MatPaginator variable used to provide navigation between paged information in the data table. 
+   */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  dataSource: MatTableDataSource<DocumentMeta>;
+  /**
+   * MatTableDataSource<DocumentMeta> type object instance to store a table representation of the
+   * documents
+   */
+  dataSource = new MatTableDataSource<DocumentMeta>();
+
+  
+  tempDataSource = new MatTableDataSource<DocumentMeta>();
+  
+  /**
+   * String array that contains the values to be represented in the table columns. These values mirror the data
+   * from the MatTableDataSource<DocumentMeta>.
+   */
   displayedColumns: string[] = ['title', 'creator', 'published', 'actions'];
-  tempDataSource: MatTableDataSource<DocumentMeta>;
+  
+  /**
+   * Variable used to bind the value of the "published" checkbox on this component html file.
+   */
   checkPublished = false;
+
+  /**
+   * Variable used to bind the value of the "unpublished" checkbox on this component html file.
+   */
   checkUnpublished = false;
+
+  /**
+   * Variable used to set the state of a request in progress. Used to show or hide html elements depending on the value of
+   * said variable.
+   */
   loading = true;
+
+  /**
+   * Variable used to set the temprary value of a selected element.
+   */
   selectedId = ' ';
-  usingFilter = false;
 
   constructor(
     private documentService: DocumentsService,
@@ -36,6 +63,9 @@ export class DocumentsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+  }
+
+  ngAfterContentInit(): void {
     this.documentService.getDocuments().add(() => {
       this.dataSource = new MatTableDataSource<DocumentMeta>(this.documentService.documents);
       this.dataSource.paginator = this.paginator;
