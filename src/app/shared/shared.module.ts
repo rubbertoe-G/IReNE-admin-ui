@@ -16,6 +16,7 @@ import { ConfirmModalComponent } from './components/modals/confirm-modal/confirm
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import { ErrorModalComponent } from './components/modals/error-modal/error-modal.component';
 
 
 
@@ -25,6 +26,7 @@ import {MatInputModule} from '@angular/material/input';
     SidebarComponent,
     FooterComponent,
     ConfirmModalComponent,
+    ErrorModalComponent,
   ],
   imports: [
     CommonModule,

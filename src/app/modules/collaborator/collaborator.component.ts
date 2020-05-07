@@ -76,12 +76,6 @@ export class CollaboratorComponent implements OnInit {
    * Initialize this compmonent object.
    */
   ngOnInit(): void {
-    this.collaboratorService.getCollaborators().add(() => {
-      this.dataSource = new MatTableDataSource<CollaboratorMeta>(this.collaboratorService.collaborators);
-      this.dataSource.paginator = this.paginator;
-      this.tempDataSource = this.dataSource;
-      this.loading = false;
-    });
    }
 
   /**
@@ -89,6 +83,12 @@ export class CollaboratorComponent implements OnInit {
    * collaborators on the database.
    */
   ngAfterContentInit() {
+    this.collaboratorService.getCollaborators().add(() => {
+      this.dataSource = new MatTableDataSource<CollaboratorMeta>(this.collaboratorService.collaborators);
+      this.dataSource.paginator = this.paginator;
+      this.tempDataSource = this.dataSource;
+      this.loading = false;
+    });
   }
 
 

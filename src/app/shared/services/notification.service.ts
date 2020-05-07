@@ -1,5 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorModalComponent } from '../components/modals/error-modal/error-modal.component';
 
 /**
 * Service that manages all the notifications sent to the user.
@@ -16,7 +18,7 @@ export class NotificationService {
    * @param {NgZone} zone an injectable service for executing work inside or outside of the Angular zone
    */  
   constructor(
-    public snackBar: MatSnackBar,
+    public dialog: MatDialog,
     private zone: NgZone) { }
 
   /**
@@ -26,7 +28,7 @@ export class NotificationService {
    */
   showSuccess(message: string): void {
     this.zone.run(() => {
-      this.snackBar.open(message);
+      // this.snackBar.open(message);
     });
   }
 
@@ -37,7 +39,13 @@ export class NotificationService {
    */
   showError(message: string): void {
     this.zone.run(() => {
-      this.snackBar.open(message, 'X', {panelClass: ['error'], duration: 2500});
+      // this.snackBar.open(message, 'X', {panelClass: ['error'], duration: 2500});
+      this.dialog.open(ErrorModalComponent, {
+        data: {
+          title: 'ERROR',
+          message: message
+        }
+      })
     });
   }
 }
