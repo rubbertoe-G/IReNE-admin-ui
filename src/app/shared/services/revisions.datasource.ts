@@ -24,6 +24,11 @@ export class RevisionsDataSource implements DataSource<RevisionMeta> {
     */
     public quantitySubject  = new BehaviorSubject<number>(0);
 
+        /**
+    * Variable that holds the quantity of revisions as a behavior object.
+    */
+   public quantityOverall  = new BehaviorSubject<number>(0);
+
     /**
     * Variable that holds if the revisions are loading as an observable object.
     */
@@ -64,6 +69,8 @@ export class RevisionsDataSource implements DataSource<RevisionMeta> {
                 finalize(() => this.loadingSubject.next(false))
             )
             .subscribe((revisions) => {
+                if(filter=='')
+                    this.quantityOverall.next(revisions['revision-history-length']);
                 this.revisionsSubject.next(revisions['revision-history']);
                 this.quantitySubject.next(revisions['revision-history-length']);
             });

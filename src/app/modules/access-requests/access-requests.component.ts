@@ -6,6 +6,7 @@ import { AccessRequestsService } from 'src/app/shared/services/access-requests.s
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModalComponent } from 'src/app/shared/components/modals/confirm-modal/confirm-modal.component';
+import { throwError } from 'rxjs';
 
 
 /**
@@ -94,16 +95,16 @@ export class AccessRequestsComponent implements OnInit {
         this.selectedId = request._id.toString();
         this.requestsService.denyRequest(request._id.toString(), result).subscribe(
           () => {
+            this.selectedId = null;
             this.snackBar.open("The access request has been denied.", null, { duration: 2000 });
             let index = this.dataSource.data.indexOf(request);
             this.dataSource.data.splice(index, 1);
             this.dataSource._updateChangeSubscription();
-            this.selectedId = '';
+
           }
         );
       }
     });
-    this.selectedId = '';
   }
 
 
@@ -119,21 +120,21 @@ export class AccessRequestsComponent implements OnInit {
         message: `The following action will create and grant access to a new collaborator with the email: ${request.email.bold()}.`,
       }
     })
-
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result) {
-        this.selectedId = request._id.toString();
+        this.selectedId = 'request._id.toString();'
         this.requestsService.acceptRequest(request._id.toString(), result).subscribe(
           () => {
+            this.selectedId = null;
             this.snackBar.open("The access request has been accepted.", null, { duration: 2000 });
             let index = this.dataSource.data.indexOf(request);
             this.dataSource.data.splice(index, 1);
             this.dataSource._updateChangeSubscription();
-            this.selectedId = '';
+            
           }
         );
       }
     });
-    this.selectedId = '';
+
   }
 }

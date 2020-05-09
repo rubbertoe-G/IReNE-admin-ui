@@ -8,7 +8,7 @@
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
   
-  <div *ngIf="dataSource?.quantitySubject.getValue() === 0 && !dataSource?.loadingSubject.getValue()" class="center-screen">
+  <div *ngIf="dataSource?.quantityOverall.getValue() === 0 && !dataSource?.loadingSubject.getValue()" class="center-screen">
     <h1>NO REVISIONS FOUND</h1>
   </div>
   <mat-progress-bar mode="indeterminate" *ngIf="dataSource?.loadingSubject.getValue() && dataSource?.quantitySubject.getValue() != 0 "></mat-progress-bar>
