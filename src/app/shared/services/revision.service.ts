@@ -56,8 +56,8 @@ export class RevisionService {
   }
 
 
-  findRevisions(sortSubject ='date', filter = '', sortOrder = 'desc',
-    pageNumber = 0, pageSize = 10):  Observable<Object> {
+  findRevisions(sortSubject ='revision_date', filter = '', sortOrder = 'desc',
+    pageNumber = 0, pageSize = 8):  Observable<Object> {
     const formData = new FormData();
     formData.append('sortField', sortSubject);
     formData.append('filterVal', filter);

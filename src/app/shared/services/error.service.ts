@@ -29,10 +29,33 @@ export class ErrorService {
    */
   getServerErrorMessage(error: HttpErrorResponse): string {
     return navigator.onLine ?    
-           error.statusText :
+           error.error.msg :
+           'No Internet Connection';
+  }
+
+  /**
+   * Returns the server error type of the parameter given, if no error type exists, the whole error object is sent as a string.
+   * 
+   * @param {Error} error error object to be evaluated
+   * @returns {string} custom error message
+   */
+  getServerErrorType(error: HttpErrorResponse): string {
+    return navigator.onLine ?    
+           error.error.error_type :
            'No Internet Connection';
   }
   
+  /**
+   * Returns the server status message of the parameter given, if no status message exists, the whole error object is sent as a string.
+   * 
+   * @param {Error} error error object to be evaluated
+   * @returns {string} custom error message
+   */
+  getServerStatusMessage(error: HttpErrorResponse): string {
+    return navigator.onLine ?    
+           error.statusText :
+           'No Internet Connection';
+  }
     /**
    * Returns the server Status code of the parameter given.
    * 

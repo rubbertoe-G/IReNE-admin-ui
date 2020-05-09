@@ -27,7 +27,7 @@ import { DocumentsService } from 'src/app/shared/services/documents.service';
 import { FormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RevisionsComponent, CreationDialog, DescriptionDialog, TitleDialog, TimelineDialog, InfrastructureDialog, 
-  DamageDialog, LocationDialog, TagDialog, IncidentDialog, AuthorDialog, ActorDialog, SectionDialog, HeaderComponent } from 'src/app/modules/revisions/revisions.component';
+  DamageDialog, LocationDialog, TagDialog, IncidentDialog, AuthorDialog, ActorDialog, SectionDialog, HeaderComponent, DeletionDialog } from 'src/app/modules/revisions/revisions.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatChipsModule} from '@angular/material/chips';
@@ -54,6 +54,7 @@ import {MatChipsModule} from '@angular/material/chips';
     ActorDialog,
     SectionDialog,
     HeaderComponent,
+    DeletionDialog
   ],
   imports: [
     CommonModule,

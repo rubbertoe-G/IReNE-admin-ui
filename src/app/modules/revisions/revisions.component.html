@@ -7,11 +7,14 @@
     <input matInput placeholder="Ex. Tags ..." #input>
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
-
+  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+  <div *ngIf="dataSource?.revisionsLength === 0 && !loading" class="center-screen">
+    <h1>NO REVISIONS FOUND</h1>
+  </div>
   <div class="mat-elevation-z8">
     <div class="table-container">
 
-      <table mat-table [dataSource]="dataSource" matSort matSortActive="date" matSortDirection="desc"
+      <table mat-table [dataSource]="dataSource" matSort matSortActive="revision_date" matSortDirection="desc"
         matSortDisableClear>
 
         <!-- date Column -->

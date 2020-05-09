@@ -31,7 +31,7 @@ var revisionSelected: RevisionMeta;
   styleUrls: ['./revisions.component.scss']
 })
 export class RevisionsComponent implements OnInit {
-
+  loading = true;
   dataSource: RevisionsDataSource;
   displayedColumns: string[] = ['revision_date', 'revision_number', 'document_title', 'creator_name', 'revision_type'];
   @ViewChild('input') input: ElementRef;
@@ -46,7 +46,8 @@ export class RevisionsComponent implements OnInit {
   ngOnInit(): void {
     const revisionService = this.injector.get(RevisionService);
     this.dataSource =  new RevisionsDataSource(revisionService);
-    this.dataSource.loadRevisions('revision_date','', 'desc', 0, 10);
+    this.dataSource.loadRevisions('revision_date','', 'desc', 0, 8);
+    this.loading = false;
   }
 
   ngAfterViewInit() {
@@ -77,6 +78,7 @@ export class RevisionsComponent implements OnInit {
           this.sort.direction,
           this.paginator.pageIndex,
           this.paginator.pageSize);
+
   }
 
   previewRev(rev) {
@@ -147,7 +149,7 @@ export class RevisionsComponent implements OnInit {
 @Component({
   selector: 'header-component',
   templateUrl: './modals/header.component.html',
-  styleUrls: ['./modals/header.component.scss']
+  styleUrls: ['./modals/modals.component.scss']
   })
   export class HeaderComponent implements OnInit{
     sectionRev: SectionMetaDOC;
@@ -164,7 +166,7 @@ export class RevisionsComponent implements OnInit {
 @Component({
 selector: 'creation-dialog',
 templateUrl: './modals/creation.component.html',
-styleUrls: ['./modals/creation.component.scss']
+styleUrls: ['./modals/modals.component.scss']
 })
 export class CreationDialog implements OnInit{
   creationRev: CreationMeta;
@@ -188,9 +190,35 @@ ngOnInit(){
 }
 
 @Component({
+  selector: 'deletion-dialog',
+  templateUrl: './modals/deletion.component.html',
+  styleUrls: ['./modals/modals.component.scss']
+  })
+  export class DeletionDialog implements OnInit{
+    creationRev: CreationMeta;
+    creatorEmail: string;
+    creatorFullName: string;
+    revisionSelected: RevisionMeta;
+    
+  
+    constructor(private injector: Injector){}
+  
+  ngOnInit(){
+      this.revisionSelected = revisionSelected;
+      const revisionService = this.injector.get(RevisionService);
+      revisionService.getCreationRevision(revisionSelected._id).add(() => {
+        this.creationRev = revisionService.creationRevision;
+        this.creatorEmail = revisionSelected.creator_email;
+        this.creatorFullName = revisionSelected.creator_name
+    });
+  }
+  
+  }
+
+@Component({
   selector: 'description-dialog',
   templateUrl: './modals/description.component.html',
-  styleUrls: ['./modals/description.component.scss']
+  styleUrls: ['./modals/modals.component.scss']
   })
   export class DescriptionDialog implements OnInit{
     descriptionRev: DescriptionMeta;
@@ -212,7 +240,7 @@ ngOnInit(){
   @Component({
     selector: 'title-dialog',
     templateUrl: './modals/title.component.html',
-    styleUrls: ['./modals/title.component.scss']
+    styleUrls: ['./modals/modals.component.scss']
     })
     export class TitleDialog implements OnInit{
       titleRev: TitleMeta;
@@ -234,7 +262,7 @@ ngOnInit(){
 @Component({
   selector: 'timeline-dialog',
   templateUrl: './modals/timeline.component.html',
-  styleUrls: ['./modals/timeline.component.scss']
+  styleUrls: ['./modals/modals.component.scss']
   })
   export class TimelineDialog implements OnInit{
     timelineRev: TimelineMeta;
@@ -256,7 +284,7 @@ ngOnInit(){
 @Component({
   selector: 'infrastructure-dialog',
   templateUrl: './modals/infrastructure.component.html',
-  styleUrls: ['./modals/infrastructure.component.scss']
+  styleUrls: ['./modals/modals.component.scss']
   })
   export class InfrastructureDialog implements OnInit{
     infrastructureRev: InfrastructureMeta;
@@ -277,7 +305,7 @@ ngOnInit(){
 @Component({
   selector: 'damage-dialog',
   templateUrl: './modals/damage.component.html',
-  styleUrls: ['./modals/damage.component.scss']
+  styleUrls: ['./modals/modals.component.scss']
   })
   export class DamageDialog implements OnInit{
     damageRev: DamageMeta;
@@ -298,7 +326,7 @@ ngOnInit(){
 @Component({
   selector: 'location-dialog',
   templateUrl: './modals/location.component.html',
-  styleUrls: ['./modals/location.component.scss']
+  styleUrls: ['./modals/modals.component.scss']
   })
   export class LocationDialog implements OnInit{
     locationRev: LocationMeta;
@@ -319,7 +347,7 @@ ngOnInit(){
 @Component({
   selector: 'tag-dialog',
   templateUrl: './modals/tag.component.html',
-  styleUrls: ['./modals/tag.component.scss']
+  styleUrls: ['./modals/modals.component.scss']
   })
   export class TagDialog implements OnInit{
     tagRev: TagMetaDOC;
@@ -340,7 +368,7 @@ ngOnInit(){
 @Component({
   selector: 'incidentDate-dialog',
   templateUrl: './modals/incidentDate.component.html',
-  styleUrls: ['./modals/incidentDate.component.scss']
+  styleUrls: ['./modals/modals.component.scss']
   })
   export class IncidentDialog implements OnInit{
     incidentRev: IncidentMeta;
@@ -360,7 +388,7 @@ ngOnInit(){
 @Component({
   selector: 'author-dialog',
   templateUrl: './modals/author.component.html',
-  styleUrls: ['./modals/author.component.scss']
+  styleUrls: ['./modals/modals.component.scss']
   })
   export class AuthorDialog implements OnInit{
     authorRev: AuthorMetaDOC;
@@ -382,7 +410,7 @@ ngOnInit(){
 @Component({
   selector: 'actor-dialog',
   templateUrl: './modals/actor.component.html',
-  styleUrls: ['./modals/actor.component.scss']
+  styleUrls: ['./modals/modals.component.scss']
   })
   export class ActorDialog implements OnInit{
     actorRev: ActorMetaDOC;
@@ -402,7 +430,7 @@ ngOnInit(){
 @Component({
   selector: 'section-dialog',
   templateUrl: './modals/section.component.html',
-  styleUrls: ['./modals/section.component.scss']
+  styleUrls: ['./modals/modals.component.scss']
   })
   export class SectionDialog implements OnInit{
     sectionRev: SectionMetaDOC;

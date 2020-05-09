@@ -19,13 +19,14 @@
   <div class="filler"></div>
   <div class="action-buttons-container">
     <div style="padding-right: 0.5em;">
-      <button mat-raised-button 
+      <button mat-raised-button
+      color="primary"
       [ngClass]="{'confirm-button': !passwordForm.valid}" 
       [disabled]="!passwordForm.valid"
       (click)="closeDialogSubmit()">
         Confirm
       </button>
     </div>
-    <button mat-raised-button color="primary" (click)="closeDialogNoValue()">Cancel</button>
+    <button mat-raised-button color="warn" (click)="closeDialogNoValue()">Cancel</button>
   </div>
 </div>

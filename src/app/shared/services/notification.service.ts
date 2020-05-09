@@ -1,7 +1,8 @@
 import { Injectable, NgZone } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { ErrorModalComponent } from '../components/modals/error-modal/error-modal.component';
+import { ErrorModalComponent, DialogData } from '../components/modals/error-modal/error-modal.component';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 
 /**
 * Service that manages all the notifications sent to the user.
@@ -11,6 +12,8 @@ import { ErrorModalComponent } from '../components/modals/error-modal/error-moda
 })
 export class NotificationService {
 
+  private subject = new BehaviorSubject<DialogData>(null);
+
   /**
    * Initializes the necessary objects for the notifications to work
    * 
@@ -19,6 +22,7 @@ export class NotificationService {
    */  
   constructor(
     public dialog: MatDialog,
+    public snackBar: MatSnackBar,
     private zone: NgZone) { }
 
   /**
@@ -28,24 +32,19 @@ export class NotificationService {
    */
   showSuccess(message: string): void {
     this.zone.run(() => {
-      // this.snackBar.open(message);
+      this.snackBar.open(message);
     });
   }
 
-  /**
+    /**
    * Displays an error message to the user.
    * 
    * @param {string} message message to be shown as an error
+   * @param {string} title title of error to be shown
    */
-  showError(message: string): void {
+  showError(title: string, message: string): void {
     this.zone.run(() => {
-      // this.snackBar.open(message, 'X', {panelClass: ['error'], duration: 2500});
-      this.dialog.open(ErrorModalComponent, {
-        data: {
-          title: 'ERROR',
-          message: message
-        }
-      })
+      this.snackBar.open(message, 'X', {panelClass: ['error'], duration: 2500});
     });
   }
 }
