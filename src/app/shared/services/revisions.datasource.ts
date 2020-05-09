@@ -9,8 +9,8 @@ export class RevisionsDataSource implements DataSource<RevisionMeta> {
 
     private revisionsSubject = new BehaviorSubject<RevisionMeta[]>([]);
 
-    private loadingSubject = new BehaviorSubject<boolean>(false);
-    private quantitySubject  = new BehaviorSubject<number>(0);
+    public loadingSubject = new BehaviorSubject<boolean>(false);
+    public quantitySubject  = new BehaviorSubject<number>(0);
     public loading$ = this.loadingSubject.asObservable();
     public revisionsLength = this.quantitySubject.asObservable();
 

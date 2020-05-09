@@ -75,10 +75,10 @@ export class RevisionService {
     formData.append('revDocId', docId);
     return this.http.post(`${environment.backend}/documents-hist/revision`, formData).subscribe(
       (response: CreationMeta) => {
-        this.creationRevision = response['revision']['new']
+        this.creationRevision = response['revision']['new'];
         this.creationRevision.incidentDate = this.datePipe.transform(response['revision']['new'].incidentDate, 'yyyy-MM-dd');
-        this.creationRevision.lastModificationDate = this.datePipe.transform(response['revision']['new'].lastModificationDate, 'yyyy-MM-dd')
-        this.creationRevision.creationDate = this.datePipe.transform(response['revision']['new'].creationDate, 'yyyy-MM-dd')
+        this.creationRevision.lastModificationDate = this.datePipe.transform(response['revision']['new'].lastModificationDate, 'yyyy-MM-dd');
+        this.creationRevision.creationDate = this.datePipe.transform(response['revision']['new'].creationDate, 'yyyy-MM-dd');
       }
     );
   }
