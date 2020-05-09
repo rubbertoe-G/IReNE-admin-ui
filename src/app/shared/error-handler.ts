@@ -33,11 +33,9 @@ export class GlobalErrorHandler implements ErrorHandler {
     let error_type;
     let statusCode;
     if (error instanceof HttpErrorResponse) {
-      console.log("Logging")
       message = errorService.getServerErrorMessage(error);
       statusCode = errorService.getServerErrorStatusCode(error);
       error_type = errorService.getServerErrorType(error);
-      notifier.showError(error_type, message);
       if(statusCode == 0){
         const service = this.injector.get(AuthenticationService);
         notifier.showError(error_type, "The application was unable to reach the server");
@@ -48,8 +46,9 @@ export class GlobalErrorHandler implements ErrorHandler {
         const service = this.injector.get(AuthenticationService);
         service.logout();
         this.router.navigate(['/login']);
-        if(message =="Token has expired")
+        if(message =="Token has expired"){
             notifier.showError(error_type, message);
+        }
       }
       else if([400,403,404].includes(statusCode)){
         notifier.showError(error_type, message);

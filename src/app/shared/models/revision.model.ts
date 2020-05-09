@@ -1,3 +1,6 @@
+/**
+*  Interface that represents the metadata of a revision history item.
+*/
 export interface RevisionMeta {
     _id: string;
     revision_date: string;

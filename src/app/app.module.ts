@@ -14,6 +14,7 @@ import { PreviewModule } from './layouts/preview/preview.module';
 import { JwtInterceptor } from "src/app/shared/authentication/jwt.interceptor"
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RevisionsModule } from './modules/revisions/revisions.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { FormsModule } from '@angular/forms';
     LoginModule,
     PreviewModule,
     HttpClientModule,
+    RevisionsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
