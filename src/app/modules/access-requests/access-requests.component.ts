@@ -99,13 +99,11 @@ export class AccessRequestsComponent implements OnInit {
             this.dataSource.data.splice(index, 1);
             this.dataSource._updateChangeSubscription();
             this.selectedId = '';
-          },
-          (error) => {
-            this.selectedId = '';
           }
         );
       }
     });
+    this.selectedId = '';
   }
 
 
@@ -124,7 +122,6 @@ export class AccessRequestsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result) {
-        console.log(result)
         this.selectedId = request._id.toString();
         this.requestsService.acceptRequest(request._id.toString(), result).subscribe(
           () => {
@@ -133,12 +130,10 @@ export class AccessRequestsComponent implements OnInit {
             this.dataSource.data.splice(index, 1);
             this.dataSource._updateChangeSubscription();
             this.selectedId = '';
-          },
-          (error) => {
-            this.selectedId = '';
           }
         );
       }
     });
+    this.selectedId = '';
   }
 }

@@ -45,9 +45,6 @@ export class DocumentsService {
             e.published = true;
           }
         });
-      },
-      (error) => {
-        Error('ERROR: Unable to change document status.')
       }
     );
 
@@ -68,9 +65,6 @@ export class DocumentsService {
             e.published = false;
           }
         });
-      },
-      (error) => {
-        Error('ERROR: Unable to change document status.')
       }
     );
 

@@ -645,7 +645,6 @@ export class CreationDialog implements OnInit{
         const revisionService = this.injector.get(RevisionService);
         revisionService.getAuthorRevision(revisionSelected._id, revisionSelected.revision_number).add(() => {
           this.authorRev = revisionService.authorRevision;
-          console.log(this.authorRev)
       });
     }
 }

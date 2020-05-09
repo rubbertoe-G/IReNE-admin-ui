@@ -58,6 +58,16 @@ export class ConfirmModalComponent {
       })
     }
 
+      /**
+   * 
+   * @ignore 
+   */
+  keyDownConfirm(e: KeyboardEvent){
+    if(e.keyCode == 13 && this.passwordForm.valid){
+      this.closeDialogSubmit()
+    }
+  }
+
   /**
    * Function to close the dialog
   */

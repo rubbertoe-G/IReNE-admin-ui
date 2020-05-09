@@ -40,7 +40,6 @@ export class NotificationService {
    * @param {string} title title of error to be shown
    */
   showError(title: string, message: string): void {
-    console.log(title)
     this.zone.run(() => {
       this.snackBar.open(message, 'X', {panelClass: ['error'], duration: 2500});
     });
