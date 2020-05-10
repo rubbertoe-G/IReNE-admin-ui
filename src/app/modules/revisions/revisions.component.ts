@@ -294,7 +294,7 @@ export class CreationDialog implements OnInit{
   ngOnInit(){
       this.revisionSelected = revisionSelected;
       const revisionService = this.injector.get(RevisionService);
-      revisionService.getCreationRevision(revisionSelected._id).add(() => {
+      revisionService.getDeletionRevision(revisionSelected._id).add(() => {
         this.creationRev = revisionService.creationRevision;
         this.creatorEmail = revisionSelected.creator_email;
         this.creatorFullName = revisionSelected.creator_name

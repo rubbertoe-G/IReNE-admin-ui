@@ -147,6 +147,25 @@ export class RevisionService {
   }
 
     /**
+   * Returns the deletion revision object that matched the revision document id.
+   * @param docId document id of the deletion object to be searched in the database
+   * @returns {CreationMeta} creation object that matched the id because its the same as deletion
+   */
+  getDeletionRevision(docId){
+    const formData = new FormData();
+    formData.append('index', '0');
+    formData.append('revDocId', docId);
+    return this.http.post(`${environment.backend}/documents-hist/revision`, formData).subscribe(
+      (response: CreationMeta) => {
+        this.creationRevision = response['revision']['old'];
+        this.creationRevision.incidentDate = this.datePipe.transform(response['revision']['old'].incidentDate, 'yyyy-MM-dd');
+        this.creationRevision.lastModificationDate = this.datePipe.transform(response['revision']['old'].lastModificationDate, 'yyyy-MM-dd');
+        this.creationRevision.creationDate = this.datePipe.transform(response['revision']['old'].creationDate, 'yyyy-MM-dd');
+      }
+    );
+  }
+
+    /**
    * Returns the description revision object that matched the revision document id.
    * @param docId document id of the description object to be searched in the database
    * @param index revision number of the revision to be returned
