@@ -25,7 +25,7 @@ To generate documentation files, run `npm run compodoc`.
 
 ## Authors
 
-* **Yomar Ruiz** - *Initial work* - [yrs1](https://github.com/yrs1)
 * **Roberto Guzman** - *Initial work* - [rubbertoe-G](https://github.com/rubbertoe-G)
+* **Yomar Ruiz** - *Initial work* - [yrs1](https://github.com/yrs1)
 
 See also the list of [contributors](https://github.com/rubbertoe-G/IReNE-admin-server/graphs/contributors) who participated in this project.
