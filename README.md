@@ -22,3 +22,10 @@ At this point you can either run `npm start` or `ng serve` to run the applicatio
 ## Generating Documentation
 
 To generate documentation files, run `npm run compodoc`.
+
+## Authors
+
+* **Yomar Ruiz** - *Initial work* - [yrs1](https://github.com/yrs1)
+* **Roberto Guzman** - *Initial work* - [rubbertoe-G](https://github.com/rubbertoe-G)
+
+See also the list of [contributors](https://github.com/rubbertoe-G/IReNE-admin-server/graphs/contributors) who participated in this project.
