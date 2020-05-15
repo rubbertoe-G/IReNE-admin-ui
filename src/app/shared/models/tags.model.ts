@@ -6,6 +6,9 @@ export interface TagMeta {
     tagItem: string;
   }
 
+  /**
+*  Interface that represents a revision component of type tag.
+*/
 export interface TagMetaDOC{
   new: Array<string>;
   old: Array<string>;

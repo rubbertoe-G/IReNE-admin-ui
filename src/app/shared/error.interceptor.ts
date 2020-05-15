@@ -27,14 +27,7 @@ export class ServerErrorInterceptor implements HttpInterceptor {
     // TODO: Define behavior, do not delete. Functionality that could surface in the future could be implemented here
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if ([401,403,422].includes(error.status)) {
-          const service = this.injector.get(AuthenticationService);
-          service.logout();
-          this.router.navigate(['/login']);
           return throwError(error);
-        } else {
-          return throwError(error);
-        }
       })
     );    
   }

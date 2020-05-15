@@ -4,13 +4,16 @@
 <div>
   <mat-form-field appearance="outline">
     <mat-label>Filter</mat-label>
-    <input [disabled]="loading" matInput (keyup)="applyFilter($event)" placeholder="Ex. John Smith">
+    <input [disabled]="loading" matInput (keyup)="applyFilter($event)" placeholder="Ex. Earthquakes">
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
   <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+  <div *ngIf="dataSource.data.length === 0 && !loading" class="center-screen">
+    <h1>NO TAGS FOUND</h1>
+  </div>
   <div class="mat-elevation-z8">
     <div class="table-container">
-      <table mat-table [dataSource]="dataSource" *ngIf="!loading">
+      <table mat-table [dataSource]="dataSource">
 
         <!-- CollabId Column -->
         <ng-container matColumnDef="_id">
@@ -39,7 +42,6 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
-    <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[8, 16]" showFirstLastButtons></mat-paginator>
   </div>
-
 </div>

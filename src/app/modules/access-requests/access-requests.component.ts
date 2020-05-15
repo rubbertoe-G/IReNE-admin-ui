@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RequestMeta } from 'src/app/shared/models/access-requests.model';
 import { AccessRequestsService } from 'src/app/shared/services/access-requests.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModalComponent } from 'src/app/shared/components/modals/confirm-modal/confirm-modal.component';
+import { throwError } from 'rxjs';
 
 
 /**
@@ -18,13 +18,22 @@ import { ConfirmModalComponent } from 'src/app/shared/components/modals/confirm-
   styleUrls: ['./access-requests.component.scss']
 })
 export class AccessRequestsComponent implements OnInit {
+
+  /**
+   * Value used to denote that a request is being performed. When active, it will trigger the ngIf directive
+   * to either display or hide html elements.
+   */
   loading = true;
 
+  /**
+   * Value used to temprarily store the id of the selected collaborator. When active it will trigger the ngIf directive
+   * to either display or hide html elements that use this variable.
+   */
   selectedId = '';
 
   /**
-  *Data to be displayed in the view.
-  */
+   * MatPaginator variable used to provide navigation between paged information in the data table. 
+   */
   dataSource = new MatTableDataSource<RequestMeta>();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -84,16 +93,14 @@ export class AccessRequestsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result) {
         this.selectedId = request._id.toString();
-        this.requestsService.denyRequest(request._id.toString()).subscribe(
+        this.requestsService.denyRequest(request._id.toString(), result).subscribe(
           () => {
+            this.selectedId = null;
             this.snackBar.open("The access request has been denied.", null, { duration: 2000 });
             let index = this.dataSource.data.indexOf(request);
             this.dataSource.data.splice(index, 1);
             this.dataSource._updateChangeSubscription();
-            this.selectedId = '';
-          },
-          (error) => {
-            this.selectedId = '';
+
           }
         );
       }
@@ -113,23 +120,21 @@ export class AccessRequestsComponent implements OnInit {
         message: `The following action will create and grant access to a new collaborator with the email: ${request.email.bold()}.`,
       }
     })
-
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result) {
-        this.selectedId = request._id.toString();
-        this.requestsService.acceptRequest(request._id.toString()).subscribe(
+        this.selectedId = 'request._id.toString();'
+        this.requestsService.acceptRequest(request._id.toString(), result).subscribe(
           () => {
+            this.selectedId = null;
             this.snackBar.open("The access request has been accepted.", null, { duration: 2000 });
             let index = this.dataSource.data.indexOf(request);
             this.dataSource.data.splice(index, 1);
             this.dataSource._updateChangeSubscription();
-            this.selectedId = '';
-          },
-          (error) => {
-            this.selectedId = '';
+            
           }
         );
       }
     });
+
   }
 }

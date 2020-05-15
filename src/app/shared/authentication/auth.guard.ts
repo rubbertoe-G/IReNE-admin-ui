@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { tokenName } from '@angular/compiler';
+import { NotificationService } from '../services/notification.service';
 
 /**
 *  Class that manages the operations to check if a user has a valid token to access a path. The class implements the intergace CanActivate.
@@ -16,7 +18,8 @@ export class AuthGuard implements CanActivate {
    */
     constructor(
         private router: Router,
-        private authenticationService: AuthenticationService
+        private authenticationService: AuthenticationService,
+        private injector: Injector
     ) {}
 
     /**
@@ -28,7 +31,18 @@ export class AuthGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const currentUser = this.authenticationService.currentUserValue;
         if (currentUser) {
-            return true;
+            var time = new Date().getTime();
+            var parts = currentUser.token.split('.');
+            var tokenized =  JSON.parse(atob(parts[1]));
+            var tokenTime = new Date(tokenized.exp*1000).getTime();
+            if(time<tokenTime)
+                return true;
+            else{
+                this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
+                const notificationService = this.injector.get(NotificationService);
+                notificationService.showError("Authentication Error", "Token has expired");
+                return false;
+            }
         }
         // not logged in so redirect to login page with the return url
         this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});

@@ -16,8 +16,10 @@ import { ConfirmModalComponent } from 'src/app/shared/components/modals/confirm-
 })
 export class CollaboratorComponent implements OnInit {
 
+  /**
+   * MatPaginator variable used to provide navigation between paged information in the data table. 
+   */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   /**
    * MatTableDataSource<CollaboratorMeta> type data to store a table representation of the
@@ -25,10 +27,16 @@ export class CollaboratorComponent implements OnInit {
    */
   dataSource = new MatTableDataSource<CollaboratorMeta>();
 
-  /**@ignore */
+  /**
+  * MatTableDataSource<CollaboratorMeta> type data to store a copy representation of the
+  * collaborators. Used as an intermediary for filtering processes.
+  */
   private tempDataSource: MatTableDataSource<CollaboratorMeta>;
 
-  /**@ignore */
+  /**
+   * String array that containes the values to be represented in the table columns. These values mirror the data
+   * from the MatTableDataSource<CollaboratorMeta>.
+   */
   displayedColumns: string[] = ['first_name', 'last_name', 'email', 'banned', 'actions'];
 
   /**
@@ -56,7 +64,8 @@ export class CollaboratorComponent implements OnInit {
   /**
    * Contructor of the collaborator component instance.
    * 
-   * @param collaboratorService angular service object use to perform http requests related to a collaborator.
+   * @param {CollaboratorsService} collaboratorService angular service object use to perform http requests related to a collaborator.
+   * @param {MatDialog} dialog material dialog box controller instance
    */
   constructor(
     private collaboratorService: CollaboratorsService,
@@ -66,7 +75,8 @@ export class CollaboratorComponent implements OnInit {
   /**
    * Initialize this compmonent object.
    */
-  ngOnInit(): void { }
+  ngOnInit(): void {
+   }
 
   /**
    * Function triggered after all html entities have been compleatly loaded. Performs http request to retrive all the
@@ -76,7 +86,6 @@ export class CollaboratorComponent implements OnInit {
     this.collaboratorService.getCollaborators().add(() => {
       this.dataSource = new MatTableDataSource<CollaboratorMeta>(this.collaboratorService.collaborators);
       this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
       this.tempDataSource = this.dataSource;
       this.loading = false;
     });
@@ -154,7 +163,7 @@ export class CollaboratorComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result != null) {
         this.selectedId = id;
-        this.collaboratorService.unbanCollaborator(id).add(() => {
+        this.collaboratorService.unbanCollaborator(id, result).add(() => {
           this.selectedId = null;
         });
       }
@@ -181,7 +190,7 @@ export class CollaboratorComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result) {
         this.selectedId = id;
-        this.collaboratorService.banCollaborator(id).add(() => {
+        this.collaboratorService.banCollaborator(id, result).add(() => {
           this.selectedId = null;
         });
       }

@@ -9,7 +9,9 @@
   <div>Please type the administrator password to confirm.</div>
   <br>
   <div class="center-content">
-    <form [formGroup]="passwordForm">
+    <form 
+    [formGroup]="passwordForm"
+    (keydown)="keyDownConfirm($event)"ß>
       <mat-form-field appearance="outline" style="width: 30em;">
         <mat-label>Password</mat-label>
         <input matInput formControlName="password" name="password" placeholder="Password" type="password" required>
@@ -19,13 +21,14 @@
   <div class="filler"></div>
   <div class="action-buttons-container">
     <div style="padding-right: 0.5em;">
-      <button mat-raised-button 
-      [ngClass]="{'confirm-button': !passwordForm.valid}" 
+      <button mat-raised-button
+      color="primary"
+      [ngClass]="{'confirm-button': !passwordForm.valid}" ß
       [disabled]="!passwordForm.valid"
       (click)="closeDialogSubmit()">
         Confirm
       </button>
     </div>
-    <button mat-raised-button color="primary" (click)="closeDialogNoValue()">Cancel</button>
+    <button mat-raised-button color="warn" (click)="closeDialogNoValue()">Cancel</button>
   </div>
 </div>

@@ -3,6 +3,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorService } from './services/error.service';
 import { NotificationService } from './services/notification.service';
 import { Router } from '@angular/router';
+import { AuthenticationService } from './services/authentication.service';
+import { throwError } from 'rxjs';
 
 
 /**
@@ -28,24 +30,40 @@ export class GlobalErrorHandler implements ErrorHandler {
   handleError(error: Error | HttpErrorResponse) {
     const errorService = this.injector.get(ErrorService);
     const notifier = this.injector.get(NotificationService);
-
     let message;
-    let stackTrace;
+    let error_type;
+    let statusCode;
     if (error instanceof HttpErrorResponse) {
-      // Server error
       message = errorService.getServerErrorMessage(error);
-      //stackTrace = errorService.getServerErrorStackTrace(error);
-      notifier.showError(message);
-      let statusCode = errorService.getServerErrorStatusCode(error);
-      if(statusCode === 403)
+      statusCode = errorService.getServerErrorStatusCode(error);
+      error_type = errorService.getServerErrorType(error);
+      if(statusCode == 0){
+        const service = this.injector.get(AuthenticationService);
+        notifier.showError(error_type, "The application was unable to reach the server");
+        service.logout();
         this.router.navigate(['/login']);
+      }
+      else if([401,422].includes(statusCode)){
+        const service = this.injector.get(AuthenticationService);
+        service.logout();
+        this.router.navigate(['/login']);
+        if(message =="Token has expired"){
+            notifier.showError(error_type, message);
+        }
+      }
+      else if([400,403,404].includes(statusCode)){
+        notifier.showError(error_type, message);
+      }
+      else{
+        notifier.showError(error_type, message);
+      }
       
     } else {
       // Client Error
       message = errorService.getClientErrorMessage(error);
-      notifier.showError(message);
+      //notifier.showError(message);
     }
     // Always log errors
-    console.error(error);
+    console.error("Log: "+error);
   }
 }

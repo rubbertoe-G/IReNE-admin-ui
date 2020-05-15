@@ -3,8 +3,10 @@ import { ActorMeta } from './actor.model';
 import { SectionMeta } from './section.model';
 import { TimelineMeta } from './timeline.model';
 
+/**
+*  Interface that represents a revision component of type Creation.
+*/
 export interface CreationMeta{
-    _id: object;
     creatoriD: string;
     title: string;
     language: string;

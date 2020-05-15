@@ -13,11 +13,17 @@
     align-items: center;
     overflow: hidden;
   }
+
+  .mat-card-subtitle{
+    color: black;
+  }
   
   .preview-card {
+   border: solid;
+   border-width: 1px;
     padding-left: 2em;
     /* 8in width */
-    width: 768px;
+    width: inherit;
   }
   
   .title-section{
@@ -31,3 +37,7 @@
     padding-left: 4em;
   }
   
+.custom{
+    width: 50% !important;
+    float: left !important;  
+}

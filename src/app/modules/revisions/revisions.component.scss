@@ -1,9 +1,12 @@
 
 .table-container{
+  position: relative;
+  height: 58.5vh;
   overflow: auto;
 }
 
 table {
+  overflow-y: scroll;
   width: 100%;
 }
 
@@ -53,4 +56,14 @@ table {
 
 .spinner-container mat-spinner {
     margin: 130px auto 0 auto;
+}
+
+.center-screen{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+mat-progress-bar{
+  height: 10px;
 }

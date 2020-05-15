@@ -1,31 +1,31 @@
-<h2>{{revisionSelected?.title}}</h2>
+<h2>{{revisionSelected?.document_title}}</h2>
 <mat-dialog-content style="width:100%">
-    <table>
+    <table style="width: inherit;">
             <tr style="width: 100%; ">
                 <td style="width: 50%; text-align: left; font-weight: normal;">
                 <h4 style="display: inline-block; font-weight: bolder;">
                     Date: 
                 </h4>
-                {{ revisionSelected?.date }}
+                {{ revisionSelected?.revision_date }}
                 </td>
                 <td style="width: 50%; text-align: left; font-weight: normal;">
                 <h4 style="display: inline-block; font-weight: bolder;">
                     Performed By: 
                 </h4>
-                    {{ revisionSelected?.creator }} 
+                    {{ revisionSelected?.creator_name }} 
                 <a style="font-weight: lighter;">
-                    ({{ revisionSelected?.email }})
+                    ({{ revisionSelected?.creator_email }})
                 </a>
                 </td>
             </tr>
             <tr>
             <td style="width: 50%; text-align: left; font-weight: normal;">
                 <h4 style="display: inline-block; font-weight: bolder;">Revision #: </h4>
-                {{ revisionSelected?.index }}
+                {{ revisionSelected?.revision_number }}
             </td>
             <td style="width: 50%; text-align: left; font-weight: normal;">
                 <h4 style="display: inline-block; font-weight: bolder;">Performed On: </h4>
-                {{ revisionSelected?.revType }}
+                {{ revisionSelected?.revision_type }}
             </td>
             </tr>
     </table>

@@ -13,7 +13,7 @@
             <div *ngIf="authorRev?.new.length > 0">
             <h2>Author</h2>
             <div>
-                <table *ngFor="let author of authorRev?.new; index as i" >
+                <table [ngClass]="{'custom': authorRev?.new.length > 5}" *ngFor="let author of authorRev?.new.slice(0,5); index as i" >
                     <tr style="width: 100%; ">
                         <td style="width: 50%; text-align: left; font-weight: normal;">
                             <h4 style="display: inline; font-weight: bolder;">
@@ -31,7 +31,34 @@
                         </td>
                     </tr>
                     <tr>
+                        <td style="width: 50%; text-align: left; font-weight: normal; padding-bottom: 15px;">
+                            <h4 style="display: inline; font-weight: bolder;">
+                                Faculty: 
+                            </h4>
+                                {{ author.author_faculty }} 
+                        </td>
+                    </tr>
+            </table>
+            <div  *ngIf="authorRev?.new.length > 5 ">
+                <table style="width: 50%; float: left;" *ngFor="let author of authorRev?.new.slice(5,10); index as i" >
+                    <tr style="width: 100%; ">
                         <td style="width: 50%; text-align: left; font-weight: normal;">
+                            <h4 style="display: inline; font-weight: bolder;">
+                                Name: 
+                            </h4>
+                            {{ author.author_FN }} {{author.author_LN}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%; text-align: left; font-weight: normal;">
+                            <h4 style="display: inline; font-weight: bolder;">
+                                Email: 
+                            </h4>
+                                {{ author.author_email }} 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%; text-align: left; font-weight: normal; padding-bottom: 15px;">
                             <h4 style="display: inline; font-weight: bolder;">
                                 Faculty: 
                             </h4>
@@ -40,6 +67,10 @@
                     </tr>
             </table>
             </div>
+            
+            </div>
+            
+
         </div>
             <div *ngIf="authorRev?.new.length == 0">
                 <h2>No New Authors to Show</h2>
@@ -62,7 +93,7 @@
             <div *ngIf="authorRev?.old.length > 0">
                 <h2>Author</h2>
                 <div>
-                    <table *ngFor="let author of authorRev?.old; index as i" >
+                    <table [ngClass]="{'custom': authorRev?.new.length > 5}" *ngFor="let author of authorRev?.old.slice(0,5); index as i" >
                         <tr style="width: 100%; ">
                             <td style="width: 50%; text-align: left; font-weight: normal;">
                                 <h4 style="display: inline; font-weight: bolder;">
@@ -80,7 +111,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="width: 50%; text-align: left; font-weight: normal;">
+                            <td style="width: 50%; text-align: left; font-weight: normal; padding-bottom: 15px;">
                                 <h4 style="display: inline; font-weight: bolder;">
                                     Faculty: 
                                 </h4>
@@ -88,6 +119,34 @@
                             </td>
                         </tr>
                 </table>
+                <div *ngIf="authorRev?.old.length > 5 ">
+                    <table style="width: 50%; float: left;" *ngFor="let author of authorRev?.old.slice(5,10); index as i" >
+                        <tr style="width: 100%; ">
+                            <td style="width: 50%; text-align: left; font-weight: normal;">
+                                <h4 style="display: inline; font-weight: bolder;">
+                                    Name: 
+                                </h4>
+                                {{ author.author_FN }} {{author.author_LN}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%; text-align: left; font-weight: normal;">
+                                <h4 style="display: inline; font-weight: bolder;">
+                                    Email: 
+                                </h4>
+                                    {{ author.author_email }} 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%; text-align: left; font-weight: normal; padding-bottom: 15px;">
+                                <h4 style="display: inline; font-weight: bolder;">
+                                    Faculty: 
+                                </h4>
+                                    {{ author.author_faculty }} 
+                            </td>
+                        </tr>
+                </table>
+                </div>
                 </div>
             </div>
                 <div *ngIf="authorRev?.old.length == 0">

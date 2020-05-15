@@ -2,11 +2,14 @@
   <div style="padding: 2em;">
     <header-component></header-component>
     <mat-card class="preview-card">
+      <div >
+        <h1 style="padding-bottom: 0%; margin-bottom: 0%; font-size:large; font-weight: bolder; width: 100%; text-align: right !important;">New</h1>
+    </div>
       <mat-card-header style="padding-top: 3em;">
         <mat-card-title style="font-size: xx-large; font-weight: bolder;">{{creationRev?.title}}</mat-card-title>
         <mat-card-subtitle>
           <br>
-          <div *ngIf="creationRev?.description.length > 0">
+          <div *ngIf="creationRev?.description !== undefined || creationRev?.description.length > 0">
             <h2>Description</h2>
             <div>{{creationRev?.description}}</div>
           </div>
@@ -17,15 +20,15 @@
 
           <br>
 
-          <p><b>Creator: </b>{{revisionSelected?.creator}} | {{revisionSelected?.email}}</p>
+          <p><b>Creator: </b>{{revisionSelected?.creator_name}} | {{revisionSelected?.creator_email}}</p>
 
           <div *ngIf="creationRev?.author.length > 0">
             <p><b>Authors:</b></p>
             <div class="title-section">
               <div class="title-box" *ngFor="let author of creationRev?.author">
-                <p>{{author.firstName}} {{author.lastName}}</p>
-                <p>{{author.email}}</p>
-                <p>{{author.faculty}}</p>
+                <p>{{author.author_FN}} {{author.author_LN}}</p>
+                <p>{{author.author_email}}</p>
+                <p>{{author.author_faculty}}</p>
               </div>
             </div>
           </div>
@@ -55,7 +58,7 @@
             <p><b>Actors:</b></p>
             <div class="title-section">
               <div class="title-box" *ngFor="let actor of creationRev?.actor">
-                <p>{{actor.firstName}} {{actor.lastName}}</p>
+                <p>{{actor.actor_FN}} {{actor.actor_LN}}</p>
                 <p>{{actor.role}}</p>
               </div>
             </div>
@@ -75,6 +78,24 @@
         </mat-card-subtitle>
       </mat-card-header>
     </mat-card>
+    <br/>
+    <br/>
+    <mat-card class="preview-card">
+      <div style="padding-bottom: 0%; margin-bottom: 0%; ">
+          <h1 style="padding-bottom: 0%; margin-bottom: 0%; font-size:large; font-weight: bolder; width: 100%; text-align: right !important;">Old</h1>
+      </div>
+      <mat-card-header>
+          <mat-card-subtitle>
+          <br>
+          <div>
+
+              <h2>No Old Document to Show</h2>
+              </div>
+          <br>
+  
+          </mat-card-subtitle>
+      </mat-card-header>
+      </mat-card>
   </div>
 
 

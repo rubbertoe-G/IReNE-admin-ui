@@ -10,13 +10,10 @@ import { environment } from 'src/environments/environment';
 })
 export class CollaboratorsService {
 
-  fakeBackend = environment.backend;
 
   collaborators: CollaboratorMeta[];
 
   constructor(private http: HttpClient) {
-    if(environment.testErrorBackend) 
-      this.fakeBackend = 'http://idontexist';
   }
 
   /**
@@ -34,9 +31,10 @@ export class CollaboratorsService {
    * Ban collaborator
    * @param id the collaborator id
    */
-  banCollaborator(id: string) {
+  banCollaborator(id: string, password: string) {
     const formData = new FormData();
     formData.append('collabID', id);
+    formData.append('password', password);
 
      return this.http.put(`${environment.backend}/collaborators/ban`, formData).subscribe(
        (response) =>{
@@ -53,10 +51,10 @@ export class CollaboratorsService {
    * Unban one collaborator from the database using the collaborator id.
    * @param id the collaborator id to be banned 
    */
-  unbanCollaborator(id: string) {
+  unbanCollaborator(id: string, password: string) {
     const formData = new FormData();
     formData.append('collabID', id);
-
+    formData.append('password', password);
     return this.http.put(`${environment.backend}/collaborators/unban`, formData).subscribe(
       (response) =>{
         this.collaborators.forEach(e => {
