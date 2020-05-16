@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModalComponent } from 'src/app/shared/components/modals/confirm-modal/confirm-modal.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -59,7 +60,8 @@ export class DocumentsComponent implements OnInit {
   constructor(
     private documentService: DocumentsService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -137,6 +139,7 @@ export class DocumentsComponent implements OnInit {
         this.selectedId = id;
         this.documentService.publishDocument(id, result).add(() => {
           this.selectedId = ' ';
+          this.snackBar.open("The document has been published.", null, { duration: 2000 });
         });
       }
     });
@@ -161,6 +164,7 @@ export class DocumentsComponent implements OnInit {
         this.selectedId = id;
         this.documentService.unpublishDocument(id, result).add(() => {
           this.selectedId = ' ';
+          this.snackBar.open("The document has been unpublished.", null, { duration: 2000 });
         });
       }
     });

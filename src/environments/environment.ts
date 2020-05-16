@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   testErrorBackend: false,
   testErrors: false,
-  backend: 'http://localhost:5000/admin'
+  backend: 'http://localhost:5000'
 };
 
 /*

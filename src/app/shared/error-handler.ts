@@ -48,7 +48,7 @@ export class GlobalErrorHandler implements ErrorHandler {
         service.logout();
         this.router.navigate(['/login']);
         if(message =="Token has expired"){
-            notifier.showError(error_type, message);
+            notifier.showError(error_type, "User session has expired. Please sign in again.");
         }
       }
       else if([400,403,404].includes(statusCode)){
@@ -64,6 +64,6 @@ export class GlobalErrorHandler implements ErrorHandler {
       //notifier.showError(message);
     }
     // Always log errors
-    console.error("Log: "+error);
+    console.error(error);
   }
 }

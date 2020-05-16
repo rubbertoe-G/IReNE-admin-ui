@@ -124,56 +124,57 @@ export class RevisionsComponent implements OnInit {
   previewRev(rev) {
     revisionSelected=rev;
     let activeComponent: any;
-    switch(revisionSelected.revision_type) { 
-      case "Creation": { 
+    console.log(revisionSelected.revision_type)
+    switch(revisionSelected.revision_type.toLowerCase()) { 
+      case "creation": { 
         activeComponent = CreationDialog; 
         break; 
       } 
-      case "Description": { 
+      case "description": { 
         activeComponent = DescriptionDialog; 
         break;
       } 
-      case "Title": { 
+      case "title": { 
         activeComponent = TitleDialog; 
         break; 
       } 
-      case "Timeline": { 
+      case "timeline": { 
         activeComponent = TimelineDialog; 
         break; 
       } 
-      case "Infrastructure": { 
+      case "infrastructure": { 
         activeComponent = InfrastructureDialog; 
         break; 
       } 
-      case "Damage": { 
+      case "damage": { 
         activeComponent = DamageDialog; 
         break; 
       }
-      case "Location": { 
+      case "location": { 
         activeComponent = LocationDialog; 
         break; 
       } 
-      case "Tag": { 
+      case "tag": { 
         activeComponent = TagDialog; 
         break; 
       } 
-      case "Incident Date": { 
+      case "incident date": { 
         activeComponent = IncidentDialog; 
         break; 
       }
-      case "Author": { 
+      case "author": { 
         activeComponent = AuthorDialog; 
         break; 
       }
-      case "Actor": { 
+      case "actor": { 
         activeComponent = ActorDialog; 
         break; 
       }
-      case "Section": { 
+      case "section": { 
         activeComponent = SectionDialog; 
         break; 
       }
-      case "Deletion": { 
+      case "deletion": { 
         activeComponent = DeletionDialog; 
         break; 
       }

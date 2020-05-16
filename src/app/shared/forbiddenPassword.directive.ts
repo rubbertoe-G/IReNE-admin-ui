@@ -10,7 +10,8 @@ import { AbstractControl } from '@angular/forms';
 export function ForbiddenPasswordValidator() {
     return (control: AbstractControl): {[key: string]: any} | null => {
         let reg = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})');
-        const notForbidden = reg.test(control.value);
+        let notForbidden = reg.test(control.value);
+        notForbidden = String(control.value).length < 128 && notForbidden;
         return notForbidden ? null : {'forbiddenPassword': {value: control.value}};
       };
   }

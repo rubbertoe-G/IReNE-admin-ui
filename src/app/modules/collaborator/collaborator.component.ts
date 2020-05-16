@@ -7,6 +7,7 @@ import { CollaboratorMeta } from 'src/app/shared/models/collaborators.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ConfirmModalComponent } from 'src/app/shared/components/modals/confirm-modal/confirm-modal.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -66,10 +67,12 @@ export class CollaboratorComponent implements OnInit {
    * 
    * @param {CollaboratorsService} collaboratorService angular service object use to perform http requests related to a collaborator.
    * @param {MatDialog} dialog material dialog box controller instance
+   * @param {MatSnackBar} snackbar snackbar controller instance
    */
   constructor(
     private collaboratorService: CollaboratorsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
   ) { }
 
   /**
@@ -165,6 +168,7 @@ export class CollaboratorComponent implements OnInit {
         this.selectedId = id;
         this.collaboratorService.unbanCollaborator(id, result).add(() => {
           this.selectedId = null;
+          this.snackBar.open("The collaborator has been unbanned.", null, { duration: 2000 });
         });
       }
     });
@@ -192,6 +196,7 @@ export class CollaboratorComponent implements OnInit {
         this.selectedId = id;
         this.collaboratorService.banCollaborator(id, result).add(() => {
           this.selectedId = null;
+          this.snackBar.open("The collaborator has been banned.", null, { duration: 2000 });
         });
       }
     });
