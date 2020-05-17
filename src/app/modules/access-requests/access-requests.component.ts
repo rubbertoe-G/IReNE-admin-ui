@@ -85,7 +85,7 @@ export class AccessRequestsComponent implements OnInit {
   denyAccessRequest(request: RequestMeta) {
     const dialogRef = this.dialog.open(ConfirmModalComponent, {
       data: {
-        title: 'Deny Access Request',
+        title: 'Deny Collaborator Request',
         message: `The following action will deny and remove the collaborator access-request with the email: ${request.email.bold()}.`,
       }
     })
@@ -96,7 +96,7 @@ export class AccessRequestsComponent implements OnInit {
         this.requestsService.denyRequest(request._id.toString(), result).subscribe(
           () => {
             this.selectedId = null;
-            this.snackBar.open("The access request has been denied.", null, { duration: 2000 });
+            this.snackBar.open("The collaborator request has been denied.", null, { duration: 2000 });
             let index = this.dataSource.data.indexOf(request);
             this.dataSource.data.splice(index, 1);
             this.dataSource._updateChangeSubscription();
@@ -116,7 +116,7 @@ export class AccessRequestsComponent implements OnInit {
   acceptAccessRequest(request: RequestMeta) {
     const dialogRef = this.dialog.open(ConfirmModalComponent, {
       data: {
-        title: 'Accept Access Request',
+        title: 'Accept Collaborator Request',
         message: `The following action will create and grant access to a new collaborator with the email: ${request.email.bold()}.`,
       }
     })
@@ -126,7 +126,7 @@ export class AccessRequestsComponent implements OnInit {
         this.requestsService.acceptRequest(request._id.toString(), result).subscribe(
           () => {
             this.selectedId = null;
-            this.snackBar.open("The access request has been accepted.", null, { duration: 2000 });
+            this.snackBar.open("The collaborator request has been accepted.", null, { duration: 2000 });
             let index = this.dataSource.data.indexOf(request);
             this.dataSource.data.splice(index, 1);
             this.dataSource._updateChangeSubscription();

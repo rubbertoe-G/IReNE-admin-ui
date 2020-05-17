@@ -1,5 +1,5 @@
 <div>
-  <h1>Access Requests</h1>
+  <h1>Collaborator Requests</h1>
 </div>
 <div>
   <mat-form-field appearance="outline">
@@ -9,7 +9,7 @@
   </mat-form-field>
   <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
   <div *ngIf="dataSource.data.length === 0 && !loading" class="center-screen">
-    <h1>NO ACCESS REQUESTS FOUND</h1>
+    <h1>NO COLLABORATOR REQUESTS FOUND</h1>
   </div>
   <div class="mat-elevation-z8">
     <div class="table-container">
@@ -48,7 +48,7 @@
           <td mat-cell *matCellDef="let element">
             <button 
             mat-icon-button 
-            matTooltip="Approve Access Request"
+            matTooltip="Approve Collaborator Request"
             matTooltipPosition="right"
             [class.spinner]="element._id == selectedId"
             color="primary" (click)="acceptAccessRequest(element)">
@@ -56,7 +56,7 @@
             </button>
             <button 
             mat-icon-button
-            matTooltip="Deny Access Request"
+            matTooltip="Deny Collaborator Request"
             matTooltipPosition="right"
             [class.spinner]="element._id == selectedId"
             color="warn" (click)="denyAccessRequest(element)">
