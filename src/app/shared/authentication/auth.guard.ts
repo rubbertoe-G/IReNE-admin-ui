@@ -40,7 +40,7 @@ export class AuthGuard implements CanActivate {
             else{
                 this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
                 const notificationService = this.injector.get(NotificationService);
-                notificationService.showError("Authentication Error", "Token has expired");
+                notificationService.showError("Authentication Error", "User session has expired. Please sign in again.");
                 return false;
             }
         }
