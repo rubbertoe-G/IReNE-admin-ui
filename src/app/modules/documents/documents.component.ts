@@ -95,6 +95,14 @@ export class DocumentsComponent implements OnInit {
       return;
     }
     this.dataSource = this.tempDataSource;
+    if(!this.checkPublished){
+      this.documentService.getDocuments().add(() => {
+        this.dataSource = new MatTableDataSource<DocumentMeta>(this.documentService.documents);
+        this.dataSource.paginator = this.paginator;
+        this.tempDataSource = this.dataSource;
+        this.loading = false;
+      });
+    }
   }
 
   filterUnpublished() {
@@ -111,6 +119,14 @@ export class DocumentsComponent implements OnInit {
       return;
     }
     this.dataSource = this.tempDataSource;
+    if(!this.checkUnpublished){
+      this.documentService.getDocuments().add(() => {
+        this.dataSource = new MatTableDataSource<DocumentMeta>(this.documentService.documents);
+        this.dataSource.paginator = this.paginator;
+        this.tempDataSource = this.dataSource;
+        this.loading = false;
+      });
+    }
   }
 
   isUnpublished(unpublished: boolean) {

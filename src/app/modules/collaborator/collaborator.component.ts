@@ -123,6 +123,14 @@ export class CollaboratorComponent implements OnInit {
       return;
     }
     this.dataSource = this.tempDataSource;
+    if(!this.checkBanned){
+      this.collaboratorService.getCollaborators().add(() => {
+        this.dataSource = new MatTableDataSource<CollaboratorMeta>(this.collaboratorService.collaborators);
+        this.dataSource.paginator = this.paginator;
+        this.tempDataSource = this.dataSource;
+        this.loading = false;
+      });
+    }
   }
 
   /**
@@ -143,6 +151,14 @@ export class CollaboratorComponent implements OnInit {
       return;
     }
     this.dataSource = this.tempDataSource;
+    if(!this.checkUnbanned){
+      this.collaboratorService.getCollaborators().add(() => {
+        this.dataSource = new MatTableDataSource<CollaboratorMeta>(this.collaboratorService.collaborators);
+        this.dataSource.paginator = this.paginator;
+        this.tempDataSource = this.dataSource;
+        this.loading = false;
+      });
+    }
   }
 
 
