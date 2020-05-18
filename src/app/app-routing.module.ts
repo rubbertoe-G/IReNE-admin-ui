@@ -18,7 +18,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'collaborators', pathMatch: 'full' },
       { path: 'collaborators', component: CollaboratorComponent, canActivate: [AuthGuard]},
       { path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard] },
-      { path: 'access-requests', component: AccessRequestsComponent, canActivate: [AuthGuard] },
+      { path: 'collaborator-requests', component: AccessRequestsComponent, canActivate: [AuthGuard] },
       { path: 'tags', component: TagsComponent, canActivate: [AuthGuard] },
       { path: 'revision-history', component: RevisionsComponent, canActivate: [AuthGuard] },
     ]},
