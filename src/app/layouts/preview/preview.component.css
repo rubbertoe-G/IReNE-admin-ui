@@ -24,6 +24,17 @@
     width: 768px;
   }
   
+  .author-box{
+    padding-bottom: 2em;
+    padding-left: 4em;
+    line-height: 80%;
+  }
+  
+  .actor-box{
+    padding-bottom: 2em;
+    padding-left: 4em;
+    line-height: 80%;
+  }
   .title-section{
     display: flex; 
     justify-content: flex-start space-between; 

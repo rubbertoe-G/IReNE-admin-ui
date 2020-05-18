@@ -7,7 +7,7 @@
     <input matInput placeholder="Ex. Tags ..." #input>
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
-  
+  <mat-progress-bar mode="indeterminate" *ngIf="dataSource?.loadingSubject.getValue()"></mat-progress-bar>
   <div *ngIf="dataSource?.quantityOverall.getValue() === 0 && !dataSource?.loadingSubject.getValue()" class="center-screen">
     <h1>NO REVISIONS FOUND</h1>
   </div>
